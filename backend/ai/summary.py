@@ -2,31 +2,34 @@
 Gemini AI — Natural Language Route Summary.
 
 Generates a 3-sentence briefing for fleet managers.
+Uses google-genai SDK (official, lighter).
 Falls back to a templated summary if GEMINI_API_KEY is not set.
 """
 import os
-import logging
-
-logger = logging.getLogger(__name__)
+import json
 
 # ─── Try to initialise Gemini ─────────────────────────────────────────────────
-_gemini_model = None
+_client = None
 
-def _load_model():
-    global _gemini_model
+def _init_client():
+    global _client
     api_key = os.environ.get("GEMINI_API_KEY", "")
     if not api_key:
+        print("⚠ [Summary] GEMINI_API_KEY not set — will use template fallback")
         return None
     try:
-        import google.generativeai as genai
-        genai.configure(api_key=api_key)
-        _gemini_model = genai.GenerativeModel("gemini-2.0-flash")
-        logger.info("Gemini model loaded for NL summary.")
+        from google import genai
+        _client = genai.Client(api_key=api_key)
+        print(f"✅ [Summary] Gemini client initialized (key: ...{api_key[-6:]})")
+        return _client
+    except ImportError:
+        print("⚠ [Summary] google-genai not installed — will use template fallback")
+        print("  Run: pip install google-genai")
+        return None
     except Exception as e:
-        logger.warning(f"Gemini init failed: {e}")
-    return _gemini_model
+        print(f"⚠ [Summary] Gemini init failed: {e} — will use template fallback")
+        return None
 
-_load_model()
 
 SUMMARY_SYSTEM_PROMPT = """You are a dispatcher assistant for an Indian last-mile delivery fleet.
 Write a 3-sentence route briefing for the fleet manager.
@@ -57,16 +60,27 @@ def _template_summary(route_data: dict) -> str:
 # ─── Public API ───────────────────────────────────────────────────────────────
 async def generate_summary(route_data: dict) -> str:
     """Generate a 3-sentence NL route briefing."""
-    model = _gemini_model
+    global _client
+    if _client is None:
+        _init_client()
 
-    if model is None:
+    if _client is None:
+        print("  📝 [Summary] Using template fallback")
         return _template_summary(route_data)
 
     try:
-        import json
+        print("\n📝 [Summary] Generating Gemini AI route briefing...")
+
         prompt = SUMMARY_SYSTEM_PROMPT + "\n\nRoute data:\n" + json.dumps(route_data)
-        response = model.generate_content(prompt)
-        return response.text.strip()
+
+        response = _client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=prompt,
+        )
+
+        summary = response.text.strip()
+        print(f"  🤖 [Gemini] Summary: {summary[:80]}...")
+        return summary
     except Exception as e:
-        logger.warning(f"Gemini summary call failed ({e}), using template.")
+        print(f"  ⚠ [Gemini] Summary call failed: {e} — using template")
         return _template_summary(route_data)
