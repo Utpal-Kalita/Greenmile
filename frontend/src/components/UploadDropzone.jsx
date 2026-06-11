@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react';
 
+const API = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 export default function UploadDropzone({ onUpload, onLoadDemo, onError }) {
   const [isDragging, setIsDragging] = useState(false);
   const [fileName, setFileName] = useState('');
@@ -20,7 +22,7 @@ export default function UploadDropzone({ onUpload, onLoadDemo, onError }) {
     form.append('file', file);
 
     try {
-      const res = await fetch('http://localhost:8000/upload', { method: 'POST', body: form });
+      const res = await fetch(`${API}/upload`, { method: 'POST', body: form });
       const json = await res.json();
 
       if (!res.ok) {

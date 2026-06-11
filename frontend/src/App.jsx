@@ -1,4 +1,6 @@
 import { useState } from 'react';
+
+const API = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 import MetricCards from './components/MetricCards';
 import UploadDropzone from './components/UploadDropzone';
 import AnomalyBadge from './components/AnomalyBadge';
@@ -61,7 +63,7 @@ export default function App() {
     if (stops.length === 0) return;
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:8000/optimize', {
+      const res = await fetch(`${API}/optimize`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ stops }),
