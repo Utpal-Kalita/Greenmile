@@ -6,6 +6,8 @@
 
 Built for **FAR AWAY 2026 Hackathon · Theme: Logistics & Transit**
 
+🌐 **Live Demo → [greenmile-seven.vercel.app](https://greenmile-seven.vercel.app/)**
+
 ---
 
 ## 📌 The Problem
@@ -51,9 +53,11 @@ The van delivers packages on the way out and picks up returns on the way back. N
 - **Natural Language Briefing** — Generates a 3-sentence plain-English route summary that non-technical fleet managers can read in 10 seconds
 - **Return Probability Predictor** — Scores each delivery for return likelihood and pre-allocates van space for predicted returns
 
+> **Graceful fallback**: if no Gemini API key is provided, the system automatically falls back to heuristic anomaly detection and a static route summary — no crash, no empty UI.
+
 ### 🗺️ Route Optimization Engine
 
-- **DBSCAN Geographic Clustering** — Groups nearby stops into zones using haversine distance (eps = 3km), so each van handles a tight geographic area
+- **DBSCAN Geographic Clustering** — Groups nearby stops into zones using haversine distance (eps = 3 km), so each van handles a tight geographic area
 - **Bidirectional Loop Optimizer** — Nearest-Neighbour seed + 2-opt improvement builds one loop: deliver outbound → collect returns inbound → return to warehouse
 - **Before/After Split Map** — Side-by-side Leaflet maps showing the old 2-trip routes (red + blue) vs the optimized green loop with progressive drawing animation
 
@@ -81,24 +85,25 @@ greenmile/
 │   ├── ai/
 │   │   ├── anomaly.py               # Gemini fraud detector (google-genai SDK)
 │   │   └── summary.py               # Gemini NL route summary generator
-│   ├── requirements.txt
-│   └── .env                         # GEMINI_API_KEY (not committed)
+│   └── requirements.txt
 ├── frontend/
-│   └── src/
-│       ├── App.jsx                  # Main dashboard — state management & layout
-│       ├── index.css                # Design system (dark theme)
-│       └── components/
-│           ├── UploadDropzone.jsx    # CSV drag-and-drop upload
-│           ├── RouteMap.jsx          # Leaflet map (before state)
-│           ├── SplitRouteMap.jsx     # Before/After side-by-side split map
-│           ├── MetricCards.jsx       # Animated before → after savings cards
-│           ├── AnomalyBadge.jsx     # AI fraud flag display panel
-│           ├── PackingSequencer.jsx  # SVG van diagram + load order checklist
-│           ├── DriverView.jsx       # Mobile driver interface
-│           └── FleetScaler.jsx      # 1–50 van annual savings projector
+│   ├── src/
+│   │   ├── App.jsx                  # Main dashboard — state management & layout
+│   │   ├── index.css                # Design system (dark theme)
+│   │   └── components/
+│   │       ├── UploadDropzone.jsx   # CSV drag-and-drop upload
+│   │       ├── RouteMap.jsx         # Leaflet map (before state)
+│   │       ├── SplitRouteMap.jsx    # Before/After side-by-side split map
+│   │       ├── MetricCards.jsx      # Animated before → after savings cards
+│   │       ├── AnomalyBadge.jsx     # AI fraud flag display panel
+│   │       ├── PackingSequencer.jsx # SVG van diagram + load order checklist
+│   │       ├── DriverView.jsx       # Mobile driver interface
+│   │       └── FleetScaler.jsx      # 1–50 van annual savings projector
+│   └── package.json
 ├── data/
 │   └── demo_stops.csv               # 18 seeded stops — Delhi-NCR Zone B
-└── render.yaml                      # Render deployment config
+├── frontend/vercel.json             # Vercel frontend deployment config
+└── render.yaml                      # Render backend deployment config
 ```
 
 ### System Flow
@@ -136,7 +141,7 @@ flowchart TD
 
 ### Prerequisites
 - Python 3.10+ and Node.js 18+
-- A [Gemini API key](https://aistudio.google.com/apikey) (free tier works)
+- A [Gemini API key](https://aistudio.google.com/apikey) (free tier works; the app runs in heuristic-fallback mode without one)
 
 ### 1. Backend
 
@@ -145,7 +150,7 @@ cd backend
 pip install -r requirements.txt
 ```
 
-Create a `.env` file:
+Create a `.env` file inside `backend/`:
 ```
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
@@ -162,6 +167,15 @@ API docs → http://localhost:8000/docs
 ```bash
 cd frontend
 npm install
+```
+
+If your backend is running somewhere other than `localhost:8000`, create a `.env` file inside `frontend/`:
+```
+VITE_API_URL=http://localhost:8000
+```
+
+Start the dev server:
+```bash
 npm run dev
 ```
 
@@ -173,6 +187,33 @@ Dashboard → http://localhost:5173
 2. Click **"or load seeded demo data"** in the upload dropzone
 3. Click **⚡ Optimize** — watch the pipeline run
 4. Explore tabs: **Route Map** → **Packing Order** → **Driver View** → **Fleet Scaler**
+
+---
+
+## ☁️ Deployment
+
+🌐 **Frontend** → [greenmile-seven.vercel.app](https://greenmile-seven.vercel.app/) (Vercel)
+
+### Frontend → Vercel
+
+`frontend/vercel.json` configures the Vite SPA build with client-side routing rewrites.
+
+1. Push this repo to GitHub
+2. Go to [vercel.com](https://vercel.com) → **Add New Project** → import your repo
+3. Set **Root Directory** to `frontend`
+4. In **Environment Variables**, add:
+   ```
+   VITE_API_URL=https://greenmile-backend.onrender.com
+   ```
+5. Deploy — Vercel auto-detects Vite
+
+### Backend → Render
+
+`render.yaml` at the project root configures a free-tier Python web service:
+
+1. Go to [render.com](https://render.com) → **New → Blueprint** → connect your repo
+2. Render auto-reads `render.yaml` and provisions the service
+3. In the Render dashboard, go to **Environment** and add `GEMINI_API_KEY`
 
 ---
 
@@ -193,66 +234,68 @@ Dashboard → http://localhost:5173
   "type": "DELIVERY",
   "lat": 28.5479,
   "lng": 77.2118,
+  "address": "Malviya Nagar",
   "weight_kg": 4.1,
   "volume_l": 18,
   "time_window_start": "12:00",
   "time_window_end": "15:00",
   "cluster_id": "Zone_B",
-  "address": "Malviya Nagar",
   "return_count_30d": 3,
   "avg_delivery_confirm_minutes": 15,
   "dispute_history_count": 1
 }
 ```
 
+`type` must be `"DELIVERY"` or `"RETURN"`.
+
 ### Optimization Response
 
 The `/optimize` endpoint returns:
-- `route` — Ordered list of stops with `risk_score`, `flag`, `reason`, `suggested_action`, `return_probability`, `pre_stage_return` annotations
-- `summary` — Gemini-generated 3-sentence route briefing
+- `route` — Ordered list of stops annotated with `risk_score`, `flag`, `reason`, `suggested_action`, `return_probability`, `pre_stage_return`
+- `nl_summary` — Gemini-generated 3-sentence route briefing
 - `metrics` — Before/after distance, fuel cost, CO₂, driver hours
+- `flagged_count` — Number of stops with anomaly flags
+- `pre_staged_returns` — Number of delivery stops pre-allocated a return bay
+
+### CSV Format
+
+Required columns (see `data/demo_stops.csv` for a working example):
+
+```
+stop_id, type, lat, lng, address, weight_kg, volume_l,
+time_window_start, time_window_end, cluster_id,
+return_count_30d, avg_delivery_confirm_minutes, dispute_history_count
+```
 
 ---
 
 ## 🛠️ Tech Stack
 
 | Layer | Technology |
-|-------|-----------|
+|-------|------------|
 | **Backend** | Python 3.12 · FastAPI · Uvicorn |
 | **Optimization** | scikit-learn (DBSCAN) · scipy · custom NN + 2-opt |
 | **AI** | Google Gemini 2.0 Flash via `google-genai` SDK |
 | **Frontend** | React 19 · Vite 8 · Tailwind CSS v3 |
-| **Maps** | Leaflet.js with dark tiles |
-| **Data** | pandas · CSV validation · Pydantic models |
+| **Maps** | Leaflet.js · react-leaflet · dark tile layer |
+| **Data** | pandas · CSV validation · Pydantic v2 models |
 
 ---
 
-## 📊 PRD Feature Completion — 10/10 ✅
+## 📊 Feature Completion
 
-| Feature | ID | Priority | Status |
-|---------|:--:|:--------:|:------:|
-| CSV Upload & Validation | F1 | MUST | ✅ |
-| DBSCAN Geographic Clustering | F2 | MUST | ✅ |
-| Bidirectional Route Optimizer (NN + 2-opt) | F3 | MUST | ✅ |
-| Before/After Split Dashboard + Animation | F4 | MUST | ✅ |
-| Packing Sequencer + SVG Van Diagram | F5 | MUST | ✅ |
-| Gemini AI — Return Anomaly Detector | F6 | MUST | ✅ |
-| Gemini AI — NL Route Summary | F7 | MUST | ✅ |
-| Driver Mobile View | F8 | SHOULD | ✅ |
-| Fleet Scaler Widget (1–50 vans) | F9 | SHOULD | ✅ |
-| Return Probability Predictor | F10 | STRETCH | ✅ |
-
-```
-MUST-have   (6/6):   ████████████████████  100%
-SHOULD-have (2/2):   ████████████████████  100%
-STRETCH     (1/1):   ████████████████████  100%
-```
-
----
-
-## 👥 Team
-
-**FAR AWAY 2026 Hackathon**
+| Feature | Priority | Status |
+|---------|:--------:|:------:|
+| CSV Upload & Validation | MUST | ✅ |
+| DBSCAN Geographic Clustering | MUST | ✅ |
+| Bidirectional Route Optimizer (NN + 2-opt) | MUST | ✅ |
+| Before/After Split Dashboard + Animation | MUST | ✅ |
+| Packing Sequencer + SVG Van Diagram | MUST | ✅ |
+| Gemini AI — Return Anomaly Detector | MUST | ✅ |
+| Gemini AI — NL Route Summary | MUST | ✅ |
+| Driver Mobile View | SHOULD | ✅ |
+| Fleet Scaler Widget (1–50 vans) | SHOULD | ✅ |
+| Return Probability Predictor | STRETCH | ✅ |
 
 ---
 
