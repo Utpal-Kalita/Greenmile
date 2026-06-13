@@ -282,21 +282,4 @@ return_count_30d, avg_delivery_confirm_minutes, dispute_history_count
 
 ---
 
-## 📊 Feature Completion
-
-| Feature | Priority | Status |
-|---------|:--------:|:------:|
-| CSV Upload & Validation | MUST | ✅ |
-| DBSCAN Geographic Clustering | MUST | ✅ |
-| Bidirectional Route Optimizer (NN + 2-opt) | MUST | ✅ |
-| Before/After Split Dashboard + Animation | MUST | ✅ |
-| Packing Sequencer + SVG Van Diagram | MUST | ✅ |
-| Gemini AI — Return Anomaly Detector | MUST | ✅ |
-| Gemini AI — NL Route Summary | MUST | ✅ |
-| Driver Mobile View | SHOULD | ✅ |
-| Fleet Scaler Widget (1–50 vans) | SHOULD | ✅ |
-| Return Probability Predictor | STRETCH | ✅ |
-
----
-
 *Greenmile v2.0 · Built for India's last mile 🇮🇳*
