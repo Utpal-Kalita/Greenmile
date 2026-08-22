@@ -1,0 +1,33 @@
+# Copy this file to .env before configuring external services.
+# Never commit .env or real credentials.
+
+# PostgreSQL — local Docker defaults only
+POSTGRES_DB=greenmile
+POSTGRES_USER=greenmile
+POSTGRES_PASSWORD=greenmile
+DATABASE_URL=postgresql+asyncpg://greenmile:greenmile@postgres:5432/greenmile
+
+# API
+ENVIRONMENT=development
+CORS_ORIGINS=["http://localhost:3000"]
+AUTO_SEED_DEMO=true
+
+# Reproducible logistics assumptions
+FUEL_PRICE_PER_LITRE=94.77
+VEHICLE_FUEL_EFFICIENCY_KM_PER_L=12.0
+CO2_KG_PER_LITRE=2.31
+DRIVER_COST_PER_HOUR=180.0
+AVERAGE_SPEED_KMH=28.0
+DEFAULT_SERVICE_TIME_SECONDS=300
+MAX_DRIVER_HOURS=12.0
+DBSCAN_EPS_KM=3.0
+DBSCAN_MIN_SAMPLES=2
+TWO_OPT_MAX_ITERATIONS=60
+
+# Azure OpenAI — server-only; never expose these as NEXT_PUBLIC variables
+AZURE_OPENAI_ENDPOINT=https://YOUR-RESOURCE.openai.azure.com
+AZURE_OPENAI_API_KEY=replace-with-your-server-side-key
+AZURE_OPENAI_DEPLOYMENT=replace-with-your-deployment-name
+OPENAI_API_VERSION=2024-10-21
+AZURE_OPENAI_TIMEOUT_SECONDS=20
+AZURE_OPENAI_MAX_RETRIES=1

@@ -1,67 +1,78 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
-  ArrowDown,
+  AlertCircle,
   Check,
   Gauge,
+  Play,
   ShieldCheck,
-  Sparkles,
   Timer,
 } from "lucide-react";
-import { benchmarks } from "@/data/mock-data";
-import { cn, formatPercent, formatSeconds } from "@/lib/utils";
-
-type Mode = "turbo" | "balanced" | "quality";
-
-const modes: Record<Mode, { speed: number; quality: number; note: string }> = {
-  turbo: {
-    speed: 83,
-    quality: 2.1,
-    note: "Fastest route generation for live dispatch.",
-  },
-  balanced: {
-    speed: 77,
-    quality: 0.2,
-    note: "Recommended balance of speed and route quality.",
-  },
-  quality: {
-    speed: 58,
-    quality: -1.4,
-    note: "Longer search for the shortest possible route.",
-  },
-};
+import { api } from "@/lib/api";
+import type { Benchmark, Scenario } from "@/types/api";
 
 export function PerformanceLab() {
+  const [scenario, setScenario] = useState<Scenario | null>(null);
+  const [benchmarks, setBenchmarks] = useState<Benchmark[]>([]);
   const [workload, setWorkload] = useState(500);
-  const [mode, setMode] = useState<Mode>("balanced");
+  const [running, setRunning] = useState(false);
+  const [error, setError] = useState("");
+  useEffect(() => {
+    void Promise.all([api.getDemoScenario(), api.getBenchmarks()])
+      .then(([demo, records]) => {
+        setScenario(demo);
+        setBenchmarks(latestByWorkload(records));
+      })
+      .catch((reason) =>
+        setError(
+          reason instanceof Error ? reason.message : "Backend unavailable",
+        ),
+      );
+  }, []);
   const benchmark = useMemo(
-    () =>
-      benchmarks.find((item) => item.workload === workload) ?? benchmarks[1],
-    [workload],
+    () => benchmarks.find((item) => item.stop_count === workload),
+    [benchmarks, workload],
   );
-  const improvement =
-    (1 - benchmark.after.fullResult / benchmark.before.fullResult) * 100;
-  const profile = modes[mode];
-
+  const improvement = benchmark
+    ? (1 - benchmark.optimized_latency_ms / benchmark.baseline_latency_ms) * 100
+    : null;
+  async function runBenchmark() {
+    if (!scenario) return;
+    setRunning(true);
+    setError("");
+    try {
+      const records = await api.runBenchmarks(scenario.id, [workload]);
+      setBenchmarks((current) => latestByWorkload([...records, ...current]));
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "Benchmark failed");
+    } finally {
+      setRunning(false);
+    }
+  }
   return (
     <div className="content-page performance-page">
       <header className="page-hero performance-hero">
         <div>
-          <span className="eyebrow">Greenmile performance / Round 2</span>
+          <span className="eyebrow">Greenmile performance / measured</span>
           <h1>
-            We optimized
+            We measure
             <br />
             our own optimizer.
           </h1>
         </div>
         <div className="hero-proof">
-          <span className="mono">BENCHMARK / DELHI-NCR</span>
-          <strong className="mono">{formatPercent(improvement)}</strong>
-          <p>faster full result at {workload.toLocaleString()} stops</p>
+          <span className="mono">POSTGRESQL BENCHMARK</span>
+          <strong className="mono">
+            {improvement == null ? "—" : `${improvement.toFixed(1)}%`}
+          </strong>
+          <p>
+            {benchmark
+              ? `faster at ${benchmark.stop_count.toLocaleString()} stops`
+              : "Run a workload to generate evidence"}
+          </p>
         </div>
       </header>
-
       <section className="workload-section">
         <div className="section-heading-row">
           <div>
@@ -69,155 +80,126 @@ export function PerformanceLab() {
             <h2>Choose the pressure.</h2>
           </div>
           <p>
-            Measured mock benchmark based on the documented Round 2 scenario.
+            Every value comes from executing the algorithms and persisting the
+            result.
           </p>
         </div>
         <div className="workload-tabs">
-          {benchmarks.map((item) => (
+          {[100, 500, 1000, 5000].map((value) => (
             <button
-              key={item.workload}
-              className={workload === item.workload ? "is-active" : ""}
-              onClick={() => setWorkload(item.workload)}
+              key={value}
+              className={workload === value ? "is-active" : ""}
+              onClick={() => setWorkload(value)}
             >
-              <strong className="mono">{item.workload.toLocaleString()}</strong>
+              <strong className="mono">{value.toLocaleString()}</strong>
               <span>stops</span>
             </button>
           ))}
         </div>
-      </section>
-
-      <section className="benchmark-section">
-        <div className="benchmark-head">
-          <span>Measured stage</span>
-          <span>Before</span>
-          <span>After</span>
-          <span>Change</span>
-        </div>
-        <BenchmarkRow
-          label="Route ready"
-          before={formatSeconds(benchmark.before.routeReady)}
-          after={formatSeconds(benchmark.after.routeReady)}
-          change={`${Math.round((1 - benchmark.after.routeReady / benchmark.before.routeReady) * 100)}% faster`}
-        />
-        <BenchmarkRow
-          label="Full result"
-          before={formatSeconds(benchmark.before.fullResult)}
-          after={formatSeconds(benchmark.after.fullResult)}
-          change={`${Math.round(improvement)}% faster`}
-        />
-        <BenchmarkRow
-          label="AI blocking"
-          before="YES"
-          after="NO"
-          change="Async"
-        />
-        <BenchmarkRow
-          label="Route quality"
-          before={`${benchmark.before.routeQuality.toFixed(1)} km`}
-          after={`${benchmark.after.routeQuality.toFixed(1)} km`}
-          change={`+${((benchmark.after.routeQuality / benchmark.before.routeQuality - 1) * 100).toFixed(1)}%`}
-        />
-      </section>
-
-      <section className="timing-section">
-        <div className="section-heading-row">
-          <div>
-            <span className="eyebrow">Where the time went</span>
-            <h2>The same work. Less waiting.</h2>
-          </div>
-          <p>
-            Candidate search is bounded. Distance is cached. AI runs after route
-            readiness.
+        <button
+          className="primary-button"
+          style={{ marginTop: 18 }}
+          onClick={runBenchmark}
+          disabled={!scenario || running}
+        >
+          <Play size={15} />
+          {running
+            ? "Measuring…"
+            : `Run ${workload.toLocaleString()}-stop benchmark`}
+        </button>
+        {error && (
+          <p className="eyebrow danger" style={{ marginLeft: 16 }}>
+            <AlertCircle size={12} />
+            {error}
           </p>
-        </div>
-        <div className="timing-grid">
-          <TimingChart
-            title="Before"
-            total={benchmark.before.fullResult}
-            items={[
-              { label: "2-opt", value: 58, color: "danger" },
-              { label: "Distance", value: 18, color: "neutral" },
-              { label: "Prediction", value: 9, color: "blue" },
-              { label: "AI", value: 15, color: "amber" },
-            ]}
-          />
-          <TimingChart
-            title="After"
-            total={benchmark.after.fullResult}
-            items={[
-              { label: "2-opt", value: 47, color: "green" },
-              { label: "Distance", value: 12, color: "neutral" },
-              { label: "Prediction", value: 8, color: "blue" },
-              { label: "AI · ASYNC", value: 4, color: "amber" },
-            ]}
-          />
-        </div>
+        )}
       </section>
-
-      <section className="tradeoff-section">
-        <div className="section-heading-row">
-          <div>
-            <span className="eyebrow">Optimization profile</span>
-            <h2>Speed without blind spots.</h2>
-          </div>
-          <p>
-            Change the search profile to see the speed ↔ route-quality tradeoff.
-          </p>
-        </div>
-        <div className="mode-selector">
-          {(["turbo", "balanced", "quality"] as Mode[]).map((item) => (
-            <button
-              key={item}
-              onClick={() => setMode(item)}
-              className={mode === item ? "is-active" : ""}
-            >
-              <span className="mono">{item.toUpperCase()}</span>
-              <small>{modes[item].note}</small>
-            </button>
-          ))}
-        </div>
-        <div className="quality-grid">
-          <article>
-            <Timer size={18} />
-            <span>Speed</span>
-            <strong className="mono">{profile.speed}% FASTER</strong>
-          </article>
-          <article>
-            <Gauge size={18} />
-            <span>Route quality</span>
-            <strong className="mono">
-              {profile.quality > 0 ? "+" : ""}
-              {profile.quality}% DISTANCE
-            </strong>
-          </article>
-          <article>
-            <ShieldCheck size={18} />
-            <span>Constraints</span>
-            <strong className="mono">0 VIOLATIONS</strong>
-          </article>
-          <article>
-            <Sparkles size={18} />
-            <span>AI dependency</span>
-            <strong className="mono">NON-BLOCKING</strong>
-          </article>
-        </div>
-      </section>
-
-      <footer className="performance-footer">
-        <Check size={18} />
-        <p>
-          The route appears first. Intelligence arrives next.
-          <br />
-          <strong>Fast feedback, without losing operational context.</strong>
-        </p>
-        <a href="/system">
-          See inside the system <ArrowDown className="rotate-icon" size={16} />
-        </a>
-      </footer>
+      {benchmark ? (
+        <>
+          <section className="benchmark-section">
+            <div className="benchmark-head">
+              <span>Measured value</span>
+              <span>Baseline</span>
+              <span>Optimized</span>
+              <span>Change</span>
+            </div>
+            <BenchmarkRow
+              label="Execution latency"
+              before={`${benchmark.baseline_latency_ms.toFixed(1)} ms`}
+              after={`${benchmark.optimized_latency_ms.toFixed(1)} ms`}
+              change={`${improvement!.toFixed(1)}% faster`}
+            />
+            <BenchmarkRow
+              label="Route distance"
+              before={`${benchmark.baseline_distance_km.toFixed(1)} km`}
+              after={`${benchmark.optimized_distance_km.toFixed(1)} km`}
+              change={`${benchmark.route_quality_delta.toFixed(1)}%`}
+            />
+            <BenchmarkRow
+              label="p95 latency"
+              before="—"
+              after={`${benchmark.p95_latency_ms.toFixed(1)} ms`}
+              change="measured"
+            />
+            <BenchmarkRow
+              label="Memory"
+              before="—"
+              after={`${benchmark.memory_usage_mb.toFixed(1)} MB`}
+              change="observed"
+            />
+          </section>
+          <section className="tradeoff-section">
+            <div className="section-heading-row">
+              <div>
+                <span className="eyebrow">Correctness guardrail</span>
+                <h2>Speed, with proof.</h2>
+              </div>
+              <p>
+                Optimization only counts when route quality and feasibility
+                remain visible.
+              </p>
+            </div>
+            <div className="quality-grid">
+              <article>
+                <Timer size={18} />
+                <span>Critical path</span>
+                <strong className="mono">
+                  {benchmark.optimized_latency_ms.toFixed(1)} MS
+                </strong>
+              </article>
+              <article>
+                <Gauge size={18} />
+                <span>Route quality delta</span>
+                <strong className="mono">
+                  {benchmark.route_quality_delta.toFixed(2)}%
+                </strong>
+              </article>
+              <article>
+                <ShieldCheck size={18} />
+                <span>Constraints</span>
+                <strong className="mono">
+                  {benchmark.constraint_violations} VIOLATIONS
+                </strong>
+              </article>
+              <article>
+                <Check size={18} />
+                <span>Dataset</span>
+                <strong className="mono">{benchmark.dataset_version}</strong>
+              </article>
+            </div>
+          </section>
+        </>
+      ) : (
+        <section className="route-loading" style={{ minHeight: 360 }}>
+          <span className="eyebrow">No fabricated benchmark</span>
+          <h1 style={{ fontSize: 48 }}>
+            Run the engine to see measured evidence.
+          </h1>
+        </section>
+      )}
     </div>
   );
 }
-
 function BenchmarkRow({
   label,
   before,
@@ -238,36 +220,9 @@ function BenchmarkRow({
     </div>
   );
 }
-
-function TimingChart({
-  title,
-  total,
-  items,
-}: {
-  title: string;
-  total: number;
-  items: Array<{ label: string; value: number; color: string }>;
-}) {
-  return (
-    <article className={cn("timing-chart", title === "After" && "is-after")}>
-      <header>
-        <span className="eyebrow">{title}</span>
-        <strong className="mono">{formatSeconds(total)}</strong>
-      </header>
-      <div className="timing-bars">
-        {items.map((item) => (
-          <div key={item.label} className="timing-bar-row">
-            <span>{item.label}</span>
-            <div>
-              <i
-                className={`bar-${item.color}`}
-                style={{ width: `${item.value}%` }}
-              />
-            </div>
-            <small className="mono">{item.value}%</small>
-          </div>
-        ))}
-      </div>
-    </article>
-  );
+function latestByWorkload(records: Benchmark[]) {
+  const seen = new Set<number>();
+  return [...records]
+    .sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at))
+    .filter((item) => !seen.has(item.stop_count) && seen.add(item.stop_count));
 }

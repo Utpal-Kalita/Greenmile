@@ -90,7 +90,7 @@ greenmile/
 │   ├── src/
 │   │   ├── app/                     # Next.js App Router pages + route states
 │   │   ├── components/              # Trip, performance, system, packing, driver UI
-│   │   ├── data/mock-data.ts        # Typed Delhi NCR demo fixtures
+│   │   ├── lib/api.ts               # Typed REST + SSE backend client
 │   │   ├── lib/                     # Shared frontend utilities
 │   │   └── types/                   # Greenmile domain models
 │   ├── next.config.ts
@@ -137,7 +137,8 @@ flowchart TD
 ### Prerequisites
 
 - Python 3.10+ and Node.js 20.9+
-- A [Gemini API key](https://aistudio.google.com/apikey) for live backend AI features (the redesigned frontend currently runs entirely on seeded mock data)
+- Docker Desktop for the full stack
+- An Azure OpenAI resource is optional; without it, route optimization still works and intelligence is reported as unavailable
 
 ### 1. Backend
 
@@ -168,7 +169,7 @@ npm install
 npm run dev
 ```
 
-The redesign uses local typed mock data, so no frontend environment variable or running backend is required.
+The frontend reads persisted scenarios and computed results from the FastAPI backend. The recommended full-stack workflow is `docker compose up --build`; see `environment.example` for optional Azure OpenAI configuration.
 
 Greenmile → http://localhost:3000
 
@@ -193,7 +194,8 @@ Greenmile → http://localhost:3000
 1. Push this repo to GitHub
 2. Go to [vercel.com](https://vercel.com) → **Add New Project** → import your repo
 3. Set **Root Directory** to `frontend`
-4. Deploy — Vercel auto-detects Next.js; no frontend environment variables are needed for the mock-data experience
+4. Set `NEXT_PUBLIC_API_URL` to the deployed FastAPI origin
+5. Deploy — Vercel auto-detects Next.js
 
 ### Backend → Render
 
@@ -264,7 +266,7 @@ return_count_30d, avg_delivery_confirm_minutes, dispute_history_count
 | ---------------- | --------------------------------------------------- |
 | **Backend**      | Python 3.12 · FastAPI · Uvicorn                     |
 | **Optimization** | scikit-learn (DBSCAN) · scipy · custom NN + 2-opt   |
-| **AI**           | Google Gemini 2.0 Flash via `google-genai` SDK      |
+| **AI**           | Azure OpenAI structured outputs (post-route)        |
 | **Frontend**     | Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 |
 | **Maps**         | Responsive SVG route visualization                  |
 | **Data**         | pandas · CSV validation · Pydantic v2 models        |

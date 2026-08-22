@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { Activity, Map, Menu, Network, Route, X } from "lucide-react";
 import { useState } from "react";
-import { navigation } from "@/data/mock-data";
+import { navigation } from "@/data/navigation";
 import { cn } from "@/lib/utils";
 import { Brand, EngineStatus } from "@/components/brand";
 

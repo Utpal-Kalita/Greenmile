@@ -13,7 +13,6 @@ This runs in O(n²) and finishes in well under 1 second for ≤50 stops.
 """
 from .haversine import build_distance_matrix
 
-
 # ─── Nearest Neighbour ────────────────────────────────────────────────────────
 
 def nearest_neighbour(stops: list, dist_matrix: list[list[float]]) -> list[int]:

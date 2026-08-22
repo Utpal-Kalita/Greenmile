@@ -1,0 +1,11 @@
+{
+  "name": "Delhi NCR — Zone B",
+  "version": "delhi-synthetic-v2",
+  "kind": "SYNTHETIC_DETERMINISTIC",
+  "generator": "backend.app.data_pipeline.seed.generate_delhi_stops",
+  "seed": 20260822,
+  "stop_count": 500,
+  "delivery_count": 250,
+  "return_count": 250,
+  "note": "This is deterministic synthetic planning data, not observed real-world fleet data. Routes, constraints, timings, and business metrics are calculated by the backend at runtime."
+}

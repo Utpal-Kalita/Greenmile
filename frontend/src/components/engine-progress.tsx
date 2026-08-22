@@ -1,10 +1,24 @@
 "use client";
 
 import { Check, Circle } from "lucide-react";
-import { engineStages } from "@/data/mock-data";
 import { cn } from "@/lib/utils";
+import type { StageEvent } from "@/types/api";
 
-export function EngineProgress({ activeIndex }: { activeIndex: number }) {
+const stages = [
+  ["LOADING_DATA", "Stops loaded"],
+  ["VALIDATING", "Data validated"],
+  ["CLUSTERING", "Geographic zones created"],
+  ["BUILDING_ROUTE", "Initial routes built"],
+  ["OPTIMIZING", "Best loops found"],
+  ["CHECKING_CONSTRAINTS", "Constraints checked"],
+  ["CALCULATING_METRICS", "Impact calculated"],
+  ["PERSISTING", "Result persisted"],
+  ["ROUTE_READY", "Route ready"],
+] as const;
+
+export function EngineProgress({ events }: { events: StageEvent[] }) {
+  const names = new Set(events.map((event) => event.event_type));
+  const activeIndex = Math.min(names.size, stages.length - 1);
   return (
     <section
       className="engine-progress"
@@ -13,12 +27,13 @@ export function EngineProgress({ activeIndex }: { activeIndex: number }) {
     >
       <div className="panel-kicker">Greenmile engine</div>
       <div className="engine-stage-list">
-        {engineStages.map((stage, index) => {
-          const complete = index < activeIndex;
-          const active = index === activeIndex;
+        {stages.map(([id, label], index) => {
+          const event = events.find((item) => item.event_type === id);
+          const complete = names.has(id);
+          const active = !complete && index === activeIndex;
           return (
             <div
-              key={stage.id}
+              key={id}
               className={cn(
                 "engine-stage",
                 complete && "is-complete",
@@ -33,16 +48,36 @@ export function EngineProgress({ activeIndex }: { activeIndex: number }) {
                 )}
               </span>
               <span className="stage-copy">
-                <strong>{stage.label}</strong>
-                <small>{stage.detail}</small>
+                <strong>{label}</strong>
+                <small>
+                  {event
+                    ? summarize(event.payload)
+                    : active
+                      ? "Backend is working…"
+                      : "Waiting"}
+                </small>
               </span>
               <span className="stage-duration mono">
-                {complete ? stage.duration : active ? "RUNNING" : "PENDING"}
+                {event?.duration_ms != null
+                  ? `${event.duration_ms.toFixed(1)} MS`
+                  : complete
+                    ? "DONE"
+                    : active
+                      ? "RUNNING"
+                      : "PENDING"}
               </span>
             </div>
           );
         })}
       </div>
     </section>
+  );
+}
+function summarize(payload: Record<string, unknown>) {
+  return (
+    Object.entries(payload)
+      .slice(0, 2)
+      .map(([key, value]) => `${key.replaceAll("_", " ")} ${String(value)}`)
+      .join(" · ") || "Complete"
   );
 }

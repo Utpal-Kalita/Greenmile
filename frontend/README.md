@@ -1,6 +1,6 @@
 # Greenmile Frontend
 
-A dark-first operational interface for Greenmile’s bidirectional last-mile optimizer. The frontend is a **Next.js 16 App Router** application using TypeScript, Tailwind CSS 4, and seeded mock data.
+A dark-first operational interface for Greenmile’s bidirectional last-mile optimizer. The frontend is a **Next.js 16 App Router** application using TypeScript and Tailwind CSS 4. It consumes persisted scenarios, computed routes, events, metrics, benchmarks, and Azure OpenAI intelligence from the FastAPI backend.
 
 ## Run locally
 
@@ -30,7 +30,7 @@ npm run start      # serve the production build
 
 ## Data
 
-The current experience intentionally uses typed mock data from `src/data/mock-data.ts`. No backend or environment variable is required for the redesign demo.
+The frontend owns no logistics results. It loads the persisted demo scenario from FastAPI, follows optimization progress over SSE, and renders the canonical run response. Configure `NEXT_PUBLIC_API_URL` when the API is not available at `http://localhost:8000`.
 
 ## Structure
 
@@ -38,7 +38,7 @@ The current experience intentionally uses typed mock data from `src/data/mock-da
 src/
 ├── app/            # App Router pages, metadata, and route states
 ├── components/     # Interactive product experiences and shared shell
-├── data/           # Typed Delhi NCR demo fixtures
+├── data/           # Static navigation content only
 ├── lib/            # Small shared utilities
 └── types/          # Greenmile domain types
 ```
