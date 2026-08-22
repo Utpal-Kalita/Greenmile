@@ -2,50 +2,88 @@
 
 import { useState } from "react";
 import {
-  AlertTriangle,
+  AlertCircle,
   ArrowDown,
   Check,
-  ChevronRight,
   PackageCheck,
   RotateCcw,
   Sparkles,
   Warehouse,
 } from "lucide-react";
-import { metrics, stops, tripSummary } from "@/data/mock-data";
-import { cn } from "@/lib/utils";
 import { RouteMap } from "@/components/route-map";
+import { cn } from "@/lib/utils";
+import type { OptimizationRun, RouteStop, Stop } from "@/types/api";
 
-export function ImpactHero() {
+export function TripResults({
+  run,
+  stops,
+  onTripEvent,
+}: {
+  run: OptimizationRun;
+  stops: Stop[];
+  onTripEvent: (event: string, stopId: string | null) => Promise<void>;
+}) {
+  if (!run.metrics) return null;
+  return (
+    <div className="results-story">
+      <ImpactHero run={run} />
+      <BeforeAfter run={run} stops={stops} />
+      <RouteTimeline route={run.route} />
+      <RouteIntelligence run={run} />
+      <ProviderPanel run={run} />
+      <CapacityAndPacking run={run} />
+      <DriverPreview run={run} onTripEvent={onTripEvent} />
+      <section className="story-end">
+        <Sparkles size={19} />
+        <p>
+          We optimized the route.
+          <br />
+          <strong>Then we measured every decision.</strong>
+        </p>
+        <a href="/performance">
+          Open Performance Lab <ArrowDown className="rotate-icon" size={16} />
+        </a>
+      </section>
+    </div>
+  );
+}
+
+function ImpactHero({ run }: { run: OptimizationRun }) {
+  const metrics = run.metrics!;
   const impact = [
     {
-      value: `${metrics.afterDistance} KM`,
-      detail: `↓ ${metrics.distanceSavedPercent}% distance`,
+      value: `${metrics.distance.after_km.toFixed(1)} KM`,
+      detail: `↓ ${metrics.distance.saved_percent.toFixed(1)}% distance`,
       primary: true,
     },
-    { value: `₹${metrics.moneySaved}`, detail: "saved per trip" },
-    { value: `${metrics.co2Saved} KG`, detail: "CO₂ avoided" },
-    { value: `${metrics.hoursSaved} HRS`, detail: "driver time recovered" },
+    {
+      value: `₹${metrics.total_cost.saved.toFixed(0)}`,
+      detail: "saved per run",
+    },
+    { value: `${metrics.co2_kg.saved.toFixed(1)} KG`, detail: "CO₂ avoided" },
+    {
+      value: `${metrics.driver_hours.saved.toFixed(1)} HRS`,
+      detail: "driver time recovered",
+    },
   ];
   return (
-    <section
-      className="impact-section reveal-section"
-      aria-labelledby="impact-heading"
-    >
+    <section className="impact-section reveal-section">
       <div className="section-heading-row">
         <div>
           <span className="eyebrow success">
-            Trip optimized <Check size={12} />
+            Trip computed <Check size={12} />
           </span>
-          <h2 id="impact-heading">The loop is the impact.</h2>
+          <h2>The loop is the impact.</h2>
         </div>
-        <p>Two disconnected journeys became one continuous operation.</p>
+        <p>
+          {run.routing_provider} distance · {run.algorithm_version}
+        </p>
       </div>
       <div className="impact-grid">
-        {impact.map((item, index) => (
+        {impact.map((item) => (
           <article
-            key={item.value}
+            key={item.detail}
             className={cn("impact-metric", item.primary && "is-primary")}
-            style={{ animationDelay: `${index * 90}ms` }}
           >
             <strong className="mono">{item.value}</strong>
             <span>{item.detail}</span>
@@ -56,19 +94,17 @@ export function ImpactHero() {
   );
 }
 
-export function BeforeAfter() {
+function BeforeAfter({ run, stops }: { run: OptimizationRun; stops: Stop[] }) {
   const [mode, setMode] = useState<"before" | "after">("after");
+  const metrics = run.metrics!;
   return (
-    <section
-      className="comparison-section reveal-section"
-      aria-labelledby="comparison-heading"
-    >
+    <section className="comparison-section reveal-section">
       <div className="section-heading-row">
         <div>
           <span className="eyebrow">Route transformation</span>
-          <h2 id="comparison-heading">Before → After</h2>
+          <h2>Before → After</h2>
         </div>
-        <div className="segmented" role="group" aria-label="Select route view">
+        <div className="segmented">
           <button
             className={mode === "before" ? "is-active" : ""}
             onClick={() => setMode("before")}
@@ -85,56 +121,45 @@ export function BeforeAfter() {
       </div>
       <div className="comparison-grid">
         <RouteMap
+          scenario={run.scenario}
+          stops={stops}
+          route={mode === "after" ? run.route : []}
           before={mode === "before"}
-          optimized={mode === "after"}
           compact
         />
         <div className="comparison-data">
-          {mode === "before" ? (
-            <>
-              <span className="comparison-label danger">Separate journeys</span>
-              <strong className="mono">2 TRIPS</strong>
-              <dl>
-                <div>
-                  <dt>Delivery trip</dt>
-                  <dd className="mono">87 KM</dd>
-                </div>
-                <div>
-                  <dt>Return trip</dt>
-                  <dd className="mono">43 KM</dd>
-                </div>
-                <div>
-                  <dt>Empty legs</dt>
-                  <dd className="mono">35 KM</dd>
-                </div>
-              </dl>
-            </>
-          ) : (
-            <>
-              <span className="comparison-label success">
-                Bidirectional loop
-              </span>
-              <strong className="mono">1 TRIP</strong>
-              <dl>
-                <div>
-                  <dt>Continuous loop</dt>
-                  <dd className="mono">52.1 KM</dd>
-                </div>
-                <div>
-                  <dt>Stops served</dt>
-                  <dd className="mono">500</dd>
-                </div>
-                <div>
-                  <dt>Empty legs</dt>
-                  <dd className="mono success-text">0 KM</dd>
-                </div>
-              </dl>
-            </>
-          )}
+          <span
+            className={`comparison-label ${mode === "before" ? "danger" : "success"}`}
+          >
+            {mode === "before" ? "Separate journeys" : "Bidirectional loops"}
+          </span>
+          <strong className="mono">
+            {mode === "before" ? "2 TYPES" : `${run.vehicles.length} VANS`}
+          </strong>
+          <dl>
+            <div>
+              <dt>Distance</dt>
+              <dd className="mono">
+                {(mode === "before"
+                  ? metrics.distance.before_km
+                  : metrics.distance.after_km
+                ).toFixed(1)}{" "}
+                KM
+              </dd>
+            </div>
+            <div>
+              <dt>Stops</dt>
+              <dd className="mono">{run.stop_count}</dd>
+            </div>
+            <div>
+              <dt>Constraint violations</dt>
+              <dd className="mono">{run.constraints.violations.length}</dd>
+            </div>
+          </dl>
           <p>
             {mode === "before"
-              ? "The van repeats roads and comes home empty."
-              : "Deliver going out. Collect returns coming back."}
+              ? "Delivery and return routes are computed independently."
+              : "Each route starts and closes at the persisted depot."}
           </p>
         </div>
       </div>
@@ -142,155 +167,200 @@ export function BeforeAfter() {
   );
 }
 
-export function RouteTimeline() {
-  const routeStops = stops.slice(0, 8);
+function RouteTimeline({ route }: { route: RouteStop[] }) {
+  const firstVehicle = route
+    .filter((item) => item.vehicle_sequence === 1)
+    .slice(0, 12);
   return (
-    <section
-      className="timeline-section reveal-section"
-      aria-labelledby="timeline-heading"
-    >
+    <section className="timeline-section reveal-section">
       <div className="section-heading-row">
         <div>
-          <span className="eyebrow">The operation</span>
-          <h2 id="timeline-heading">One loop, in order.</h2>
+          <span className="eyebrow">Vehicle 01</span>
+          <h2>One loop, in order.</h2>
         </div>
-        <p>Deliver first. Collect returns. Come home.</p>
+        <p>Showing the first twelve persisted route stops.</p>
       </div>
       <div className="route-timeline">
-        {routeStops.map((stop, index) => (
+        {firstVehicle.map((stop) => (
           <article
-            key={stop.id}
-            className={cn("timeline-stop", `is-${stop.kind}`)}
+            key={stop.sequence_number}
+            className={cn(
+              "timeline-stop",
+              stop.type === "DELIVERY"
+                ? "is-delivery"
+                : stop.type === "WAREHOUSE"
+                  ? "is-warehouse"
+                  : "is-return",
+            )}
           >
             <span className="timeline-number mono">
-              {String(index).padStart(2, "0")}
+              {String(stop.sequence_number).padStart(2, "0")}
             </span>
             <div className="timeline-marker">
-              {stop.kind === "warehouse" ? (
+              {stop.type === "WAREHOUSE" ? (
                 <Warehouse size={16} />
-              ) : stop.kind === "delivery" ? (
+              ) : stop.type === "DELIVERY" ? (
                 <PackageCheck size={15} />
               ) : (
                 <RotateCcw size={15} />
               )}
             </div>
             <div>
-              <span className="mono stop-id">{stop.id}</span>
+              <span className="mono stop-id">{stop.external_id}</span>
               <h3>{stop.name}</h3>
               <p>
-                {stop.eta} · {stop.window}
+                {new Date(stop.arrival_time).toLocaleTimeString([], {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                })}{" "}
+                · {stop.distance_from_previous_km.toFixed(2)} km
               </p>
             </div>
-            {stop.risk === "high" && (
-              <span className="risk-chip">
-                <AlertTriangle size={12} />
-                84% risk
-              </span>
-            )}
-            {index < routeStops.length - 1 && (
-              <ChevronRight className="timeline-arrow" size={17} />
-            )}
           </article>
         ))}
-        <article className="timeline-stop is-warehouse is-last">
-          <span className="timeline-number mono">08</span>
-          <div className="timeline-marker">
-            <Warehouse size={16} />
-          </div>
-          <div>
-            <span className="mono stop-id">DEPOT</span>
-            <h3>Home</h3>
-            <p>14:36 · Loop closed</p>
-          </div>
-        </article>
       </div>
     </section>
   );
 }
 
-export function Intelligence() {
+function RouteIntelligence({ run }: { run: OptimizationRun }) {
+  const checks = [
+    {
+      label: "Depot closure",
+      ok: !run.constraints.violations.some((v) => v.type === "DEPOT"),
+    },
+    {
+      label: "Capacity",
+      ok: !run.constraints.violations.some((v) => v.type === "CAPACITY"),
+    },
+    {
+      label: "Time windows",
+      ok: !run.constraints.violations.some((v) => v.type === "TIME_WINDOW"),
+    },
+    {
+      label: "Precedence",
+      ok: !run.constraints.violations.some((v) => v.type === "PRECEDENCE"),
+    },
+  ];
   return (
-    <section
-      className="intelligence-section reveal-section"
-      aria-labelledby="intelligence-heading"
-    >
+    <section className="checks-section reveal-section">
+      <div className="section-heading-row">
+        <div>
+          <span className="eyebrow">Verified by the engine</span>
+          <h2>Route intelligence</h2>
+        </div>
+        <p>
+          {run.constraints.feasible
+            ? "All configured constraints passed."
+            : `${run.constraints.violations.length} real violations reported — no result is hidden.`}
+        </p>
+      </div>
+      <div className="route-checks">
+        {checks.map((item, index) => (
+          <div key={item.label}>
+            <span style={{ color: item.ok ? "var(--green)" : "var(--red)" }}>
+              {item.ok ? <Check size={14} /> : <AlertCircle size={14} />}
+            </span>
+            <strong>
+              {item.label} {item.ok ? "feasible" : "needs attention"}
+            </strong>
+            <small className="mono">
+              CHECK {String(index + 1).padStart(2, "0")}
+            </small>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function ProviderPanel({ run }: { run: OptimizationRun }) {
+  return (
+    <section className="intelligence-section reveal-section">
       <div className="intelligence-intro">
         <span className="eyebrow intelligence">
           <Sparkles size={12} /> Greenmile Intelligence
         </span>
-        <h2 id="intelligence-heading">
-          We look for things the route alone can’t see.
-        </h2>
-        <p>
-          D7 is the main operational risk. Its return probability is 84%. Keep
-          capacity available and verify the delivery before dispatch.
-        </p>
+        <h2>Route first. Models plug in later.</h2>
+        <p>{run.intelligence.message}</p>
       </div>
       <div className="risk-console">
         <div className="risk-header">
-          <span>Return risk</span>
-          <span className="mono">MODEL / R-07</span>
+          <span>Provider status</span>
+          <span className="mono">RUN / {run.run_id}</span>
         </div>
         <div className="risk-score">
-          <span className="mono">D7</span>
-          <strong className="mono">84%</strong>
+          <span className="mono">AI</span>
+          <strong className="mono" style={{ fontSize: 28 }}>
+            {run.intelligence.status}
+          </strong>
         </div>
         <p>
-          <AlertTriangle size={15} /> High chance of return
+          <AlertCircle size={15} /> No fabricated model output
         </p>
         <dl>
           <div>
-            <dt>Previous returns</dt>
-            <dd className="mono">03</dd>
+            <dt>Return prediction</dt>
+            <dd className="mono">{run.prediction.status}</dd>
           </div>
           <div>
-            <dt>Disputes</dt>
-            <dd className="mono">02</dd>
+            <dt>Intelligence</dt>
+            <dd className="mono">{run.intelligence.status}</dd>
           </div>
           <div>
-            <dt>Avg. confirmation</dt>
-            <dd className="mono">18 MIN</dd>
+            <dt>Route dependency</dt>
+            <dd className="mono success-text">NONE</dd>
           </div>
         </dl>
         <div className="recommendation">
-          <span>Recommendation</span>
-          <strong>VERIFY</strong>
-          <p>Confirm D7 before the van leaves Okhla.</p>
+          <span>Model contract</span>
+          <strong>READY</strong>
+          <p>{run.prediction.message}</p>
         </div>
       </div>
     </section>
   );
 }
 
-export function CapacityAndPacking() {
+function CapacityAndPacking({ run }: { run: OptimizationRun }) {
+  const packing = run.packing;
+  if (!packing) return null;
   return (
-    <section
-      className="packing-section reveal-section"
-      aria-labelledby="packing-heading"
-    >
+    <section className="packing-section reveal-section">
       <div className="section-heading-row">
         <div>
           <span className="eyebrow">Physical operation</span>
-          <h2 id="packing-heading">Load the van</h2>
+          <h2>Load the van</h2>
         </div>
-        <p>Deliveries go in first. Returns stay accessible.</p>
+        <p>Derived from vehicle 01’s persisted route and load transitions.</p>
       </div>
       <div className="packing-grid">
         <div className="capacity-panel">
-          <div className="panel-kicker">Van capacity</div>
-          <strong className="mono">{tripSummary.usedCapacity}%</strong>
+          <div className="panel-kicker">Van utilization</div>
+          <strong className="mono">
+            {packing.utilization_percent.toFixed(0)}%
+          </strong>
           <div className="capacity-track">
-            <span style={{ width: `${tripSummary.usedCapacity}%` }} />
+            <span
+              style={{
+                width: `${Math.min(packing.utilization_percent, 100)}%`,
+              }}
+            />
           </div>
           <div className="capacity-labels mono">
             <span>0 KG</span>
-            <span>{tripSummary.capacityKg} KG</span>
+            <span>{packing.capacity_kg.toFixed(0)} KG</span>
           </div>
           <div className="reserved-space">
             <RotateCcw size={18} />
             <div>
-              <strong>{tripSummary.returnSpaceLitres} L return space</strong>
-              <span>Reserved for predicted returns</span>
+              <strong>
+                {packing.initial_load_l.toFixed(1)} L outbound load
+              </strong>
+              <span>
+                {(packing.capacity_l - packing.initial_load_l).toFixed(1)} L
+                available at departure
+              </span>
             </div>
           </div>
         </div>
@@ -302,26 +372,28 @@ export function CapacityAndPacking() {
               <span />
             </div>
             <div className="cargo-grid">
-              {["D1", "D2", "D3", "D4", "D5", "D6", "D7", "D8"].map(
-                (id, index) => (
-                  <div
-                    className="cargo delivery-cargo"
-                    key={id}
-                    style={{ animationDelay: `${index * 60}ms` }}
-                  >
-                    <small className="mono">
-                      {String(index + 1).padStart(2, "0")}
-                    </small>
-                    <strong className="mono">{id}</strong>
-                  </div>
-                ),
-              )}
+              {packing.items.slice(0, 8).map((item) => (
+                <div
+                  className="cargo delivery-cargo"
+                  key={`${item.stop_id}-${item.sequence}`}
+                >
+                  <small className="mono">
+                    {String(item.sequence).padStart(2, "0")}
+                  </small>
+                  <strong className="mono">{item.stop_id}</strong>
+                </div>
+              ))}
               <div className="return-bay">
-                <span>Reserved return space</span>
+                <span>Return access zone</span>
                 <div>
-                  <b className="mono">R4</b>
-                  <b className="mono">R3</b>
-                  <b className="mono">R2</b>
+                  {packing.items
+                    .filter((item) => item.zone === "RETURN_ACCESS")
+                    .slice(0, 3)
+                    .map((item) => (
+                      <b className="mono" key={item.stop_id}>
+                        {item.stop_id}
+                      </b>
+                    ))}
                 </div>
               </div>
             </div>
@@ -333,103 +405,72 @@ export function CapacityAndPacking() {
   );
 }
 
-export function RouteIntelligence() {
-  const checks = [
-    "Route feasible",
-    "Capacity feasible",
-    "Time windows satisfied",
-    "Depot return confirmed",
-  ];
-  return (
-    <div className="route-checks">
-      {checks.map((check, index) => (
-        <div key={check}>
-          <span>
-            <Check size={14} />
-          </span>
-          <strong>{check}</strong>
-          <small className="mono">
-            CHECK {String(index + 1).padStart(2, "0")}
-          </small>
-        </div>
-      ))}
-    </div>
+function DriverPreview({
+  run,
+  onTripEvent,
+}: {
+  run: OptimizationRun;
+  onTripEvent: (event: string, stopId: string | null) => Promise<void>;
+}) {
+  const [working, setWorking] = useState(false);
+  const next = run.route.find(
+    (item) => item.stop_id && item.status === "PENDING",
   );
-}
-
-export function DriverPreview() {
-  const [delivered, setDelivered] = useState(false);
+  if (!next) return null;
+  async function complete() {
+    setWorking(true);
+    await onTripEvent(
+      next!.action === "DELIVER" ? "DELIVERY_COMPLETED" : "RETURN_COLLECTED",
+      next!.stop_id,
+    );
+    setWorking(false);
+  }
   return (
-    <section
-      className="driver-section reveal-section"
-      aria-labelledby="driver-heading"
-    >
+    <section className="driver-section reveal-section">
       <div className="driver-copy">
         <span className="eyebrow">Driver mode</span>
-        <h2 id="driver-heading">
+        <h2>
           Complex engine.
           <br />
           Simple next move.
         </h2>
-        <p>
-          The driver sees only the next stop, the action, and the risk that
-          matters.
-        </p>
-        <ul>
-          <li>
-            <Check size={14} />
-            No dashboard overload
-          </li>
-          <li>
-            <Check size={14} />
-            One clear action
-          </li>
-          <li>
-            <Check size={14} />
-            Risk shown at the right moment
-          </li>
-        </ul>
+        <p>This action is sent to the backend as a persisted trip event.</p>
       </div>
       <div className="phone-shell">
         <div className="phone-status mono">
-          <span>12:36</span>
-          <span>GM ROUTE · 62%</span>
+          <span>LIVE</span>
+          <span>{run.run_id}</span>
         </div>
         <div className="phone-progress">
-          <span style={{ width: delivered ? "72%" : "62%" }} />
+          <span style={{ width: "12%" }} />
         </div>
-        <span className="phone-kicker">
-          {delivered ? "Next pickup" : "Next stop"}
-        </span>
-        <strong className="phone-stop mono">{delivered ? "R3" : "D7"}</strong>
-        <h3>{delivered ? "Lajpat Nagar" : "Vasant Kunj"}</h3>
+        <span className="phone-kicker">Next stop</span>
+        <strong className="phone-stop mono">{next.external_id}</strong>
+        <h3>{next.name}</h3>
         <p className="phone-eta mono">
-          {delivered ? "12:46 PM" : "12:42 PM"} ·{" "}
-          {delivered ? "8 MIN" : "6 MIN"}
+          {new Date(next.arrival_time).toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
+          })}{" "}
+          · {next.distance_from_previous_km.toFixed(1)} KM
         </p>
-        {!delivered && (
-          <div className="phone-risk">
-            <AlertTriangle size={16} />
-            <div>
-              <strong>84% return risk</strong>
-              <span>Verify before handoff</span>
-            </div>
+        <div className="phone-success">
+          <Check size={17} />
+          <div>
+            <strong>{next.action}</strong>
+            <span>{next.address}</span>
           </div>
-        )}
-        {delivered && (
-          <div className="phone-success">
-            <Check size={17} />
-            <div>
-              <strong>Delivered</strong>
-              <span>D7 confirmed at 12:39</span>
-            </div>
-          </div>
-        )}
+        </div>
         <button
+          disabled={working}
           className="primary-button phone-action"
-          onClick={() => setDelivered(!delivered)}
+          onClick={complete}
         >
-          {delivered ? "Collect return" : "Navigate"}
+          {working
+            ? "Updating route…"
+            : next.action === "DELIVER"
+              ? "Mark delivered"
+              : "Collect return"}
           <ArrowDown className="rotate-icon" size={17} />
         </button>
       </div>
