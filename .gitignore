@@ -16,5 +16,8 @@ node_modules/
 .DS_Store
 Thumbs.db
 
+# Local agent artifacts
+.claude/
+
 # Local Netlify folder
 .netlify
