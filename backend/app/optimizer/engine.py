@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from collections.abc import Sequence
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from datetime import date, datetime, time, timedelta
 from math import asin, cos, radians, sin, sqrt
 from typing import Protocol
@@ -10,6 +10,7 @@ from sklearn.cluster import DBSCAN
 
 from app.core.config import Settings
 from app.domain.enums import RouteAction, StopType
+from app.optimizer.validator import ConstraintCheck, RouteValidator, Violation
 
 
 class StopLike(Protocol):
@@ -60,21 +61,6 @@ class PlannedStop:
     load_before_l: float
     load_after_l: float
     distance_from_previous_km: float
-
-
-@dataclass
-class Violation:
-    type: str
-    message: str
-    stop_id: str | None = None
-    amount_kg: float | None = None
-    amount_l: float | None = None
-
-
-@dataclass
-class ConstraintCheck:
-    feasible: bool
-    violations: list[Violation] = field(default_factory=list)
 
 
 @dataclass
@@ -133,8 +119,9 @@ class RouteOptimizer:
         for vehicle_index, vehicle_stops in enumerate(self._partition(returns, len(vehicles)), start=1):
             route, sequence = self._plan_segment(vehicle_stops, vehicles[vehicle_index - 1], depot, vehicle_index, sequence, close_depot=True, nearest=False)
             routes.append(route)
-        constraints = self.check_constraints(routes, vehicles, depot)
-        return RoutePlan(routes, 1, round(self._routes_distance(routes), 3), constraints)
+        total_distance = round(self._routes_distance(routes), 3)
+        constraints = self.validate(stops, routes, vehicles, depot, total_distance_km=total_distance)
+        return RoutePlan(routes, 1, total_distance, constraints)
 
     def optimize(self, stops: Sequence[StopLike], vehicles: Sequence[VehicleLike], depot: Location) -> RoutePlan:
         if not stops or not vehicles:
@@ -149,8 +136,9 @@ class RouteOptimizer:
             ordered_returns = self._optimize_segment([stop for stop in group if stop.type != StopType.DELIVERY], ordered_deliveries[-1] if ordered_deliveries else depot)
             route, sequence = self._materialize(ordered_deliveries + ordered_returns, vehicles[vehicle_index - 1], depot, vehicle_index, sequence)
             routes.append(route)
-        constraints = self.check_constraints(routes, vehicles, depot)
-        return RoutePlan(routes, len(set(cluster_labels)), round(self._routes_distance(routes), 3), constraints)
+        total_distance = round(self._routes_distance(routes), 3)
+        constraints = self.validate(stops, routes, vehicles, depot, total_distance_km=total_distance)
+        return RoutePlan(routes, len(set(cluster_labels)), total_distance, constraints)
 
     def _clusters(self, stops: Sequence[StopLike]) -> list[int]:
         if len(stops) < self.settings.dbscan_min_samples:
@@ -252,32 +240,37 @@ class RouteOptimizer:
         planned.append(PlannedStop(None, "DEPOT", "Depot", "Depot", depot.lat, depot.lng, "WAREHOUSE", RouteAction.DEPOT_END, vehicle_sequence, global_sequence, current_time, current_time, current_kg, current_kg, current_l, current_l, distance_home))
         return planned, global_sequence + 1
 
-    def check_constraints(self, routes: Sequence[Sequence[PlannedStop]], vehicles: Sequence[VehicleLike], depot: Location) -> ConstraintCheck:
-        violations: list[Violation] = []
-        for route_index, route in enumerate(routes):
+    def validate(
+        self,
+        required_stops: Sequence[StopLike],
+        routes: Sequence[Sequence[PlannedStop]],
+        vehicles: Sequence[VehicleLike],
+        depot: Location,
+        *,
+        total_distance_km: float | None = None,
+        metrics: dict | None = None,
+    ) -> ConstraintCheck:
+        result = RouteValidator(self.provider).validate(
+            required_stops,
+            routes,
+            vehicles,
+            depot,
+            total_distance_km=total_distance_km,
+            metrics=metrics,
+        )
+        for route in routes:
             if not route:
                 continue
-            vehicle = vehicles[min(route_index, len(vehicles) - 1)]
-            if route[0].action != RouteAction.DEPOT_START or route[-1].action != RouteAction.DEPOT_END:
-                violations.append(Violation("DEPOT", "Route must start and end at the depot"))
-            seen_return = False
-            for item in route:
-                if item.action in (RouteAction.PICKUP, RouteAction.RETURN):
-                    seen_return = True
-                if seen_return and item.action == RouteAction.DELIVER:
-                    violations.append(Violation("PRECEDENCE", "Delivery appears after return collection", item.external_id))
-                if item.load_after_kg > vehicle.capacity_kg + 1e-6:
-                    violations.append(Violation("CAPACITY", "Vehicle weight capacity exceeded", item.external_id, amount_kg=round(item.load_after_kg - vehicle.capacity_kg, 3)))
-                if item.load_after_l > vehicle.capacity_l + 1e-6:
-                    violations.append(Violation("CAPACITY", "Vehicle volume capacity exceeded", item.external_id, amount_l=round(item.load_after_l - vehicle.capacity_l, 3)))
-                if item.stop:
-                    window_end = datetime.combine(item.arrival_time.date(), item.stop.time_window_end)
-                    if item.arrival_time > window_end:
-                        violations.append(Violation("TIME_WINDOW", "Arrival is after the time window", item.external_id))
             hours = (route[-1].departure_time - route[0].arrival_time).total_seconds() / 3600
             if hours > self.settings.max_driver_hours:
-                violations.append(Violation("DRIVER_HOURS", f"Route exceeds {self.settings.max_driver_hours:g} driver hours"))
-        return ConstraintCheck(not violations, violations)
+                result.violations.append(Violation("DRIVER_HOURS", f"Route exceeds {self.settings.max_driver_hours:g} driver hours"))
+        result.feasible = not result.violations
+        return result
+
+    def check_constraints(self, routes: Sequence[Sequence[PlannedStop]], vehicles: Sequence[VehicleLike], depot: Location) -> ConstraintCheck:
+        """Compatibility wrapper for callers that cannot supply required stops."""
+        required = [item.stop for route in routes for item in route if item.stop is not None]
+        return self.validate(required, routes, vehicles, depot, total_distance_km=self._routes_distance(routes))
 
     @staticmethod
     def _routes_distance(routes: Sequence[Sequence[PlannedStop]]) -> float:
@@ -415,11 +408,19 @@ class IncrementalOptimizer:
             )
             renumbered.append(materialized)
 
+        total_distance = round(self.optimizer._routes_distance(renumbered), 3)
+        expected_stops = [stop for stop in current_stops if stop.external_id in active]
         plan = RoutePlan(
             routes=renumbered,
             cluster_count=cluster_count,
-            total_distance_km=round(self.optimizer._routes_distance(renumbered), 3),
-            constraints=self.optimizer.check_constraints(renumbered, vehicles, depot),
+            total_distance_km=total_distance,
+            constraints=self.optimizer.validate(
+                expected_stops,
+                renumbered,
+                vehicles,
+                depot,
+                total_distance_km=total_distance,
+            ),
         )
         return IncrementalRepair(
             plan=plan,

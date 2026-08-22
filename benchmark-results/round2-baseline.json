@@ -1,0 +1,4831 @@
+{
+  "algorithm_changed": false,
+  "config": {
+    "repetitions": 10,
+    "seed": 20260823,
+    "warmups": 2,
+    "workloads": [
+      100,
+      500,
+      1000,
+      2500,
+      5000
+    ]
+  },
+  "environment": {
+    "logical_cpu_count": 8,
+    "memory_total_mb": 7837.598,
+    "physical_cpu_count": 8,
+    "platform": "Linux-6.10.14-linuxkit-aarch64-with-glibc2.41",
+    "processor": "",
+    "python": "3.13.15"
+  },
+  "generated_at": "2026-08-22T20:56:26.766716+00:00",
+  "git_sha": null,
+  "schema_version": "greenmile-round2-benchmark-v1",
+  "workloads": [
+    {
+      "algorithm": "baseline-v1",
+      "cpu_ms": {
+        "max": 41.575,
+        "min": 35.501,
+        "p50": 35.597,
+        "p95": 41.575,
+        "p99": 41.575
+      },
+      "dataset": "delhi-100",
+      "dataset_version": "round2-delhi-v1",
+      "distance_km": 155.785,
+      "latency_ms": {
+        "max": 41.568,
+        "min": 35.495,
+        "p50": 35.6,
+        "p95": 41.568,
+        "p99": 41.568
+      },
+      "metrics": {
+        "co2_kg": {
+          "after": 29.989,
+          "before": 29.989,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "distance": {
+          "after_km": 155.785,
+          "before_km": 155.785,
+          "saved_km": 0.0,
+          "saved_percent": 0.0
+        },
+        "driver_hours": {
+          "after": 7.23,
+          "before": 7.23,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "fuel_cost": {
+          "after": 1230.312,
+          "before": 1230.312,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "fuel_litres": {
+          "after": 12.982,
+          "before": 12.982,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "labor_cost": {
+          "after": 1301.478,
+          "before": 1301.478,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "total_cost": {
+          "after": 2531.79,
+          "before": 2531.79,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        }
+      },
+      "samples": [
+        {
+          "cpu_ms": 35.591,
+          "cpu_utilization_percent": 99.975,
+          "distance_km": 155.785,
+          "metrics": {
+            "co2_kg": {
+              "after": 29.989,
+              "before": 29.989,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 155.785,
+              "before_km": 155.785,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 7.23,
+              "before": 7.23,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 1230.312,
+              "before": 1230.312,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 12.982,
+              "before": 12.982,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 1301.478,
+              "before": 1301.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 2531.79,
+              "before": 2531.79,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 125.227,
+          "repetition": 1,
+          "rss_after_mb": 125.227,
+          "rss_before_mb": 125.227,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 6554,
+          "stage_timings": {
+            "clustering_ms": 0.824,
+            "constraint_validation_ms": 0.276,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 35.6,
+            "distance_calculation_ms": 1.675,
+            "local_optimization_ms": 32.532,
+            "metrics_ms": 0.017,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 1.732,
+            "serialization_ms": 0.096,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 100,
+            "routed_stop_count": 100,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 35.6
+        },
+        {
+          "cpu_ms": 35.502,
+          "cpu_utilization_percent": 100.015,
+          "distance_km": 155.785,
+          "metrics": {
+            "co2_kg": {
+              "after": 29.989,
+              "before": 29.989,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 155.785,
+              "before_km": 155.785,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 7.23,
+              "before": 7.23,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 1230.312,
+              "before": 1230.312,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 12.982,
+              "before": 12.982,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 1301.478,
+              "before": 1301.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 2531.79,
+              "before": 2531.79,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 125.227,
+          "repetition": 2,
+          "rss_after_mb": 125.227,
+          "rss_before_mb": 125.227,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 6554,
+          "stage_timings": {
+            "clustering_ms": 0.867,
+            "constraint_validation_ms": 0.286,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 35.496,
+            "distance_calculation_ms": 1.712,
+            "local_optimization_ms": 32.331,
+            "metrics_ms": 0.016,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 1.717,
+            "serialization_ms": 0.092,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 100,
+            "routed_stop_count": 100,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 35.496
+        },
+        {
+          "cpu_ms": 35.501,
+          "cpu_utilization_percent": 100.015,
+          "distance_km": 155.785,
+          "metrics": {
+            "co2_kg": {
+              "after": 29.989,
+              "before": 29.989,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 155.785,
+              "before_km": 155.785,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 7.23,
+              "before": 7.23,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 1230.312,
+              "before": 1230.312,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 12.982,
+              "before": 12.982,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 1301.478,
+              "before": 1301.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 2531.79,
+              "before": 2531.79,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 125.227,
+          "repetition": 3,
+          "rss_after_mb": 125.227,
+          "rss_before_mb": 125.227,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 6554,
+          "stage_timings": {
+            "clustering_ms": 0.84,
+            "constraint_validation_ms": 0.281,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 35.495,
+            "distance_calculation_ms": 1.655,
+            "local_optimization_ms": 32.41,
+            "metrics_ms": 0.018,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 1.706,
+            "serialization_ms": 0.102,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 100,
+            "routed_stop_count": 100,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 35.495
+        },
+        {
+          "cpu_ms": 41.575,
+          "cpu_utilization_percent": 100.016,
+          "distance_km": 155.785,
+          "metrics": {
+            "co2_kg": {
+              "after": 29.989,
+              "before": 29.989,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 155.785,
+              "before_km": 155.785,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 7.23,
+              "before": 7.23,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 1230.312,
+              "before": 1230.312,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 12.982,
+              "before": 12.982,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 1301.478,
+              "before": 1301.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 2531.79,
+              "before": 2531.79,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 125.227,
+          "repetition": 4,
+          "rss_after_mb": 125.227,
+          "rss_before_mb": 125.227,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 6554,
+          "stage_timings": {
+            "clustering_ms": 0.922,
+            "constraint_validation_ms": 0.309,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 41.568,
+            "distance_calculation_ms": 1.713,
+            "local_optimization_ms": 38.298,
+            "metrics_ms": 0.014,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 1.728,
+            "serialization_ms": 0.096,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 100,
+            "routed_stop_count": 100,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 41.568
+        },
+        {
+          "cpu_ms": 36.227,
+          "cpu_utilization_percent": 100.014,
+          "distance_km": 155.785,
+          "metrics": {
+            "co2_kg": {
+              "after": 29.989,
+              "before": 29.989,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 155.785,
+              "before_km": 155.785,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 7.23,
+              "before": 7.23,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 1230.312,
+              "before": 1230.312,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 12.982,
+              "before": 12.982,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 1301.478,
+              "before": 1301.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 2531.79,
+              "before": 2531.79,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 125.227,
+          "repetition": 5,
+          "rss_after_mb": 125.227,
+          "rss_before_mb": 125.227,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 6554,
+          "stage_timings": {
+            "clustering_ms": 0.855,
+            "constraint_validation_ms": 0.288,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 36.222,
+            "distance_calculation_ms": 1.639,
+            "local_optimization_ms": 33.098,
+            "metrics_ms": 0.013,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 1.714,
+            "serialization_ms": 0.089,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 100,
+            "routed_stop_count": 100,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 36.222
+        },
+        {
+          "cpu_ms": 35.59,
+          "cpu_utilization_percent": 100.013,
+          "distance_km": 155.785,
+          "metrics": {
+            "co2_kg": {
+              "after": 29.989,
+              "before": 29.989,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 155.785,
+              "before_km": 155.785,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 7.23,
+              "before": 7.23,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 1230.312,
+              "before": 1230.312,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 12.982,
+              "before": 12.982,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 1301.478,
+              "before": 1301.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 2531.79,
+              "before": 2531.79,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 125.227,
+          "repetition": 6,
+          "rss_after_mb": 125.227,
+          "rss_before_mb": 125.227,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 6554,
+          "stage_timings": {
+            "clustering_ms": 0.854,
+            "constraint_validation_ms": 0.284,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 35.585,
+            "distance_calculation_ms": 1.673,
+            "local_optimization_ms": 32.471,
+            "metrics_ms": 0.013,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 1.707,
+            "serialization_ms": 0.088,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 100,
+            "routed_stop_count": 100,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 35.585
+        },
+        {
+          "cpu_ms": 36.872,
+          "cpu_utilization_percent": 100.017,
+          "distance_km": 155.785,
+          "metrics": {
+            "co2_kg": {
+              "after": 29.989,
+              "before": 29.989,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 155.785,
+              "before_km": 155.785,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 7.23,
+              "before": 7.23,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 1230.312,
+              "before": 1230.312,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 12.982,
+              "before": 12.982,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 1301.478,
+              "before": 1301.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 2531.79,
+              "before": 2531.79,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 125.227,
+          "repetition": 7,
+          "rss_after_mb": 125.227,
+          "rss_before_mb": 125.227,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 6554,
+          "stage_timings": {
+            "clustering_ms": 0.799,
+            "constraint_validation_ms": 0.41,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 36.866,
+            "distance_calculation_ms": 1.703,
+            "local_optimization_ms": 33.59,
+            "metrics_ms": 0.016,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 1.737,
+            "serialization_ms": 0.095,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 100,
+            "routed_stop_count": 100,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 36.866
+        },
+        {
+          "cpu_ms": 35.796,
+          "cpu_utilization_percent": 100.015,
+          "distance_km": 155.785,
+          "metrics": {
+            "co2_kg": {
+              "after": 29.989,
+              "before": 29.989,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 155.785,
+              "before_km": 155.785,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 7.23,
+              "before": 7.23,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 1230.312,
+              "before": 1230.312,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 12.982,
+              "before": 12.982,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 1301.478,
+              "before": 1301.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 2531.79,
+              "before": 2531.79,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 125.227,
+          "repetition": 8,
+          "rss_after_mb": 125.227,
+          "rss_before_mb": 125.227,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 6554,
+          "stage_timings": {
+            "clustering_ms": 0.918,
+            "constraint_validation_ms": 0.279,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 35.791,
+            "distance_calculation_ms": 1.655,
+            "local_optimization_ms": 32.626,
+            "metrics_ms": 0.013,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 1.716,
+            "serialization_ms": 0.091,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 100,
+            "routed_stop_count": 100,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 35.791
+        },
+        {
+          "cpu_ms": 35.597,
+          "cpu_utilization_percent": 100.016,
+          "distance_km": 155.785,
+          "metrics": {
+            "co2_kg": {
+              "after": 29.989,
+              "before": 29.989,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 155.785,
+              "before_km": 155.785,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 7.23,
+              "before": 7.23,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 1230.312,
+              "before": 1230.312,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 12.982,
+              "before": 12.982,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 1301.478,
+              "before": 1301.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 2531.79,
+              "before": 2531.79,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 125.227,
+          "repetition": 9,
+          "rss_after_mb": 125.227,
+          "rss_before_mb": 125.227,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 6554,
+          "stage_timings": {
+            "clustering_ms": 0.844,
+            "constraint_validation_ms": 0.31,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 35.591,
+            "distance_calculation_ms": 1.653,
+            "local_optimization_ms": 32.484,
+            "metrics_ms": 0.013,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 1.711,
+            "serialization_ms": 0.09,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 100,
+            "routed_stop_count": 100,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 35.591
+        },
+        {
+          "cpu_ms": 35.622,
+          "cpu_utilization_percent": 100.05,
+          "distance_km": 155.785,
+          "metrics": {
+            "co2_kg": {
+              "after": 29.989,
+              "before": 29.989,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 155.785,
+              "before_km": 155.785,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 7.23,
+              "before": 7.23,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 1230.312,
+              "before": 1230.312,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 12.982,
+              "before": 12.982,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 1301.478,
+              "before": 1301.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 2531.79,
+              "before": 2531.79,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 125.227,
+          "repetition": 10,
+          "rss_after_mb": 125.227,
+          "rss_before_mb": 125.227,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 6554,
+          "stage_timings": {
+            "clustering_ms": 0.828,
+            "constraint_validation_ms": 0.289,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 35.604,
+            "distance_calculation_ms": 1.631,
+            "local_optimization_ms": 32.528,
+            "metrics_ms": 0.013,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 1.692,
+            "serialization_ms": 0.11,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 100,
+            "routed_stop_count": 100,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 35.604
+        }
+      ],
+      "seed": 20260823,
+      "stage_statistics_ms": {
+        "clustering_ms": {
+          "max": 0.922,
+          "min": 0.799,
+          "p50": 0.844,
+          "p95": 0.922,
+          "p99": 0.922
+        },
+        "constraint_validation_ms": {
+          "max": 0.41,
+          "min": 0.276,
+          "p50": 0.286,
+          "p95": 0.41,
+          "p99": 0.41
+        },
+        "database_access_ms": {
+          "max": 0.0,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "deterministic_total_ms": {
+          "max": 41.568,
+          "min": 35.495,
+          "p50": 35.6,
+          "p95": 41.568,
+          "p99": 41.568
+        },
+        "distance_calculation_ms": {
+          "max": 1.713,
+          "min": 1.631,
+          "p50": 1.655,
+          "p95": 1.713,
+          "p99": 1.713
+        },
+        "local_optimization_ms": {
+          "max": 38.298,
+          "min": 32.331,
+          "p50": 32.528,
+          "p95": 38.298,
+          "p99": 38.298
+        },
+        "metrics_ms": {
+          "max": 0.018,
+          "min": 0.013,
+          "p50": 0.013,
+          "p95": 0.018,
+          "p99": 0.018
+        },
+        "persistence_ms": {
+          "max": 0.0,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "request_parsing_ms": {
+          "max": 0.0,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "route_construction_ms": {
+          "max": 1.737,
+          "min": 1.692,
+          "p50": 1.714,
+          "p95": 1.737,
+          "p99": 1.737
+        },
+        "serialization_ms": {
+          "max": 0.11,
+          "min": 0.088,
+          "p50": 0.092,
+          "p95": 0.11,
+          "p99": 0.11
+        },
+        "validation_ms": {
+          "max": 0.001,
+          "min": 0.001,
+          "p50": 0.001,
+          "p95": 0.001,
+          "p99": 0.001
+        }
+      },
+      "stop_count": 100,
+      "validation": {
+        "constraint_violations": 0,
+        "required_stop_count": 100,
+        "routed_stop_count": 100,
+        "valid": true,
+        "violations": []
+      },
+      "vehicle_count": 1
+    },
+    {
+      "algorithm": "baseline-v1",
+      "cpu_ms": {
+        "max": 484.58,
+        "min": 450.847,
+        "p50": 456.872,
+        "p95": 484.58,
+        "p99": 484.58
+      },
+      "dataset": "delhi-500",
+      "dataset_version": "round2-delhi-v1",
+      "distance_km": 423.771,
+      "latency_ms": {
+        "max": 484.624,
+        "min": 450.95,
+        "p50": 456.918,
+        "p95": 484.624,
+        "p99": 484.624
+      },
+      "metrics": {
+        "co2_kg": {
+          "after": 81.576,
+          "before": 81.576,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "distance": {
+          "after_km": 423.771,
+          "before_km": 423.771,
+          "saved_km": 0.0,
+          "saved_percent": 0.0
+        },
+        "driver_hours": {
+          "after": 23.468,
+          "before": 23.468,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "fuel_cost": {
+          "after": 3346.731,
+          "before": 3346.731,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "fuel_litres": {
+          "after": 35.314,
+          "before": 35.314,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "labor_cost": {
+          "after": 4224.24,
+          "before": 4224.24,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "total_cost": {
+          "after": 7570.971,
+          "before": 7570.971,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        }
+      },
+      "samples": [
+        {
+          "cpu_ms": 463.778,
+          "cpu_utilization_percent": 99.998,
+          "distance_km": 423.771,
+          "metrics": {
+            "co2_kg": {
+              "after": 81.576,
+              "before": 81.576,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 423.771,
+              "before_km": 423.771,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 23.468,
+              "before": 23.468,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 3346.731,
+              "before": 3346.731,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 35.314,
+              "before": 35.314,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 4224.24,
+              "before": 4224.24,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 7570.971,
+              "before": 7570.971,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 125.977,
+          "repetition": 1,
+          "rss_after_mb": 125.852,
+          "rss_before_mb": 125.852,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 32736,
+          "stage_timings": {
+            "clustering_ms": 3.314,
+            "constraint_validation_ms": 1.268,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 463.787,
+            "distance_calculation_ms": 19.083,
+            "local_optimization_ms": 437.404,
+            "metrics_ms": 0.018,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 20.429,
+            "serialization_ms": 0.465,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 500,
+            "routed_stop_count": 500,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 463.787
+        },
+        {
+          "cpu_ms": 456.872,
+          "cpu_utilization_percent": 99.99,
+          "distance_km": 423.771,
+          "metrics": {
+            "co2_kg": {
+              "after": 81.576,
+              "before": 81.576,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 423.771,
+              "before_km": 423.771,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 23.468,
+              "before": 23.468,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 3346.731,
+              "before": 3346.731,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 35.314,
+              "before": 35.314,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 4224.24,
+              "before": 4224.24,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 7570.971,
+              "before": 7570.971,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 125.977,
+          "repetition": 2,
+          "rss_after_mb": 125.977,
+          "rss_before_mb": 125.977,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 32736,
+          "stage_timings": {
+            "clustering_ms": 3.322,
+            "constraint_validation_ms": 1.258,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 456.918,
+            "distance_calculation_ms": 19.145,
+            "local_optimization_ms": 430.476,
+            "metrics_ms": 0.016,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 20.442,
+            "serialization_ms": 0.387,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 500,
+            "routed_stop_count": 500,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 456.918
+        },
+        {
+          "cpu_ms": 452.453,
+          "cpu_utilization_percent": 99.995,
+          "distance_km": 423.771,
+          "metrics": {
+            "co2_kg": {
+              "after": 81.576,
+              "before": 81.576,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 423.771,
+              "before_km": 423.771,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 23.468,
+              "before": 23.468,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 3346.731,
+              "before": 3346.731,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 35.314,
+              "before": 35.314,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 4224.24,
+              "before": 4224.24,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 7570.971,
+              "before": 7570.971,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 125.977,
+          "repetition": 3,
+          "rss_after_mb": 125.977,
+          "rss_before_mb": 125.977,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 32736,
+          "stage_timings": {
+            "clustering_ms": 3.364,
+            "constraint_validation_ms": 1.474,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 452.475,
+            "distance_calculation_ms": 18.869,
+            "local_optimization_ms": 426.019,
+            "metrics_ms": 0.018,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 20.233,
+            "serialization_ms": 0.4,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 500,
+            "routed_stop_count": 500,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 452.475
+        },
+        {
+          "cpu_ms": 458.897,
+          "cpu_utilization_percent": 99.982,
+          "distance_km": 423.771,
+          "metrics": {
+            "co2_kg": {
+              "after": 81.576,
+              "before": 81.576,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 423.771,
+              "before_km": 423.771,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 23.468,
+              "before": 23.468,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 3346.731,
+              "before": 3346.731,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 35.314,
+              "before": 35.314,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 4224.24,
+              "before": 4224.24,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 7570.971,
+              "before": 7570.971,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 125.977,
+          "repetition": 4,
+          "rss_after_mb": 125.977,
+          "rss_before_mb": 125.977,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 32736,
+          "stage_timings": {
+            "clustering_ms": 3.411,
+            "constraint_validation_ms": 1.255,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 458.978,
+            "distance_calculation_ms": 19.698,
+            "local_optimization_ms": 431.761,
+            "metrics_ms": 0.015,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 21.291,
+            "serialization_ms": 0.374,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 500,
+            "routed_stop_count": 500,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 458.978
+        },
+        {
+          "cpu_ms": 465.068,
+          "cpu_utilization_percent": 100.0,
+          "distance_km": 423.771,
+          "metrics": {
+            "co2_kg": {
+              "after": 81.576,
+              "before": 81.576,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 423.771,
+              "before_km": 423.771,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 23.468,
+              "before": 23.468,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 3346.731,
+              "before": 3346.731,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 35.314,
+              "before": 35.314,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 4224.24,
+              "before": 4224.24,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 7570.971,
+              "before": 7570.971,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 126.102,
+          "repetition": 5,
+          "rss_after_mb": 126.102,
+          "rss_before_mb": 125.977,
+          "rss_delta_mb": 0.125,
+          "serialized_bytes": 32736,
+          "stage_timings": {
+            "clustering_ms": 3.823,
+            "constraint_validation_ms": 1.3,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 465.067,
+            "distance_calculation_ms": 19.339,
+            "local_optimization_ms": 437.776,
+            "metrics_ms": 0.015,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 20.664,
+            "serialization_ms": 0.455,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 500,
+            "routed_stop_count": 500,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 465.067
+        },
+        {
+          "cpu_ms": 484.58,
+          "cpu_utilization_percent": 99.991,
+          "distance_km": 423.771,
+          "metrics": {
+            "co2_kg": {
+              "after": 81.576,
+              "before": 81.576,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 423.771,
+              "before_km": 423.771,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 23.468,
+              "before": 23.468,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 3346.731,
+              "before": 3346.731,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 35.314,
+              "before": 35.314,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 4224.24,
+              "before": 4224.24,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 7570.971,
+              "before": 7570.971,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 126.102,
+          "repetition": 6,
+          "rss_after_mb": 126.102,
+          "rss_before_mb": 126.102,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 32736,
+          "stage_timings": {
+            "clustering_ms": 3.812,
+            "constraint_validation_ms": 1.313,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 484.624,
+            "distance_calculation_ms": 20.455,
+            "local_optimization_ms": 456.072,
+            "metrics_ms": 0.017,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 22.009,
+            "serialization_ms": 0.395,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 500,
+            "routed_stop_count": 500,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 484.624
+        },
+        {
+          "cpu_ms": 452.094,
+          "cpu_utilization_percent": 100.001,
+          "distance_km": 423.771,
+          "metrics": {
+            "co2_kg": {
+              "after": 81.576,
+              "before": 81.576,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 423.771,
+              "before_km": 423.771,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 23.468,
+              "before": 23.468,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 3346.731,
+              "before": 3346.731,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 35.314,
+              "before": 35.314,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 4224.24,
+              "before": 4224.24,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 7570.971,
+              "before": 7570.971,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 126.102,
+          "repetition": 7,
+          "rss_after_mb": 126.102,
+          "rss_before_mb": 126.102,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 32736,
+          "stage_timings": {
+            "clustering_ms": 3.446,
+            "constraint_validation_ms": 1.244,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 452.089,
+            "distance_calculation_ms": 18.725,
+            "local_optimization_ms": 426.016,
+            "metrics_ms": 0.013,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 20.224,
+            "serialization_ms": 0.364,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 500,
+            "routed_stop_count": 500,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 452.089
+        },
+        {
+          "cpu_ms": 450.847,
+          "cpu_utilization_percent": 99.977,
+          "distance_km": 423.771,
+          "metrics": {
+            "co2_kg": {
+              "after": 81.576,
+              "before": 81.576,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 423.771,
+              "before_km": 423.771,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 23.468,
+              "before": 23.468,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 3346.731,
+              "before": 3346.731,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 35.314,
+              "before": 35.314,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 4224.24,
+              "before": 4224.24,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 7570.971,
+              "before": 7570.971,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 126.102,
+          "repetition": 8,
+          "rss_after_mb": 126.102,
+          "rss_before_mb": 126.102,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 32736,
+          "stage_timings": {
+            "clustering_ms": 3.268,
+            "constraint_validation_ms": 1.286,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 450.95,
+            "distance_calculation_ms": 18.84,
+            "local_optimization_ms": 424.814,
+            "metrics_ms": 0.017,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 20.26,
+            "serialization_ms": 0.392,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 500,
+            "routed_stop_count": 500,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 450.95
+        },
+        {
+          "cpu_ms": 456.691,
+          "cpu_utilization_percent": 100.002,
+          "distance_km": 423.771,
+          "metrics": {
+            "co2_kg": {
+              "after": 81.576,
+              "before": 81.576,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 423.771,
+              "before_km": 423.771,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 23.468,
+              "before": 23.468,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 3346.731,
+              "before": 3346.731,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 35.314,
+              "before": 35.314,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 4224.24,
+              "before": 4224.24,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 7570.971,
+              "before": 7570.971,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 126.102,
+          "repetition": 9,
+          "rss_after_mb": 126.102,
+          "rss_before_mb": 126.102,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 32736,
+          "stage_timings": {
+            "clustering_ms": 3.318,
+            "constraint_validation_ms": 1.312,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 456.683,
+            "distance_calculation_ms": 19.145,
+            "local_optimization_ms": 430.081,
+            "metrics_ms": 0.02,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 20.528,
+            "serialization_ms": 0.417,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 500,
+            "routed_stop_count": 500,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 456.683
+        },
+        {
+          "cpu_ms": 457.019,
+          "cpu_utilization_percent": 99.989,
+          "distance_km": 423.771,
+          "metrics": {
+            "co2_kg": {
+              "after": 81.576,
+              "before": 81.576,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 423.771,
+              "before_km": 423.771,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 23.468,
+              "before": 23.468,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 3346.731,
+              "before": 3346.731,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 35.314,
+              "before": 35.314,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 4224.24,
+              "before": 4224.24,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 7570.971,
+              "before": 7570.971,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 126.102,
+          "repetition": 10,
+          "rss_after_mb": 126.102,
+          "rss_before_mb": 126.102,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 32736,
+          "stage_timings": {
+            "clustering_ms": 3.68,
+            "constraint_validation_ms": 1.289,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 457.07,
+            "distance_calculation_ms": 18.923,
+            "local_optimization_ms": 430.422,
+            "metrics_ms": 0.021,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 20.311,
+            "serialization_ms": 0.4,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 0,
+            "required_stop_count": 500,
+            "routed_stop_count": 500,
+            "valid": true,
+            "violations": []
+          },
+          "wall_ms": 457.07
+        }
+      ],
+      "seed": 20260823,
+      "stage_statistics_ms": {
+        "clustering_ms": {
+          "max": 3.823,
+          "min": 3.268,
+          "p50": 3.364,
+          "p95": 3.823,
+          "p99": 3.823
+        },
+        "constraint_validation_ms": {
+          "max": 1.474,
+          "min": 1.244,
+          "p50": 1.286,
+          "p95": 1.474,
+          "p99": 1.474
+        },
+        "database_access_ms": {
+          "max": 0.0,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "deterministic_total_ms": {
+          "max": 484.624,
+          "min": 450.95,
+          "p50": 456.918,
+          "p95": 484.624,
+          "p99": 484.624
+        },
+        "distance_calculation_ms": {
+          "max": 20.455,
+          "min": 18.725,
+          "p50": 19.083,
+          "p95": 20.455,
+          "p99": 20.455
+        },
+        "local_optimization_ms": {
+          "max": 456.072,
+          "min": 424.814,
+          "p50": 430.422,
+          "p95": 456.072,
+          "p99": 456.072
+        },
+        "metrics_ms": {
+          "max": 0.021,
+          "min": 0.013,
+          "p50": 0.017,
+          "p95": 0.021,
+          "p99": 0.021
+        },
+        "persistence_ms": {
+          "max": 0.0,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "request_parsing_ms": {
+          "max": 0.0,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "route_construction_ms": {
+          "max": 22.009,
+          "min": 20.224,
+          "p50": 20.429,
+          "p95": 22.009,
+          "p99": 22.009
+        },
+        "serialization_ms": {
+          "max": 0.465,
+          "min": 0.364,
+          "p50": 0.395,
+          "p95": 0.465,
+          "p99": 0.465
+        },
+        "validation_ms": {
+          "max": 0.001,
+          "min": 0.001,
+          "p50": 0.001,
+          "p95": 0.001,
+          "p99": 0.001
+        }
+      },
+      "stop_count": 500,
+      "validation": {
+        "constraint_violations": 0,
+        "required_stop_count": 500,
+        "routed_stop_count": 500,
+        "valid": true,
+        "violations": []
+      },
+      "vehicle_count": 2
+    },
+    {
+      "algorithm": "baseline-v1",
+      "cpu_ms": {
+        "max": 1373.24,
+        "min": 901.922,
+        "p50": 906.955,
+        "p95": 1373.24,
+        "p99": 1373.24
+      },
+      "dataset": "delhi-1000",
+      "dataset_version": "round2-delhi-v1",
+      "distance_km": 869.74,
+      "latency_ms": {
+        "max": 1373.429,
+        "min": 901.965,
+        "p50": 907.0,
+        "p95": 1373.429,
+        "p99": 1373.429
+      },
+      "metrics": {
+        "co2_kg": {
+          "after": 167.425,
+          "before": 167.425,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "distance": {
+          "after_km": 869.74,
+          "before_km": 869.74,
+          "saved_km": 0.0,
+          "saved_percent": 0.0
+        },
+        "driver_hours": {
+          "after": 47.729,
+          "before": 47.729,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "fuel_cost": {
+          "after": 6868.772,
+          "before": 6868.772,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "fuel_litres": {
+          "after": 72.478,
+          "before": 72.478,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "labor_cost": {
+          "after": 8591.186,
+          "before": 8591.186,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "total_cost": {
+          "after": 15459.958,
+          "before": 15459.958,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        }
+      },
+      "samples": [
+        {
+          "cpu_ms": 960.249,
+          "cpu_utilization_percent": 99.995,
+          "distance_km": 869.74,
+          "metrics": {
+            "co2_kg": {
+              "after": 167.425,
+              "before": 167.425,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 869.74,
+              "before_km": 869.74,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 47.729,
+              "before": 47.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 6868.772,
+              "before": 6868.772,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 72.478,
+              "before": 72.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 8591.186,
+              "before": 8591.186,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 15459.958,
+              "before": 15459.958,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 128.602,
+          "repetition": 1,
+          "rss_after_mb": 128.602,
+          "rss_before_mb": 128.602,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 65534,
+          "stage_timings": {
+            "clustering_ms": 8.36,
+            "constraint_validation_ms": 2.802,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 960.295,
+            "distance_calculation_ms": 40.073,
+            "local_optimization_ms": 902.942,
+            "metrics_ms": 0.034,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 43.165,
+            "serialization_ms": 0.87,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 1000,
+            "routed_stop_count": 1000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 960.295
+        },
+        {
+          "cpu_ms": 906.672,
+          "cpu_utilization_percent": 99.985,
+          "distance_km": 869.74,
+          "metrics": {
+            "co2_kg": {
+              "after": 167.425,
+              "before": 167.425,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 869.74,
+              "before_km": 869.74,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 47.729,
+              "before": 47.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 6868.772,
+              "before": 6868.772,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 72.478,
+              "before": 72.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 8591.186,
+              "before": 8591.186,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 15459.958,
+              "before": 15459.958,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 128.602,
+          "repetition": 2,
+          "rss_after_mb": 128.602,
+          "rss_before_mb": 128.602,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 65534,
+          "stage_timings": {
+            "clustering_ms": 8.01,
+            "constraint_validation_ms": 2.537,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 906.81,
+            "distance_calculation_ms": 37.937,
+            "local_optimization_ms": 852.579,
+            "metrics_ms": 0.029,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 41.078,
+            "serialization_ms": 0.786,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 1000,
+            "routed_stop_count": 1000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 906.81
+        },
+        {
+          "cpu_ms": 906.955,
+          "cpu_utilization_percent": 99.995,
+          "distance_km": 869.74,
+          "metrics": {
+            "co2_kg": {
+              "after": 167.425,
+              "before": 167.425,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 869.74,
+              "before_km": 869.74,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 47.729,
+              "before": 47.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 6868.772,
+              "before": 6868.772,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 72.478,
+              "before": 72.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 8591.186,
+              "before": 8591.186,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 15459.958,
+              "before": 15459.958,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 128.602,
+          "repetition": 3,
+          "rss_after_mb": 128.602,
+          "rss_before_mb": 128.602,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 65534,
+          "stage_timings": {
+            "clustering_ms": 7.439,
+            "constraint_validation_ms": 2.441,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 907.0,
+            "distance_calculation_ms": 37.888,
+            "local_optimization_ms": 853.638,
+            "metrics_ms": 0.016,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 41.071,
+            "serialization_ms": 0.764,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 1000,
+            "routed_stop_count": 1000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 907.0
+        },
+        {
+          "cpu_ms": 903.824,
+          "cpu_utilization_percent": 99.994,
+          "distance_km": 869.74,
+          "metrics": {
+            "co2_kg": {
+              "after": 167.425,
+              "before": 167.425,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 869.74,
+              "before_km": 869.74,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 47.729,
+              "before": 47.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 6868.772,
+              "before": 6868.772,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 72.478,
+              "before": 72.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 8591.186,
+              "before": 8591.186,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 15459.958,
+              "before": 15459.958,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 128.602,
+          "repetition": 4,
+          "rss_after_mb": 128.602,
+          "rss_before_mb": 128.602,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 65534,
+          "stage_timings": {
+            "clustering_ms": 7.388,
+            "constraint_validation_ms": 2.449,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 903.881,
+            "distance_calculation_ms": 37.797,
+            "local_optimization_ms": 850.751,
+            "metrics_ms": 0.016,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 40.971,
+            "serialization_ms": 0.729,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 1000,
+            "routed_stop_count": 1000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 903.881
+        },
+        {
+          "cpu_ms": 901.922,
+          "cpu_utilization_percent": 99.995,
+          "distance_km": 869.74,
+          "metrics": {
+            "co2_kg": {
+              "after": 167.425,
+              "before": 167.425,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 869.74,
+              "before_km": 869.74,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 47.729,
+              "before": 47.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 6868.772,
+              "before": 6868.772,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 72.478,
+              "before": 72.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 8591.186,
+              "before": 8591.186,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 15459.958,
+              "before": 15459.958,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 128.602,
+          "repetition": 5,
+          "rss_after_mb": 128.602,
+          "rss_before_mb": 128.602,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 65534,
+          "stage_timings": {
+            "clustering_ms": 7.423,
+            "constraint_validation_ms": 2.496,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 901.965,
+            "distance_calculation_ms": 37.644,
+            "local_optimization_ms": 848.823,
+            "metrics_ms": 0.022,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 40.737,
+            "serialization_ms": 0.762,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 1000,
+            "routed_stop_count": 1000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 901.965
+        },
+        {
+          "cpu_ms": 906.644,
+          "cpu_utilization_percent": 99.992,
+          "distance_km": 869.74,
+          "metrics": {
+            "co2_kg": {
+              "after": 167.425,
+              "before": 167.425,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 869.74,
+              "before_km": 869.74,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 47.729,
+              "before": 47.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 6868.772,
+              "before": 6868.772,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 72.478,
+              "before": 72.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 8591.186,
+              "before": 8591.186,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 15459.958,
+              "before": 15459.958,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 128.602,
+          "repetition": 6,
+          "rss_after_mb": 128.602,
+          "rss_before_mb": 128.602,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 65534,
+          "stage_timings": {
+            "clustering_ms": 7.638,
+            "constraint_validation_ms": 2.574,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 906.715,
+            "distance_calculation_ms": 38.513,
+            "local_optimization_ms": 852.328,
+            "metrics_ms": 0.021,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 41.463,
+            "serialization_ms": 0.771,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 1000,
+            "routed_stop_count": 1000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 906.715
+        },
+        {
+          "cpu_ms": 909.731,
+          "cpu_utilization_percent": 99.992,
+          "distance_km": 869.74,
+          "metrics": {
+            "co2_kg": {
+              "after": 167.425,
+              "before": 167.425,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 869.74,
+              "before_km": 869.74,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 47.729,
+              "before": 47.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 6868.772,
+              "before": 6868.772,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 72.478,
+              "before": 72.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 8591.186,
+              "before": 8591.186,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 15459.958,
+              "before": 15459.958,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 128.727,
+          "repetition": 7,
+          "rss_after_mb": 128.727,
+          "rss_before_mb": 128.602,
+          "rss_delta_mb": 0.125,
+          "serialized_bytes": 65534,
+          "stage_timings": {
+            "clustering_ms": 7.603,
+            "constraint_validation_ms": 2.531,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 909.806,
+            "distance_calculation_ms": 38.635,
+            "local_optimization_ms": 855.138,
+            "metrics_ms": 0.02,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 41.921,
+            "serialization_ms": 0.815,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 1000,
+            "routed_stop_count": 1000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 909.806
+        },
+        {
+          "cpu_ms": 1373.24,
+          "cpu_utilization_percent": 99.986,
+          "distance_km": 869.74,
+          "metrics": {
+            "co2_kg": {
+              "after": 167.425,
+              "before": 167.425,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 869.74,
+              "before_km": 869.74,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 47.729,
+              "before": 47.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 6868.772,
+              "before": 6868.772,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 72.478,
+              "before": 72.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 8591.186,
+              "before": 8591.186,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 15459.958,
+              "before": 15459.958,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 128.727,
+          "repetition": 8,
+          "rss_after_mb": 128.727,
+          "rss_before_mb": 128.727,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 65534,
+          "stage_timings": {
+            "clustering_ms": 7.465,
+            "constraint_validation_ms": 2.868,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 1373.429,
+            "distance_calculation_ms": 48.738,
+            "local_optimization_ms": 1306.316,
+            "metrics_ms": 0.021,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 53.772,
+            "serialization_ms": 0.871,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 1000,
+            "routed_stop_count": 1000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 1373.429
+        },
+        {
+          "cpu_ms": 912.601,
+          "cpu_utilization_percent": 99.995,
+          "distance_km": 869.74,
+          "metrics": {
+            "co2_kg": {
+              "after": 167.425,
+              "before": 167.425,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 869.74,
+              "before_km": 869.74,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 47.729,
+              "before": 47.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 6868.772,
+              "before": 6868.772,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 72.478,
+              "before": 72.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 8591.186,
+              "before": 8591.186,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 15459.958,
+              "before": 15459.958,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 128.727,
+          "repetition": 9,
+          "rss_after_mb": 128.727,
+          "rss_before_mb": 128.727,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 65534,
+          "stage_timings": {
+            "clustering_ms": 9.49,
+            "constraint_validation_ms": 2.61,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 912.651,
+            "distance_calculation_ms": 38.987,
+            "local_optimization_ms": 855.606,
+            "metrics_ms": 0.037,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 41.983,
+            "serialization_ms": 0.771,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 1000,
+            "routed_stop_count": 1000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 912.651
+        },
+        {
+          "cpu_ms": 956.603,
+          "cpu_utilization_percent": 99.992,
+          "distance_km": 869.74,
+          "metrics": {
+            "co2_kg": {
+              "after": 167.425,
+              "before": 167.425,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 869.74,
+              "before_km": 869.74,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 47.729,
+              "before": 47.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 6868.772,
+              "before": 6868.772,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 72.478,
+              "before": 72.478,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 8591.186,
+              "before": 8591.186,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 15459.958,
+              "before": 15459.958,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 128.727,
+          "repetition": 10,
+          "rss_after_mb": 128.727,
+          "rss_before_mb": 128.727,
+          "rss_delta_mb": 0.0,
+          "serialized_bytes": 65534,
+          "stage_timings": {
+            "clustering_ms": 7.473,
+            "constraint_validation_ms": 2.642,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 956.68,
+            "distance_calculation_ms": 39.633,
+            "local_optimization_ms": 901.076,
+            "metrics_ms": 0.018,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 42.721,
+            "serialization_ms": 0.76,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 1000,
+            "routed_stop_count": 1000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 956.68
+        }
+      ],
+      "seed": 20260823,
+      "stage_statistics_ms": {
+        "clustering_ms": {
+          "max": 9.49,
+          "min": 7.388,
+          "p50": 7.473,
+          "p95": 9.49,
+          "p99": 9.49
+        },
+        "constraint_validation_ms": {
+          "max": 2.868,
+          "min": 2.441,
+          "p50": 2.537,
+          "p95": 2.868,
+          "p99": 2.868
+        },
+        "database_access_ms": {
+          "max": 0.0,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "deterministic_total_ms": {
+          "max": 1373.429,
+          "min": 901.965,
+          "p50": 907.0,
+          "p95": 1373.429,
+          "p99": 1373.429
+        },
+        "distance_calculation_ms": {
+          "max": 48.738,
+          "min": 37.644,
+          "p50": 38.513,
+          "p95": 48.738,
+          "p99": 48.738
+        },
+        "local_optimization_ms": {
+          "max": 1306.316,
+          "min": 848.823,
+          "p50": 853.638,
+          "p95": 1306.316,
+          "p99": 1306.316
+        },
+        "metrics_ms": {
+          "max": 0.037,
+          "min": 0.016,
+          "p50": 0.021,
+          "p95": 0.037,
+          "p99": 0.037
+        },
+        "persistence_ms": {
+          "max": 0.0,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "request_parsing_ms": {
+          "max": 0.0,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "route_construction_ms": {
+          "max": 53.772,
+          "min": 40.737,
+          "p50": 41.463,
+          "p95": 53.772,
+          "p99": 53.772
+        },
+        "serialization_ms": {
+          "max": 0.871,
+          "min": 0.729,
+          "p50": 0.771,
+          "p95": 0.871,
+          "p99": 0.871
+        },
+        "validation_ms": {
+          "max": 0.001,
+          "min": 0.001,
+          "p50": 0.001,
+          "p95": 0.001,
+          "p99": 0.001
+        }
+      },
+      "stop_count": 1000,
+      "validation": {
+        "constraint_violations": 2,
+        "required_stop_count": 1000,
+        "routed_stop_count": 1000,
+        "valid": false,
+        "violations": [
+          "DRIVER_HOURS: Route exceeds 12 driver hours",
+          "DRIVER_HOURS: Route exceeds 12 driver hours"
+        ]
+      },
+      "vehicle_count": 4
+    },
+    {
+      "algorithm": "baseline-v1",
+      "cpu_ms": {
+        "max": 2209.078,
+        "min": 2031.357,
+        "p50": 2070.749,
+        "p95": 2209.078,
+        "p99": 2209.078
+      },
+      "dataset": "delhi-2500",
+      "dataset_version": "round2-delhi-v1",
+      "distance_km": 2159.68,
+      "latency_ms": {
+        "max": 2211.034,
+        "min": 2031.473,
+        "p50": 2070.949,
+        "p95": 2211.034,
+        "p99": 2211.034
+      },
+      "metrics": {
+        "co2_kg": {
+          "after": 415.738,
+          "before": 415.738,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "distance": {
+          "after_km": 2159.68,
+          "before_km": 2159.68,
+          "saved_km": 0.0,
+          "saved_percent": 0.0
+        },
+        "driver_hours": {
+          "after": 118.798,
+          "before": 118.798,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "fuel_cost": {
+          "after": 17056.073,
+          "before": 17056.073,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "fuel_litres": {
+          "after": 179.973,
+          "before": 179.973,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "labor_cost": {
+          "after": 21383.656,
+          "before": 21383.656,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "total_cost": {
+          "after": 38439.729,
+          "before": 38439.729,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        }
+      },
+      "samples": [
+        {
+          "cpu_ms": 2070.749,
+          "cpu_utilization_percent": 99.99,
+          "distance_km": 2159.68,
+          "metrics": {
+            "co2_kg": {
+              "after": 415.738,
+              "before": 415.738,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 2159.68,
+              "before_km": 2159.68,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 118.798,
+              "before": 118.798,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 17056.073,
+              "before": 17056.073,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 179.973,
+              "before": 179.973,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 21383.656,
+              "before": 21383.656,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 38439.729,
+              "before": 38439.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 143.098,
+          "repetition": 1,
+          "rss_after_mb": 136.125,
+          "rss_before_mb": 136.094,
+          "rss_delta_mb": 0.031,
+          "serialized_bytes": 165325,
+          "stage_timings": {
+            "clustering_ms": 28.372,
+            "constraint_validation_ms": 6.165,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 2070.949,
+            "distance_calculation_ms": 117.527,
+            "local_optimization_ms": 1903.078,
+            "metrics_ms": 0.019,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 126.8,
+            "serialization_ms": 1.819,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 6,
+            "required_stop_count": 2500,
+            "routed_stop_count": 2500,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 2070.949
+        },
+        {
+          "cpu_ms": 2031.357,
+          "cpu_utilization_percent": 99.994,
+          "distance_km": 2159.68,
+          "metrics": {
+            "co2_kg": {
+              "after": 415.738,
+              "before": 415.738,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 2159.68,
+              "before_km": 2159.68,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 118.798,
+              "before": 118.798,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 17056.073,
+              "before": 17056.073,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 179.973,
+              "before": 179.973,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 21383.656,
+              "before": 21383.656,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 38439.729,
+              "before": 38439.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 143.113,
+          "repetition": 2,
+          "rss_after_mb": 136.266,
+          "rss_before_mb": 136.125,
+          "rss_delta_mb": 0.141,
+          "serialized_bytes": 165325,
+          "stage_timings": {
+            "clustering_ms": 28.146,
+            "constraint_validation_ms": 6.733,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 2031.473,
+            "distance_calculation_ms": 95.052,
+            "local_optimization_ms": 1886.703,
+            "metrics_ms": 0.02,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 103.372,
+            "serialization_ms": 1.837,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 6,
+            "required_stop_count": 2500,
+            "routed_stop_count": 2500,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 2031.473
+        },
+        {
+          "cpu_ms": 2071.105,
+          "cpu_utilization_percent": 99.992,
+          "distance_km": 2159.68,
+          "metrics": {
+            "co2_kg": {
+              "after": 415.738,
+              "before": 415.738,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 2159.68,
+              "before_km": 2159.68,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 118.798,
+              "before": 118.798,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 17056.073,
+              "before": 17056.073,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 179.973,
+              "before": 179.973,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 21383.656,
+              "before": 21383.656,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 38439.729,
+              "before": 38439.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 143.281,
+          "repetition": 3,
+          "rss_after_mb": 136.309,
+          "rss_before_mb": 136.266,
+          "rss_delta_mb": 0.043,
+          "serialized_bytes": 165325,
+          "stage_timings": {
+            "clustering_ms": 28.951,
+            "constraint_validation_ms": 6.631,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 2071.28,
+            "distance_calculation_ms": 97.458,
+            "local_optimization_ms": 1922.952,
+            "metrics_ms": 0.019,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 106.039,
+            "serialization_ms": 1.922,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 6,
+            "required_stop_count": 2500,
+            "routed_stop_count": 2500,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 2071.28
+        },
+        {
+          "cpu_ms": 2087.781,
+          "cpu_utilization_percent": 99.989,
+          "distance_km": 2159.68,
+          "metrics": {
+            "co2_kg": {
+              "after": 415.738,
+              "before": 415.738,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 2159.68,
+              "before_km": 2159.68,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 118.798,
+              "before": 118.798,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 17056.073,
+              "before": 17056.073,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 179.973,
+              "before": 179.973,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 21383.656,
+              "before": 21383.656,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 38439.729,
+              "before": 38439.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 143.305,
+          "repetition": 4,
+          "rss_after_mb": 136.332,
+          "rss_before_mb": 136.309,
+          "rss_delta_mb": 0.023,
+          "serialized_bytes": 165325,
+          "stage_timings": {
+            "clustering_ms": 29.703,
+            "constraint_validation_ms": 6.652,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 2088.016,
+            "distance_calculation_ms": 100.095,
+            "local_optimization_ms": 1935.351,
+            "metrics_ms": 0.021,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 108.274,
+            "serialization_ms": 1.961,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 6,
+            "required_stop_count": 2500,
+            "routed_stop_count": 2500,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 2088.016
+        },
+        {
+          "cpu_ms": 2093.282,
+          "cpu_utilization_percent": 99.991,
+          "distance_km": 2159.68,
+          "metrics": {
+            "co2_kg": {
+              "after": 415.738,
+              "before": 415.738,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 2159.68,
+              "before_km": 2159.68,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 118.798,
+              "before": 118.798,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 17056.073,
+              "before": 17056.073,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 179.973,
+              "before": 179.973,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 21383.656,
+              "before": 21383.656,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 38439.729,
+              "before": 38439.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 143.336,
+          "repetition": 5,
+          "rss_after_mb": 136.363,
+          "rss_before_mb": 136.332,
+          "rss_delta_mb": 0.031,
+          "serialized_bytes": 165325,
+          "stage_timings": {
+            "clustering_ms": 30.288,
+            "constraint_validation_ms": 6.323,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 2093.475,
+            "distance_calculation_ms": 97.527,
+            "local_optimization_ms": 1944.17,
+            "metrics_ms": 0.02,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 105.572,
+            "serialization_ms": 1.839,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 6,
+            "required_stop_count": 2500,
+            "routed_stop_count": 2500,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 2093.475
+        },
+        {
+          "cpu_ms": 2053.985,
+          "cpu_utilization_percent": 99.994,
+          "distance_km": 2159.68,
+          "metrics": {
+            "co2_kg": {
+              "after": 415.738,
+              "before": 415.738,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 2159.68,
+              "before_km": 2159.68,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 118.798,
+              "before": 118.798,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 17056.073,
+              "before": 17056.073,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 179.973,
+              "before": 179.973,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 21383.656,
+              "before": 21383.656,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 38439.729,
+              "before": 38439.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 143.348,
+          "repetition": 6,
+          "rss_after_mb": 136.375,
+          "rss_before_mb": 136.363,
+          "rss_delta_mb": 0.012,
+          "serialized_bytes": 165325,
+          "stage_timings": {
+            "clustering_ms": 28.19,
+            "constraint_validation_ms": 6.522,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 2054.109,
+            "distance_calculation_ms": 95.594,
+            "local_optimization_ms": 1909.012,
+            "metrics_ms": 0.021,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 103.681,
+            "serialization_ms": 1.885,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 6,
+            "required_stop_count": 2500,
+            "routed_stop_count": 2500,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 2054.109
+        },
+        {
+          "cpu_ms": 2055.726,
+          "cpu_utilization_percent": 99.991,
+          "distance_km": 2159.68,
+          "metrics": {
+            "co2_kg": {
+              "after": 415.738,
+              "before": 415.738,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 2159.68,
+              "before_km": 2159.68,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 118.798,
+              "before": 118.798,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 17056.073,
+              "before": 17056.073,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 179.973,
+              "before": 179.973,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 21383.656,
+              "before": 21383.656,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 38439.729,
+              "before": 38439.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 143.371,
+          "repetition": 7,
+          "rss_after_mb": 136.398,
+          "rss_before_mb": 136.375,
+          "rss_delta_mb": 0.023,
+          "serialized_bytes": 165325,
+          "stage_timings": {
+            "clustering_ms": 28.266,
+            "constraint_validation_ms": 6.451,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 2055.918,
+            "distance_calculation_ms": 97.309,
+            "local_optimization_ms": 1908.761,
+            "metrics_ms": 0.02,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 105.502,
+            "serialization_ms": 1.831,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 6,
+            "required_stop_count": 2500,
+            "routed_stop_count": 2500,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 2055.918
+        },
+        {
+          "cpu_ms": 2059.477,
+          "cpu_utilization_percent": 99.995,
+          "distance_km": 2159.68,
+          "metrics": {
+            "co2_kg": {
+              "after": 415.738,
+              "before": 415.738,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 2159.68,
+              "before_km": 2159.68,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 118.798,
+              "before": 118.798,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 17056.073,
+              "before": 17056.073,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 179.973,
+              "before": 179.973,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 21383.656,
+              "before": 21383.656,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 38439.729,
+              "before": 38439.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 143.387,
+          "repetition": 8,
+          "rss_after_mb": 136.414,
+          "rss_before_mb": 136.398,
+          "rss_delta_mb": 0.016,
+          "serialized_bytes": 165325,
+          "stage_timings": {
+            "clustering_ms": 28.467,
+            "constraint_validation_ms": 6.882,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 2059.586,
+            "distance_calculation_ms": 96.483,
+            "local_optimization_ms": 1912.694,
+            "metrics_ms": 0.028,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 104.783,
+            "serialization_ms": 2.019,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 6,
+            "required_stop_count": 2500,
+            "routed_stop_count": 2500,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 2059.586
+        },
+        {
+          "cpu_ms": 2198.703,
+          "cpu_utilization_percent": 99.982,
+          "distance_km": 2159.68,
+          "metrics": {
+            "co2_kg": {
+              "after": 415.738,
+              "before": 415.738,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 2159.68,
+              "before_km": 2159.68,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 118.798,
+              "before": 118.798,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 17056.073,
+              "before": 17056.073,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 179.973,
+              "before": 179.973,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 21383.656,
+              "before": 21383.656,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 38439.729,
+              "before": 38439.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 143.414,
+          "repetition": 9,
+          "rss_after_mb": 136.441,
+          "rss_before_mb": 136.414,
+          "rss_delta_mb": 0.027,
+          "serialized_bytes": 165325,
+          "stage_timings": {
+            "clustering_ms": 29.632,
+            "constraint_validation_ms": 6.575,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 2199.104,
+            "distance_calculation_ms": 107.515,
+            "local_optimization_ms": 2037.402,
+            "metrics_ms": 0.028,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 117.767,
+            "serialization_ms": 1.926,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 6,
+            "required_stop_count": 2500,
+            "routed_stop_count": 2500,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 2199.104
+        },
+        {
+          "cpu_ms": 2209.078,
+          "cpu_utilization_percent": 99.912,
+          "distance_km": 2159.68,
+          "metrics": {
+            "co2_kg": {
+              "after": 415.738,
+              "before": 415.738,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 2159.68,
+              "before_km": 2159.68,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 118.798,
+              "before": 118.798,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 17056.073,
+              "before": 17056.073,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 179.973,
+              "before": 179.973,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 21383.656,
+              "before": 21383.656,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 38439.729,
+              "before": 38439.729,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 143.434,
+          "repetition": 10,
+          "rss_after_mb": 136.461,
+          "rss_before_mb": 136.441,
+          "rss_delta_mb": 0.02,
+          "serialized_bytes": 165325,
+          "stage_timings": {
+            "clustering_ms": 32.676,
+            "constraint_validation_ms": 9.08,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 2211.034,
+            "distance_calculation_ms": 100.64,
+            "local_optimization_ms": 2052.194,
+            "metrics_ms": 0.038,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 107.796,
+            "serialization_ms": 2.24,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 6,
+            "required_stop_count": 2500,
+            "routed_stop_count": 2500,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 2211.034
+        }
+      ],
+      "seed": 20260823,
+      "stage_statistics_ms": {
+        "clustering_ms": {
+          "max": 32.676,
+          "min": 28.146,
+          "p50": 28.467,
+          "p95": 32.676,
+          "p99": 32.676
+        },
+        "constraint_validation_ms": {
+          "max": 9.08,
+          "min": 6.165,
+          "p50": 6.575,
+          "p95": 9.08,
+          "p99": 9.08
+        },
+        "database_access_ms": {
+          "max": 0.0,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "deterministic_total_ms": {
+          "max": 2211.034,
+          "min": 2031.473,
+          "p50": 2070.949,
+          "p95": 2211.034,
+          "p99": 2211.034
+        },
+        "distance_calculation_ms": {
+          "max": 117.527,
+          "min": 95.052,
+          "p50": 97.458,
+          "p95": 117.527,
+          "p99": 117.527
+        },
+        "local_optimization_ms": {
+          "max": 2052.194,
+          "min": 1886.703,
+          "p50": 1912.694,
+          "p95": 2052.194,
+          "p99": 2052.194
+        },
+        "metrics_ms": {
+          "max": 0.038,
+          "min": 0.019,
+          "p50": 0.02,
+          "p95": 0.038,
+          "p99": 0.038
+        },
+        "persistence_ms": {
+          "max": 0.0,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "request_parsing_ms": {
+          "max": 0.0,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "route_construction_ms": {
+          "max": 126.8,
+          "min": 103.372,
+          "p50": 105.572,
+          "p95": 126.8,
+          "p99": 126.8
+        },
+        "serialization_ms": {
+          "max": 2.24,
+          "min": 1.819,
+          "p50": 1.885,
+          "p95": 2.24,
+          "p99": 2.24
+        },
+        "validation_ms": {
+          "max": 0.001,
+          "min": 0.001,
+          "p50": 0.001,
+          "p95": 0.001,
+          "p99": 0.001
+        }
+      },
+      "stop_count": 2500,
+      "validation": {
+        "constraint_violations": 6,
+        "required_stop_count": 2500,
+        "routed_stop_count": 2500,
+        "valid": false,
+        "violations": [
+          "DRIVER_HOURS: Route exceeds 12 driver hours",
+          "DRIVER_HOURS: Route exceeds 12 driver hours",
+          "DRIVER_HOURS: Route exceeds 12 driver hours",
+          "DRIVER_HOURS: Route exceeds 12 driver hours",
+          "DRIVER_HOURS: Route exceeds 12 driver hours",
+          "DRIVER_HOURS: Route exceeds 12 driver hours"
+        ]
+      },
+      "vehicle_count": 10
+    },
+    {
+      "algorithm": "baseline-v1",
+      "cpu_ms": {
+        "max": 4721.754,
+        "min": 4398.219,
+        "p50": 4467.636,
+        "p95": 4721.754,
+        "p99": 4721.754
+      },
+      "dataset": "delhi-5000",
+      "dataset_version": "round2-delhi-v1",
+      "distance_km": 4248.589,
+      "latency_ms": {
+        "max": 4722.355,
+        "min": 4398.557,
+        "p50": 4467.978,
+        "p95": 4722.355,
+        "p99": 4722.355
+      },
+      "metrics": {
+        "co2_kg": {
+          "after": 817.853,
+          "before": 817.853,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "distance": {
+          "after_km": 4248.589,
+          "before_km": 4248.589,
+          "saved_km": 0.0,
+          "saved_percent": 0.0
+        },
+        "driver_hours": {
+          "after": 235.069,
+          "before": 235.069,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "fuel_cost": {
+          "after": 33553.232,
+          "before": 33553.232,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "fuel_litres": {
+          "after": 354.049,
+          "before": 354.049,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "labor_cost": {
+          "after": 42312.355,
+          "before": 42312.355,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        },
+        "total_cost": {
+          "after": 75865.587,
+          "before": 75865.587,
+          "saved": 0.0,
+          "saved_percent": 0.0
+        }
+      },
+      "samples": [
+        {
+          "cpu_ms": 4585.267,
+          "cpu_utilization_percent": 99.994,
+          "distance_km": 4248.589,
+          "metrics": {
+            "co2_kg": {
+              "after": 817.853,
+              "before": 817.853,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 4248.589,
+              "before_km": 4248.589,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 235.069,
+              "before": 235.069,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 33553.232,
+              "before": 33553.232,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 354.049,
+              "before": 354.049,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 42312.355,
+              "before": 42312.355,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 75865.587,
+              "before": 75865.587,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 190.09,
+          "repetition": 1,
+          "rss_after_mb": 161.402,
+          "rss_before_mb": 161.359,
+          "rss_delta_mb": 0.043,
+          "serialized_bytes": 331753,
+          "stage_timings": {
+            "clustering_ms": 155.857,
+            "constraint_validation_ms": 13.048,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 4585.565,
+            "distance_calculation_ms": 199.707,
+            "local_optimization_ms": 4185.04,
+            "metrics_ms": 0.05,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 215.726,
+            "serialization_ms": 4.001,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 5000,
+            "routed_stop_count": 5000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 4585.565
+        },
+        {
+          "cpu_ms": 4721.754,
+          "cpu_utilization_percent": 99.987,
+          "distance_km": 4248.589,
+          "metrics": {
+            "co2_kg": {
+              "after": 817.853,
+              "before": 817.853,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 4248.589,
+              "before_km": 4248.589,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 235.069,
+              "before": 235.069,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 33553.232,
+              "before": 33553.232,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 354.049,
+              "before": 354.049,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 42312.355,
+              "before": 42312.355,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 75865.587,
+              "before": 75865.587,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 190.09,
+          "repetition": 2,
+          "rss_after_mb": 161.418,
+          "rss_before_mb": 161.402,
+          "rss_delta_mb": 0.016,
+          "serialized_bytes": 331753,
+          "stage_timings": {
+            "clustering_ms": 80.828,
+            "constraint_validation_ms": 14.001,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 4722.355,
+            "distance_calculation_ms": 204.596,
+            "local_optimization_ms": 4390.09,
+            "metrics_ms": 0.03,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 221.027,
+            "serialization_ms": 4.091,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 5000,
+            "routed_stop_count": 5000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 4722.355
+        },
+        {
+          "cpu_ms": 4568.067,
+          "cpu_utilization_percent": 99.988,
+          "distance_km": 4248.589,
+          "metrics": {
+            "co2_kg": {
+              "after": 817.853,
+              "before": 817.853,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 4248.589,
+              "before_km": 4248.589,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 235.069,
+              "before": 235.069,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 33553.232,
+              "before": 33553.232,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 354.049,
+              "before": 354.049,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 42312.355,
+              "before": 42312.355,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 75865.587,
+              "before": 75865.587,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 191.078,
+          "repetition": 3,
+          "rss_after_mb": 161.43,
+          "rss_before_mb": 161.418,
+          "rss_delta_mb": 0.012,
+          "serialized_bytes": 331753,
+          "stage_timings": {
+            "clustering_ms": 79.931,
+            "constraint_validation_ms": 13.791,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 4568.618,
+            "distance_calculation_ms": 206.866,
+            "local_optimization_ms": 4234.454,
+            "metrics_ms": 0.044,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 221.374,
+            "serialization_ms": 3.966,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 5000,
+            "routed_stop_count": 5000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 4568.618
+        },
+        {
+          "cpu_ms": 4474.534,
+          "cpu_utilization_percent": 99.991,
+          "distance_km": 4248.589,
+          "metrics": {
+            "co2_kg": {
+              "after": 817.853,
+              "before": 817.853,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 4248.589,
+              "before_km": 4248.589,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 235.069,
+              "before": 235.069,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 33553.232,
+              "before": 33553.232,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 354.049,
+              "before": 354.049,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 42312.355,
+              "before": 42312.355,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 75865.587,
+              "before": 75865.587,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 191.078,
+          "repetition": 4,
+          "rss_after_mb": 161.422,
+          "rss_before_mb": 161.43,
+          "rss_delta_mb": -0.008,
+          "serialized_bytes": 331753,
+          "stage_timings": {
+            "clustering_ms": 90.159,
+            "constraint_validation_ms": 13.733,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 4474.945,
+            "distance_calculation_ms": 196.675,
+            "local_optimization_ms": 4143.631,
+            "metrics_ms": 0.032,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 213.319,
+            "serialization_ms": 3.955,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 5000,
+            "routed_stop_count": 5000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 4474.945
+        },
+        {
+          "cpu_ms": 4422.243,
+          "cpu_utilization_percent": 99.993,
+          "distance_km": 4248.589,
+          "metrics": {
+            "co2_kg": {
+              "after": 817.853,
+              "before": 817.853,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 4248.589,
+              "before_km": 4248.589,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 235.069,
+              "before": 235.069,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 33553.232,
+              "before": 33553.232,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 354.049,
+              "before": 354.049,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 42312.355,
+              "before": 42312.355,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 75865.587,
+              "before": 75865.587,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 191.078,
+          "repetition": 5,
+          "rss_after_mb": 161.426,
+          "rss_before_mb": 161.422,
+          "rss_delta_mb": 0.004,
+          "serialized_bytes": 331753,
+          "stage_timings": {
+            "clustering_ms": 107.733,
+            "constraint_validation_ms": 12.857,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 4422.547,
+            "distance_calculation_ms": 191.049,
+            "local_optimization_ms": 4080.867,
+            "metrics_ms": 0.029,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 207.347,
+            "serialization_ms": 3.766,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 5000,
+            "routed_stop_count": 5000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 4422.547
+        },
+        {
+          "cpu_ms": 4414.809,
+          "cpu_utilization_percent": 99.993,
+          "distance_km": 4248.589,
+          "metrics": {
+            "co2_kg": {
+              "after": 817.853,
+              "before": 817.853,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 4248.589,
+              "before_km": 4248.589,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 235.069,
+              "before": 235.069,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 33553.232,
+              "before": 33553.232,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 354.049,
+              "before": 354.049,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 42312.355,
+              "before": 42312.355,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 75865.587,
+              "before": 75865.587,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 191.078,
+          "repetition": 6,
+          "rss_after_mb": 161.418,
+          "rss_before_mb": 161.426,
+          "rss_delta_mb": -0.008,
+          "serialized_bytes": 331753,
+          "stage_timings": {
+            "clustering_ms": 77.955,
+            "constraint_validation_ms": 13.451,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 4415.119,
+            "distance_calculation_ms": 193.126,
+            "local_optimization_ms": 4100.355,
+            "metrics_ms": 0.039,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 209.527,
+            "serialization_ms": 3.931,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 5000,
+            "routed_stop_count": 5000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 4415.119
+        },
+        {
+          "cpu_ms": 4444.978,
+          "cpu_utilization_percent": 99.991,
+          "distance_km": 4248.589,
+          "metrics": {
+            "co2_kg": {
+              "after": 817.853,
+              "before": 817.853,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 4248.589,
+              "before_km": 4248.589,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 235.069,
+              "before": 235.069,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 33553.232,
+              "before": 33553.232,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 354.049,
+              "before": 354.049,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 42312.355,
+              "before": 42312.355,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 75865.587,
+              "before": 75865.587,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 191.078,
+          "repetition": 7,
+          "rss_after_mb": 161.422,
+          "rss_before_mb": 161.418,
+          "rss_delta_mb": 0.004,
+          "serialized_bytes": 331753,
+          "stage_timings": {
+            "clustering_ms": 81.569,
+            "constraint_validation_ms": 13.293,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 4445.356,
+            "distance_calculation_ms": 196.234,
+            "local_optimization_ms": 4122.722,
+            "metrics_ms": 0.039,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 211.996,
+            "serialization_ms": 3.886,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 5000,
+            "routed_stop_count": 5000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 4445.356
+        },
+        {
+          "cpu_ms": 4398.219,
+          "cpu_utilization_percent": 99.992,
+          "distance_km": 4248.589,
+          "metrics": {
+            "co2_kg": {
+              "after": 817.853,
+              "before": 817.853,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 4248.589,
+              "before_km": 4248.589,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 235.069,
+              "before": 235.069,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 33553.232,
+              "before": 33553.232,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 354.049,
+              "before": 354.049,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 42312.355,
+              "before": 42312.355,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 75865.587,
+              "before": 75865.587,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 191.078,
+          "repetition": 8,
+          "rss_after_mb": 161.418,
+          "rss_before_mb": 161.422,
+          "rss_delta_mb": -0.004,
+          "serialized_bytes": 331753,
+          "stage_timings": {
+            "clustering_ms": 80.567,
+            "constraint_validation_ms": 13.134,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 4398.557,
+            "distance_calculation_ms": 195.111,
+            "local_optimization_ms": 4079.277,
+            "metrics_ms": 0.034,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 211.233,
+            "serialization_ms": 3.897,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 5000,
+            "routed_stop_count": 5000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 4398.557
+        },
+        {
+          "cpu_ms": 4494.212,
+          "cpu_utilization_percent": 99.991,
+          "distance_km": 4248.589,
+          "metrics": {
+            "co2_kg": {
+              "after": 817.853,
+              "before": 817.853,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 4248.589,
+              "before_km": 4248.589,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 235.069,
+              "before": 235.069,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 33553.232,
+              "before": 33553.232,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 354.049,
+              "before": 354.049,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 42312.355,
+              "before": 42312.355,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 75865.587,
+              "before": 75865.587,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 191.078,
+          "repetition": 9,
+          "rss_after_mb": 161.426,
+          "rss_before_mb": 161.418,
+          "rss_delta_mb": 0.008,
+          "serialized_bytes": 331753,
+          "stage_timings": {
+            "clustering_ms": 77.18,
+            "constraint_validation_ms": 13.421,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 4494.622,
+            "distance_calculation_ms": 198.561,
+            "local_optimization_ms": 4174.214,
+            "metrics_ms": 0.028,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 214.776,
+            "serialization_ms": 3.785,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 5000,
+            "routed_stop_count": 5000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 4494.622
+        },
+        {
+          "cpu_ms": 4467.636,
+          "cpu_utilization_percent": 99.992,
+          "distance_km": 4248.589,
+          "metrics": {
+            "co2_kg": {
+              "after": 817.853,
+              "before": 817.853,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "distance": {
+              "after_km": 4248.589,
+              "before_km": 4248.589,
+              "saved_km": 0.0,
+              "saved_percent": 0.0
+            },
+            "driver_hours": {
+              "after": 235.069,
+              "before": 235.069,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_cost": {
+              "after": 33553.232,
+              "before": 33553.232,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "fuel_litres": {
+              "after": 354.049,
+              "before": 354.049,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "labor_cost": {
+              "after": 42312.355,
+              "before": 42312.355,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            },
+            "total_cost": {
+              "after": 75865.587,
+              "before": 75865.587,
+              "saved": 0.0,
+              "saved_percent": 0.0
+            }
+          },
+          "peak_rss_mb": 191.078,
+          "repetition": 10,
+          "rss_after_mb": 161.418,
+          "rss_before_mb": 161.426,
+          "rss_delta_mb": -0.008,
+          "serialized_bytes": 331753,
+          "stage_timings": {
+            "clustering_ms": 80.253,
+            "constraint_validation_ms": 13.227,
+            "database_access_ms": 0.0,
+            "deterministic_total_ms": 4467.978,
+            "distance_calculation_ms": 196.393,
+            "local_optimization_ms": 4147.336,
+            "metrics_ms": 0.038,
+            "persistence_ms": 0.0,
+            "request_parsing_ms": 0.0,
+            "route_construction_ms": 212.355,
+            "serialization_ms": 3.773,
+            "validation_ms": 0.001
+          },
+          "validation": {
+            "constraint_violations": 2,
+            "required_stop_count": 5000,
+            "routed_stop_count": 5000,
+            "valid": false,
+            "violations": [
+              "DRIVER_HOURS: Route exceeds 12 driver hours",
+              "DRIVER_HOURS: Route exceeds 12 driver hours"
+            ]
+          },
+          "wall_ms": 4467.978
+        }
+      ],
+      "seed": 20260823,
+      "stage_statistics_ms": {
+        "clustering_ms": {
+          "max": 155.857,
+          "min": 77.18,
+          "p50": 80.567,
+          "p95": 155.857,
+          "p99": 155.857
+        },
+        "constraint_validation_ms": {
+          "max": 14.001,
+          "min": 12.857,
+          "p50": 13.293,
+          "p95": 14.001,
+          "p99": 14.001
+        },
+        "database_access_ms": {
+          "max": 0.0,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "deterministic_total_ms": {
+          "max": 4722.355,
+          "min": 4398.557,
+          "p50": 4467.978,
+          "p95": 4722.355,
+          "p99": 4722.355
+        },
+        "distance_calculation_ms": {
+          "max": 206.866,
+          "min": 191.049,
+          "p50": 196.393,
+          "p95": 206.866,
+          "p99": 206.866
+        },
+        "local_optimization_ms": {
+          "max": 4390.09,
+          "min": 4079.277,
+          "p50": 4143.631,
+          "p95": 4390.09,
+          "p99": 4390.09
+        },
+        "metrics_ms": {
+          "max": 0.05,
+          "min": 0.028,
+          "p50": 0.034,
+          "p95": 0.05,
+          "p99": 0.05
+        },
+        "persistence_ms": {
+          "max": 0.0,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "request_parsing_ms": {
+          "max": 0.0,
+          "min": 0.0,
+          "p50": 0.0,
+          "p95": 0.0,
+          "p99": 0.0
+        },
+        "route_construction_ms": {
+          "max": 221.374,
+          "min": 207.347,
+          "p50": 212.355,
+          "p95": 221.374,
+          "p99": 221.374
+        },
+        "serialization_ms": {
+          "max": 4.091,
+          "min": 3.766,
+          "p50": 3.897,
+          "p95": 4.091,
+          "p99": 4.091
+        },
+        "validation_ms": {
+          "max": 0.001,
+          "min": 0.001,
+          "p50": 0.001,
+          "p95": 0.001,
+          "p99": 0.001
+        }
+      },
+      "stop_count": 5000,
+      "validation": {
+        "constraint_violations": 2,
+        "required_stop_count": 5000,
+        "routed_stop_count": 5000,
+        "valid": false,
+        "violations": [
+          "DRIVER_HOURS: Route exceeds 12 driver hours",
+          "DRIVER_HOURS: Route exceeds 12 driver hours"
+        ]
+      },
+      "vehicle_count": 20
+    }
+  ]
+}

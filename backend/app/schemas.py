@@ -302,14 +302,14 @@ class TripEventCreate(BaseModel):
 
 class BenchmarkCreate(BaseModel):
     scenario_id: uuid.UUID | None = None
-    workloads: list[int] = Field(default_factory=lambda: [100, 500, 1000, 5000])
+    workloads: list[int] = Field(default_factory=lambda: [100, 500, 1000, 2500, 5000])
     repetitions: int = Field(default=3, ge=1, le=10)
 
     @model_validator(mode="after")
     def validate_workloads(self) -> BenchmarkCreate:
-        allowed = {100, 500, 1000, 5000}
+        allowed = {100, 500, 1000, 2500, 5000}
         if not self.workloads or any(value not in allowed for value in self.workloads):
-            raise ValueError("workloads must contain only 100, 500, 1000, or 5000")
+            raise ValueError("workloads must contain only 100, 500, 1000, 2500, or 5000")
         return self
 
 
