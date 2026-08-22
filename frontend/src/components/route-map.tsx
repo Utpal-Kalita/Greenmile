@@ -1,7 +1,12 @@
 "use client";
 
-import { useId, useMemo } from "react";
-import { MapPin, PackageCheck, RotateCcw } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type {
+  DivIcon,
+  LayerGroup,
+  Map as LeafletMap,
+  Marker,
+} from "leaflet";
 import { cn } from "@/lib/utils";
 import type { RouteStop, Scenario, Stop } from "@/types/api";
 
@@ -15,13 +20,22 @@ interface RouteMapProps {
   activeStop?: string;
 }
 
-type Point = {
+type LeafletModule = typeof import("leaflet");
+type PointKind = "delivery" | "return";
+
+type MapPoint = {
   id: string;
   name: string;
-  kind: "delivery" | "return" | "warehouse";
-  x: number;
-  y: number;
+  address: string;
+  kind: PointKind;
+  lat: number;
+  lng: number;
+  sequence?: number;
+  vehicle?: number;
 };
+
+const DELHI_CENTER: [number, number] = [28.6139, 77.209];
+const ROUTE_COLORS = ["#45f27a", "#70a7ff", "#f5b84b", "#c084fc", "#22d3ee"];
 
 export function RouteMap({
   scenario,
@@ -32,17 +46,134 @@ export function RouteMap({
   className,
   activeStop,
 }: RouteMapProps) {
-  const patternId = useId().replace(/:/g, "");
-  const points = useMemo(
-    () => projectPoints(scenario, stops, route),
-    [scenario, stops, route],
-  );
-  const optimizedPath = useMemo(
-    () => pathForRoute(scenario, route, points),
-    [scenario, route, points],
-  );
-  const deliveryPath = useMemo(() => pathForKind(points, "delivery"), [points]);
-  const returnPath = useMemo(() => pathForKind(points, "return"), [points]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<LeafletMap | null>(null);
+  const layersRef = useRef<LayerGroup | null>(null);
+  const leafletRef = useRef<LeafletModule | null>(null);
+  const interactionTimerRef = useRef<number | null>(null);
+  const [mapReady, setMapReady] = useState(false);
+  const [isInteracting, setIsInteracting] = useState(false);
+  const points = useMemo(() => mapPoints(stops, route), [stops, route]);
+
+  function beginInteraction() {
+    if (interactionTimerRef.current !== null) {
+      window.clearTimeout(interactionTimerRef.current);
+    }
+    setIsInteracting(true);
+  }
+
+  function finishInteraction() {
+    if (interactionTimerRef.current !== null) {
+      window.clearTimeout(interactionTimerRef.current);
+    }
+    interactionTimerRef.current = window.setTimeout(() => {
+      setIsInteracting(false);
+      interactionTimerRef.current = null;
+    }, 500);
+  }
+
+  useEffect(() => {
+    let cancelled = false;
+    let map: LeafletMap | null = null;
+
+    void import("leaflet").then((L) => {
+      if (cancelled || !containerRef.current) return;
+
+      map = L.map(containerRef.current, {
+        center: DELHI_CENTER,
+        zoom: 11,
+        zoomControl: false,
+        preferCanvas: true,
+      });
+      L.tileLayer(
+        "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",
+        {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+          className: "greenmile-basemap",
+          maxZoom: 20,
+          subdomains: "abcd",
+        },
+      ).addTo(map);
+      L.control.zoom({ position: "bottomright" }).addTo(map);
+      L.control.scale({ imperial: false, position: "bottomleft" }).addTo(map);
+
+      leafletRef.current = L;
+      mapRef.current = map;
+      layersRef.current = L.layerGroup().addTo(map);
+      setMapReady(true);
+      window.setTimeout(() => map?.invalidateSize(false), 0);
+    });
+
+    return () => {
+      cancelled = true;
+      if (interactionTimerRef.current !== null) {
+        window.clearTimeout(interactionTimerRef.current);
+      }
+      map?.remove();
+      mapRef.current = null;
+      layersRef.current = null;
+      leafletRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    const L = leafletRef.current;
+    const map = mapRef.current;
+    const layers = layersRef.current;
+    if (!mapReady || !L || !map || !layers) return;
+
+    layers.clearLayers();
+    if (!scenario) {
+      map.setView(DELHI_CENTER, 11, { animate: false });
+      return;
+    }
+
+    const depot: [number, number] = [scenario.depot_lat, scenario.depot_lng];
+    drawRoutes(L, layers, depot, stops, route, before);
+
+    const depotMarker = L.marker(depot, {
+      icon: depotIcon(L),
+      title: `Depot: ${scenario.depot_address}`,
+      zIndexOffset: 1000,
+    }).addTo(layers);
+    bindPopup(depotMarker, "DEPOT", "Warehouse", scenario.depot_address);
+
+    for (const point of points) {
+      const marker = L.marker([point.lat, point.lng], {
+        icon: stopIcon(L, point, activeStop === point.id),
+        riseOnHover: true,
+        title: `${point.id}: ${point.name}`,
+      }).addTo(layers);
+      const detail = [
+        point.kind === "delivery" ? "Delivery" : "Return",
+        point.vehicle ? `Vehicle ${point.vehicle}` : null,
+        point.sequence !== undefined ? `Stop ${point.sequence}` : null,
+      ]
+        .filter(Boolean)
+        .join(" · ");
+      bindPopup(marker, point.id, detail, point.address);
+      if (activeStop === point.id) {
+        marker.openPopup();
+        map.panTo([point.lat, point.lng], { animate: true });
+      }
+    }
+
+    const bounds = L.latLngBounds([
+      depot,
+      ...points.map((point) => [point.lat, point.lng] as [number, number]),
+    ]);
+    if (points.length) {
+      map.fitBounds(bounds, {
+        animate: false,
+        maxZoom: 14,
+        padding: compact ? [34, 34] : [64, 64],
+      });
+    } else {
+      map.setView(depot, 13, { animate: false });
+    }
+    window.setTimeout(() => map.invalidateSize(false), 0);
+  }, [activeStop, before, compact, mapReady, points, route, scenario, stops]);
 
   return (
     <div
@@ -50,216 +181,238 @@ export function RouteMap({
         "route-map",
         compact && "is-compact",
         route.length > 0 && "is-optimized",
+        isInteracting && "is-interacting",
         className,
       )}
-      role="img"
+      onBlur={finishInteraction}
+      onKeyDown={beginInteraction}
+      onKeyUp={finishInteraction}
+      onPointerCancel={finishInteraction}
+      onPointerDown={beginInteraction}
+      onPointerLeave={finishInteraction}
+      onPointerUp={finishInteraction}
+      onWheel={() => {
+        beginInteraction();
+        finishInteraction();
+      }}
+      role="region"
       aria-label={
         before
-          ? "Map comparing separate delivery and return routes"
+          ? "Interactive map comparing separate delivery and return routes"
           : route.length
-            ? "Computed Greenmile route"
-            : "Scenario stops map"
+            ? "Interactive map of the computed Greenmile routes"
+            : "Interactive map of scenario stops"
       }
     >
-      <svg
-        className="map-canvas"
-        viewBox="0 0 1000 800"
-        preserveAspectRatio="xMidYMid slice"
-        aria-hidden="true"
-      >
-        <defs>
-          <pattern
-            id={patternId}
-            width="84"
-            height="84"
-            patternUnits="userSpaceOnUse"
-            patternTransform="rotate(18)"
-          >
-            <path d="M 0 42 H 84 M 42 0 V 84" className="map-grid-line" />
-          </pattern>
-          <filter
-            id={`${patternId}-glow`}
-            x="-40%"
-            y="-40%"
-            width="180%"
-            height="180%"
-          >
-            <feGaussianBlur stdDeviation="5" result="blur" />
-            <feMerge>
-              <feMergeNode in="blur" />
-              <feMergeNode in="SourceGraphic" />
-            </feMerge>
-          </filter>
-        </defs>
-        <rect width="1000" height="800" className="map-ground" />
-        <rect width="1000" height="800" fill={`url(#${patternId})`} />
-        <g className="map-blocks">
-          <path d="M-20 630 C160 555 230 625 385 540 S690 445 1020 535" />
-          <path d="M70 -20 C160 160 175 290 335 425 S520 680 580 830" />
-          <path d="M-20 270 C180 305 310 250 470 315 S735 340 1020 190" />
-          <path d="M780 -20 C690 170 685 300 760 455 S865 650 820 830" />
-        </g>
-        {before ? (
-          <g className="route-before">
-            {deliveryPath && (
-              <path d={deliveryPath} className="route-line delivery-line" />
-            )}
-            {returnPath && (
-              <path d={returnPath} className="route-line wasted-line" />
-            )}
-          </g>
-        ) : optimizedPath ? (
-          <path
-            d={optimizedPath}
-            className="route-line optimized-line"
-            filter={`url(#${patternId}-glow)`}
-          />
-        ) : null}
-      </svg>
-      {points.map((point, index) => (
-        <div
-          key={`${point.id}-${index}`}
-          className={cn(
-            "map-stop",
-            `is-${point.kind}`,
-            activeStop === point.id && "is-active",
-          )}
-          style={{
-            left: `${point.x}%`,
-            top: `${point.y}%`,
-            animationDelay: `${Math.min(index, 25) * 25}ms`,
-          }}
-          title={`${point.id} · ${point.name}`}
-        >
-          <span className="stop-core">
-            {point.kind === "warehouse" ? (
-              <MapPin size={14} />
-            ) : point.kind === "delivery" ? (
-              <PackageCheck size={11} />
-            ) : (
-              <RotateCcw size={11} />
-            )}
-          </span>
-          {(point.kind === "warehouse" || activeStop === point.id) && (
-            <span className="stop-label">{point.id}</span>
-          )}
-        </div>
-      ))}
-      <div className="map-coordinates mono">
-        {scenario ? `${scenario.depot_lat.toFixed(4)}° N` : "—"}
-        <br />
-        {scenario ? `${scenario.depot_lng.toFixed(4)}° E` : "—"}
+      <div ref={containerRef} className="map-canvas" />
+      {!mapReady && <div className="map-loading mono">LOADING OPENSTREETMAP</div>}
+      <div className="map-status-panel">
+        <span className="map-status-live mono">
+          <i /> OPENSTREETMAP
+        </span>
+        <strong>{scenario?.city || "Delhi"}</strong>
+        <span className="map-status-detail mono">
+          {scenario
+            ? `${points.length} STOPS · ${scenario.depot_lat.toFixed(4)}, ${scenario.depot_lng.toFixed(4)}`
+            : "BASEMAP READY"}
+        </span>
       </div>
-      {!compact && (
-        <div className="map-legend">
+      <div className={cn("map-legend", compact && "is-compact")}>
+        <span>
+          <i className="legend-dot depot" />
+          Depot
+        </span>
+        <span>
+          <i className="legend-dot delivery" />
+          Delivery
+        </span>
+        <span>
+          <i className="legend-dot returns" />
+          Return
+        </span>
+        {(before || route.length > 0) && (
           <span>
-            <i className="legend-dot delivery" />
-            Delivery
+            <i className={cn("legend-route", before && "is-before")} />
+            {before ? "Separate routes" : "Vehicle routes"}
           </span>
-          <span>
-            <i className="legend-dot returns" />
-            Return
-          </span>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
 
-function projectPoints(
-  scenario: Scenario | null | undefined,
-  stops: Stop[],
-  route: RouteStop[],
-): Point[] {
-  if (!scenario) return [];
-  const source = route.length
-    ? uniqueRoute(route)
-    : stops
-        .slice(0, 80)
-        .map((stop) => ({
-          id: stop.external_id,
-          name: stop.address,
-          kind:
-            stop.type === "DELIVERY"
-              ? ("delivery" as const)
-              : ("return" as const),
-          lat: stop.lat,
-          lng: stop.lng,
-        }));
-  const coordinates = [
-    { lat: scenario.depot_lat, lng: scenario.depot_lng },
-    ...source,
-  ];
-  const lats = coordinates.map((point) => point.lat);
-  const lngs = coordinates.map((point) => point.lng);
-  const minLat = Math.min(...lats);
-  const maxLat = Math.max(...lats);
-  const minLng = Math.min(...lngs);
-  const maxLng = Math.max(...lngs);
-  const project = (lat: number, lng: number) => ({
-    x: 8 + ((lng - minLng) / Math.max(maxLng - minLng, 0.0001)) * 84,
-    y: 8 + ((maxLat - lat) / Math.max(maxLat - minLat, 0.0001)) * 84,
+function mapPoints(stops: Stop[], route: RouteStop[]): MapPoint[] {
+  if (!route.length) {
+    return stops.map((stop) => ({
+      id: stop.external_id,
+      name: stop.address,
+      address: stop.address,
+      kind: stop.type === "DELIVERY" ? "delivery" : "return",
+      lat: stop.lat,
+      lng: stop.lng,
+    }));
+  }
+
+  const seen = new Set<string>();
+  return route.flatMap((stop) => {
+    if (
+      stop.type === "WAREHOUSE" ||
+      stop.external_id === "DEPOT" ||
+      seen.has(stop.external_id)
+    ) {
+      return [];
+    }
+    seen.add(stop.external_id);
+    return [
+      {
+        id: stop.external_id,
+        name: stop.name,
+        address: stop.address,
+        kind: stop.type === "DELIVERY" ? ("delivery" as const) : ("return" as const),
+        lat: stop.lat,
+        lng: stop.lng,
+        sequence: stop.sequence_number,
+        vehicle: stop.vehicle_sequence,
+      },
+    ];
   });
-  return [
-    {
-      id: "DEPOT",
-      name: scenario.depot_address,
-      kind: "warehouse",
-      ...project(scenario.depot_lat, scenario.depot_lng),
-    },
-    ...source
-      .slice(0, 120)
-      .map((item) => ({
-        id: item.id,
-        name: item.name,
-        kind: item.kind,
-        ...project(item.lat, item.lng),
-      })),
-  ];
 }
 
-function uniqueRoute(route: RouteStop[]) {
-  const seen = new Set<string>();
-  return route
-    .filter(
-      (item) =>
-        item.external_id !== "DEPOT" &&
-        !seen.has(item.external_id) &&
-        seen.add(item.external_id),
-    )
-    .map((item) => ({
-      id: item.external_id,
-      name: item.name,
-      kind:
-        item.type === "DELIVERY" ? ("delivery" as const) : ("return" as const),
-      lat: item.lat,
-      lng: item.lng,
-    }));
-}
-function pathForRoute(
-  scenario: Scenario | null | undefined,
+function drawRoutes(
+  L: LeafletModule,
+  layers: LayerGroup,
+  depot: [number, number],
+  stops: Stop[],
   route: RouteStop[],
-  points: Point[],
+  before: boolean,
 ) {
-  if (!scenario || !route.length || !points.length) return "";
-  const lookup = new Map(points.map((point) => [point.id, point]));
-  return route
-    .filter((item) => item.vehicle_sequence === 1)
-    .map((item, index) => {
-      const point = lookup.get(item.external_id) ?? points[0];
-      return `${index ? "L" : "M"} ${point.x * 10} ${point.y * 8}`;
-    })
-    .join(" ");
+  if (before) {
+    const deliveries = stops
+      .filter((stop) => stop.type === "DELIVERY")
+      .map((stop) => [stop.lat, stop.lng] as [number, number]);
+    const returns = stops
+      .filter((stop) => stop.type !== "DELIVERY")
+      .map((stop) => [stop.lat, stop.lng] as [number, number]);
+    addPolyline(
+      L,
+      layers,
+      [depot, ...deliveries, depot],
+      "#70a7ff",
+      "Deliveries",
+      undefined,
+      4,
+      "is-baseline-delivery",
+    );
+    addPolyline(
+      L,
+      layers,
+      [depot, ...returns, depot],
+      "#e37754",
+      "Returns",
+      "8 8",
+      4,
+      "is-baseline-return",
+    );
+    return;
+  }
+
+  const vehicles = new Map<number, RouteStop[]>();
+  for (const stop of route) {
+    const vehicleStops = vehicles.get(stop.vehicle_sequence) ?? [];
+    vehicleStops.push(stop);
+    vehicles.set(stop.vehicle_sequence, vehicleStops);
+  }
+  [...vehicles.entries()]
+    .sort(([first], [second]) => first - second)
+    .forEach(([vehicle, vehicleStops], index) => {
+      const coordinates = vehicleStops
+        .sort((first, second) => first.sequence_number - second.sequence_number)
+        .map((stop) => [stop.lat, stop.lng] as [number, number]);
+      if (!coordinates.length || !sameCoordinate(coordinates[0], depot)) {
+        coordinates.unshift(depot);
+      }
+      if (!sameCoordinate(coordinates.at(-1), depot)) coordinates.push(depot);
+
+      const color = ROUTE_COLORS[index % ROUTE_COLORS.length];
+      L.polyline(coordinates, {
+        className: "greenmile-route-shadow",
+        color: "#07100c",
+        opacity: 0.55,
+        weight: 10,
+        lineCap: "round",
+        lineJoin: "round",
+      }).addTo(layers);
+      addPolyline(
+        L,
+        layers,
+        coordinates,
+        color,
+        `Vehicle ${vehicle}`,
+        undefined,
+        5,
+        "is-optimized",
+      );
+    });
 }
-function pathForKind(points: Point[], kind: Point["kind"]) {
-  const selected = [
-    points[0],
-    ...points.filter((point) => point.kind === kind),
-    points[0],
-  ].filter(Boolean);
-  return selected
-    .map(
-      (point, index) => `${index ? "L" : "M"} ${point.x * 10} ${point.y * 8}`,
-    )
-    .join(" ");
+
+function addPolyline(
+  L: LeafletModule,
+  layers: LayerGroup,
+  coordinates: [number, number][],
+  color: string,
+  label: string,
+  dashArray?: string,
+  weight = 4,
+  className?: string,
+) {
+  if (coordinates.length < 3) return;
+  L.polyline(coordinates, {
+    className: cn("greenmile-route-line", className),
+    color,
+    dashArray,
+    opacity: 0.9,
+    weight,
+    lineCap: "round",
+    lineJoin: "round",
+  })
+    .bindTooltip(label, { className: "greenmile-route-tooltip", sticky: true })
+    .addTo(layers);
+}
+
+function sameCoordinate(
+  first: [number, number] | undefined,
+  second: [number, number],
+) {
+  return first?.[0] === second[0] && first[1] === second[1];
+}
+
+function depotIcon(L: LeafletModule): DivIcon {
+  return L.divIcon({
+    className: "greenmile-div-icon",
+    html: '<span class="leaflet-depot-marker"><b>W</b></span>',
+    iconAnchor: [18, 18],
+    iconSize: [36, 36],
+  });
+}
+
+function stopIcon(L: LeafletModule, point: MapPoint, active: boolean): DivIcon {
+  const numbered = point.sequence !== undefined;
+  return L.divIcon({
+    className: "greenmile-div-icon",
+    html: `<span class="leaflet-stop-marker is-${point.kind}${active ? " is-active" : ""}">${numbered ? `<b>${point.sequence}</b>` : ""}</span>`,
+    iconAnchor: numbered ? [14, 14] : [9, 9],
+    iconSize: numbered ? [28, 28] : [18, 18],
+  });
+}
+
+function bindPopup(marker: Marker, title: string, detail: string, address: string) {
+  const popup = document.createElement("div");
+  const heading = document.createElement("strong");
+  const meta = document.createElement("span");
+  const location = document.createElement("small");
+  heading.textContent = title;
+  meta.textContent = detail;
+  location.textContent = address;
+  popup.append(heading, meta, location);
+  marker.bindPopup(popup, { className: "greenmile-map-popup" });
 }
