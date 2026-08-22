@@ -1,6 +1,6 @@
 # 🟢 Greenmile — Bidirectional Last-Mile Logistics Optimizer
 
-> *"The greenest mile is the one you don't drive twice."*
+> _"The greenest mile is the one you don't drive twice."_
 
 **Greenmile** is an AI-powered logistics optimizer that merges outbound deliveries and inbound returns into a single smart loop — eliminating the empty-van problem that wastes 40% of last-mile fuel in India.
 
@@ -34,12 +34,12 @@ The van delivers packages on the way out and picks up returns on the way back. N
 
 ### Impact Per Van Per Day
 
-| Metric | Before (2 Trips) | After (1 Loop) | Saved |
-|--------|:-:|:-:|:-:|
-| Distance | 87 km | 52 km | **▼ 35 km (40%)** |
-| Fuel Cost | ₹653 | ₹390 | **▼ ₹263/day** |
-| CO₂ Emissions | 19.4 kg | 11.6 kg | **▼ 7.8 kg** |
-| Driver Hours | 8.2 hrs | 5.1 hrs | **▼ 3.1 hrs** |
+| Metric        | Before (2 Trips) | After (1 Loop) |       Saved       |
+| ------------- | :--------------: | :------------: | :---------------: |
+| Distance      |      87 km       |     52 km      | **▼ 35 km (40%)** |
+| Fuel Cost     |       ₹653       |      ₹390      |  **▼ ₹263/day**   |
+| CO₂ Emissions |     19.4 kg      |    11.6 kg     |   **▼ 7.8 kg**    |
+| Driver Hours  |     8.2 hrs      |    5.1 hrs     |   **▼ 3.1 hrs**   |
 
 > For a **50-van fleet**: ₹33 lakh saved/year · 97 tonnes CO₂ avoided · ≈ 4,600 trees equivalent
 
@@ -88,17 +88,12 @@ greenmile/
 │   └── requirements.txt
 ├── frontend/
 │   ├── src/
-│   │   ├── App.jsx                  # Main dashboard — state management & layout
-│   │   ├── index.css                # Design system (dark theme)
-│   │   └── components/
-│   │       ├── UploadDropzone.jsx   # CSV drag-and-drop upload
-│   │       ├── RouteMap.jsx         # Leaflet map (before state)
-│   │       ├── SplitRouteMap.jsx    # Before/After side-by-side split map
-│   │       ├── MetricCards.jsx      # Animated before → after savings cards
-│   │       ├── AnomalyBadge.jsx     # AI fraud flag display panel
-│   │       ├── PackingSequencer.jsx # SVG van diagram + load order checklist
-│   │       ├── DriverView.jsx       # Mobile driver interface
-│   │       └── FleetScaler.jsx      # 1–50 van annual savings projector
+│   │   ├── app/                     # Next.js App Router pages + route states
+│   │   ├── components/              # Trip, performance, system, packing, driver UI
+│   │   ├── data/mock-data.ts        # Typed Delhi NCR demo fixtures
+│   │   ├── lib/                     # Shared frontend utilities
+│   │   └── types/                   # Greenmile domain models
+│   ├── next.config.ts
 │   └── package.json
 ├── data/
 │   └── demo_stops.csv               # 18 seeded stops — Delhi-NCR Zone B
@@ -140,8 +135,9 @@ flowchart TD
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.10+ and Node.js 18+
-- A [Gemini API key](https://aistudio.google.com/apikey) (free tier works; the app runs in heuristic-fallback mode without one)
+
+- Python 3.10+ and Node.js 20.9+
+- A [Gemini API key](https://aistudio.google.com/apikey) for live backend AI features (the redesigned frontend currently runs entirely on seeded mock data)
 
 ### 1. Backend
 
@@ -151,11 +147,13 @@ pip install -r requirements.txt
 ```
 
 Create a `.env` file inside `backend/`:
+
 ```
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 Start the server:
+
 ```bash
 python -m uvicorn app.main:app --port 8000
 ```
@@ -167,26 +165,20 @@ API docs → http://localhost:8000/docs
 ```bash
 cd frontend
 npm install
-```
-
-If your backend is running somewhere other than `localhost:8000`, create a `.env` file inside `frontend/`:
-```
-VITE_API_URL=http://localhost:8000
-```
-
-Start the dev server:
-```bash
 npm run dev
 ```
 
-Dashboard → http://localhost:5173
+The redesign uses local typed mock data, so no frontend environment variable or running backend is required.
+
+Greenmile → http://localhost:3000
 
 ### 3. Try the Demo
 
-1. Open http://localhost:5173
-2. Click **"or load seeded demo data"** in the upload dropzone
-3. Click **⚡ Optimize** — watch the pipeline run
-4. Explore tabs: **Route Map** → **Packing Order** → **Driver View** → **Fleet Scaler**
+1. Open http://localhost:3000
+2. Click **Try Delhi demo**
+3. Click **Optimize this trip** and watch each engine stage complete
+4. Explore the route transformation, impact, intelligence, packing, and driver views
+5. Open **Performance**, **System**, and **How it works** from the navigation
 
 ---
 
@@ -196,16 +188,12 @@ Dashboard → http://localhost:5173
 
 ### Frontend → Vercel
 
-`frontend/vercel.json` configures the Vite SPA build with client-side routing rewrites.
+`frontend/vercel.json` identifies the application as a native Next.js project.
 
 1. Push this repo to GitHub
 2. Go to [vercel.com](https://vercel.com) → **Add New Project** → import your repo
 3. Set **Root Directory** to `frontend`
-4. In **Environment Variables**, add:
-   ```
-   VITE_API_URL=https://greenmile-backend.onrender.com
-   ```
-5. Deploy — Vercel auto-detects Vite
+4. Deploy — Vercel auto-detects Next.js; no frontend environment variables are needed for the mock-data experience
 
 ### Backend → Render
 
@@ -219,11 +207,11 @@ Dashboard → http://localhost:5173
 
 ## 🔌 API Reference
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `GET` | `/` | Health check — returns API status and Gemini config |
-| `GET` | `/docs` | Interactive Swagger UI |
-| `POST` | `/upload` | Upload CSV file → returns parsed + validated stops JSON |
+| Method | Endpoint    | Description                                                               |
+| ------ | ----------- | ------------------------------------------------------------------------- |
+| `GET`  | `/`         | Health check — returns API status and Gemini config                       |
+| `GET`  | `/docs`     | Interactive Swagger UI                                                    |
+| `POST` | `/upload`   | Upload CSV file → returns parsed + validated stops JSON                   |
 | `POST` | `/optimize` | Accepts `{ stops: Stop[] }` → returns optimized route with AI annotations |
 
 ### Stop Schema
@@ -251,6 +239,7 @@ Dashboard → http://localhost:5173
 ### Optimization Response
 
 The `/optimize` endpoint returns:
+
 - `route` — Ordered list of stops annotated with `risk_score`, `flag`, `reason`, `suggested_action`, `return_probability`, `pre_stage_return`
 - `nl_summary` — Gemini-generated 3-sentence route briefing
 - `metrics` — Before/after distance, fuel cost, CO₂, driver hours
@@ -271,15 +260,15 @@ return_count_30d, avg_delivery_confirm_minutes, dispute_history_count
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|-------|------------|
-| **Backend** | Python 3.12 · FastAPI · Uvicorn |
-| **Optimization** | scikit-learn (DBSCAN) · scipy · custom NN + 2-opt |
-| **AI** | Google Gemini 2.0 Flash via `google-genai` SDK |
-| **Frontend** | React 19 · Vite 8 · Tailwind CSS v3 |
-| **Maps** | Leaflet.js · react-leaflet · dark tile layer |
-| **Data** | pandas · CSV validation · Pydantic v2 models |
+| Layer            | Technology                                          |
+| ---------------- | --------------------------------------------------- |
+| **Backend**      | Python 3.12 · FastAPI · Uvicorn                     |
+| **Optimization** | scikit-learn (DBSCAN) · scipy · custom NN + 2-opt   |
+| **AI**           | Google Gemini 2.0 Flash via `google-genai` SDK      |
+| **Frontend**     | Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 |
+| **Maps**         | Responsive SVG route visualization                  |
+| **Data**         | pandas · CSV validation · Pydantic v2 models        |
 
 ---
 
-*Greenmile v2.0 · Built for India's last mile 🇮🇳*
+_Greenmile v2.0 · Built for India's last mile 🇮🇳_
