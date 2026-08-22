@@ -4,6 +4,7 @@ Groups stop lat/lng points into spatial clusters using scikit-learn DBSCAN
 with haversine metric (earth-radius-normalised radians).
 """
 import math
+
 import numpy as np
 from sklearn.cluster import DBSCAN
 
@@ -36,7 +37,7 @@ def cluster_stops(stops: list, eps_km: float = 3.0, min_samples: int = 2) -> lis
     zone_letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     result = []
     outlier_idx = 0
-    for stop, label in zip(stops, labels):
+    for stop, label in zip(stops, labels, strict=False):
         s = dict(stop)
         if label == -1:
             s["cluster_id"] = f"Outlier_{outlier_idx}"
