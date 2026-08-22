@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import type { GeoJSONFeatureCollection } from "../../types/api";
+import type {
+  GeoJSONFeatureCollection,
+  GeoJSONPosition,
+} from "../../types/api";
 import {
   changedRouteCollection,
   fallbackMapStyle,
@@ -8,7 +11,7 @@ import {
 } from "./map-utils";
 
 function route(
-  coordinates: number[][],
+  coordinates: GeoJSONPosition[],
   stopIds: string[],
   vehicleSequence = 1,
 ): GeoJSONFeatureCollection {

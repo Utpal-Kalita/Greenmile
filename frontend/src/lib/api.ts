@@ -1,5 +1,6 @@
 import type {
   Benchmark,
+  MapPayload,
   OptimizationRun,
   Scenario,
   StageEvent,
@@ -44,6 +45,8 @@ export const api = {
   getDemoScenario: () => request<Scenario>("/api/scenarios/demo"),
   getStops: (scenarioId: string) =>
     request<Stop[]>(`/api/scenarios/${scenarioId}/stops`),
+  getScenarioMap: (scenarioId: string) =>
+    request<MapPayload>(`/api/scenarios/${scenarioId}/map`),
   createRun: (scenarioId: string) =>
     request<OptimizationRun>("/api/optimization-runs", {
       method: "POST",
@@ -51,6 +54,8 @@ export const api = {
     }),
   getRun: (runId: string) =>
     request<OptimizationRun>(`/api/optimization-runs/${runId}`),
+  getRunMap: (runId: string) =>
+    request<MapPayload>(`/api/optimization-runs/${runId}/map`),
   getBenchmarks: () => request<Benchmark[]>("/api/benchmarks"),
   runBenchmarks: (scenarioId: string, workloads: number[]) =>
     request<Benchmark[]>("/api/benchmarks", {
@@ -92,6 +97,18 @@ export function streamRunEvents(
     "CALCULATING_METRICS",
     "PERSISTING",
     "ROUTE_READY",
+    "AI_ANALYSIS_STARTED",
+    "AI_ANALYSIS_COMPLETE",
+    "AI_ANALYSIS_FAILED",
+    "DELIVERY_COMPLETED",
+    "DELIVERY_FAILED",
+    "RETURN_READY",
+    "RETURN_COLLECTED",
+    "RETURN_CANCELLED",
+    "STOP_CANCELLED",
+    "CAPACITY_CHANGED",
+    "TRAFFIC_DELAY",
+    "DRIVER_DELAY",
     "REOPTIMIZING",
     "ROUTE_UPDATED",
   ];
