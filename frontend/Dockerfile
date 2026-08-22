@@ -12,6 +12,9 @@ COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
 
+FROM builder AS verifier
+RUN npm test && npm run lint && npm run typecheck
+
 FROM node:22-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production \
