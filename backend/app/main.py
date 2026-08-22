@@ -5,7 +5,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import benchmarks, health, optimization, scenarios
 from app.core.config import get_settings
-from app.core.logging import configure_logging
+from app.core.logging import configure_logging, logger
+from app.data_pipeline.seed import seed_demo
 from app.db.session import close_database
 
 settings = get_settings()
@@ -14,6 +15,13 @@ settings = get_settings()
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     configure_logging()
+    if settings.auto_seed_demo:
+        try:
+            demo_id = await seed_demo()
+            logger.info("demo_scenario_ready", scenario_id=demo_id)
+        except Exception:
+            logger.exception("demo_scenario_seed_failed")
+            raise
     yield
     await close_database()
 

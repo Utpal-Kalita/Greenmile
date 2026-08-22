@@ -14,6 +14,7 @@ from app.core.logging import logger
 from app.db.models import OptimizationRun, RouteStop
 from app.domain.enums import EventType, ProviderStatus, RouteAction, RunStatus, StopStatus
 from app.optimizer.engine import HaversineProvider, IncrementalOptimizer, Location, MetricsEngine, RouteOptimizer
+from app.optimizer.optimized_v2 import OptimizedV2Strategy
 from app.providers.contracts import NoIntelligenceProvider, NoPredictionProvider
 from app.repositories.runs import OptimizationRepository
 from app.repositories.scenarios import ScenarioRepository
@@ -80,20 +81,38 @@ class OptimizationService:
 
             await self._stage(run, EventType.CLUSTERING, RunStatus.OPTIMIZING, {"provider": self.provider.name})
             started = perf_counter()
-            optimized = await asyncio.to_thread(self.optimizer.optimize, stops, vehicles, depot)
+            optimized_result = await asyncio.to_thread(OptimizedV2Strategy(self.optimizer).optimize, stops, vehicles, depot)
+            optimized = optimized_result.plan
             timings["optimization_ms"] = self._elapsed(started)
+            timings["local_optimization_ms"] = optimized_result.local_search.optimization_wall_ms
             await self._event(run, EventType.BUILDING_ROUTE, {"vehicles": len(optimized.routes), "clusters": optimized.cluster_count}, timings["optimization_ms"])
-            await self._event(run, EventType.OPTIMIZING, {"algorithm": self.settings.algorithm_version})
+            await self._event(run, EventType.OPTIMIZING, {"algorithm": self.settings.algorithm_version, **optimized_result.local_search.as_dict()})
 
             run.status = RunStatus.VALIDATING_ROUTE
             started = perf_counter()
-            constraints = optimized.constraints
+            constraints = self.optimizer.validate(
+                stops,
+                optimized.routes,
+                vehicles,
+                depot,
+                total_distance_km=optimized.total_distance_km,
+            )
+            optimized.constraints = constraints
             timings["constraints_ms"] = self._elapsed(started)
-            await self._event(run, EventType.CHECKING_CONSTRAINTS, {"feasible": constraints.feasible, "violations": len(constraints.violations)}, timings["constraints_ms"])
 
             started = perf_counter()
             metrics = self.metrics_engine.calculate(baseline, optimized, vehicles)
             timings["metrics_ms"] = self._elapsed(started)
+            optimized.constraints = self.optimizer.validate(
+                stops,
+                optimized.routes,
+                vehicles,
+                depot,
+                total_distance_km=optimized.total_distance_km,
+                metrics=metrics,
+            )
+            constraints = optimized.constraints
+            await self._event(run, EventType.CHECKING_CONSTRAINTS, {"feasible": constraints.feasible, "violations": len(constraints.violations)}, timings["constraints_ms"])
             await self._event(run, EventType.CALCULATING_METRICS, {"distance_saved_km": metrics["distance"]["saved_km"]}, timings["metrics_ms"])
 
             started = perf_counter()
@@ -103,8 +122,9 @@ class OptimizationService:
             timings["persistence_ms"] = self._elapsed(started)
             run.stage_timings = timings
             await self._event(run, EventType.PERSISTING, {"route_stops": len(route_models)}, timings["persistence_ms"])
-            run.status = RunStatus.COMPLETED
-            run.system_state = "ROUTE_READY"
+            run.status = RunStatus.COMPLETED if constraints.feasible else RunStatus.FAILED
+            run.system_state = "ROUTE_READY" if constraints.feasible else "ROUTE_INFEASIBLE"
+            run.error_message = None if constraints.feasible else "Route failed correctness validation"
             run.completed_at = datetime.now(UTC)
             run.optimization_latency_ms = self._elapsed(total_start)
             await self._event(run, EventType.ROUTE_READY, {"distance_km": optimized.total_distance_km, "feasible": constraints.feasible}, run.optimization_latency_ms)

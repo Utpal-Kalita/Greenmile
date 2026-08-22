@@ -21,6 +21,9 @@ router = APIRouter(prefix="/optimization-runs", tags=["optimization"])
 async def execute_run(run_id: uuid.UUID) -> None:
     async with SessionFactory() as session:
         await OptimizationService(session).execute(run_id)
+        completed = await OptimizationRepository(session).get(run_id)
+    if not completed or completed.status != RunStatus.COMPLETED:
+        return
     from app.services.intelligence import analyze_run
 
     await analyze_run(run_id)
