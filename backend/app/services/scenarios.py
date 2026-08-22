@@ -11,7 +11,8 @@ from app.data_pipeline.csv_import import parse_csv
 from app.db.models import Scenario, Vehicle
 from app.optimizer.engine import HaversineProvider, Location, RouteOptimizer
 from app.repositories.scenarios import ScenarioRepository
-from app.schemas import ImportResult, MapPayload, ScenarioCreate, ScenarioRead, StopRead as StopResponse
+from app.schemas import ImportResult, MapPayload, ScenarioCreate, ScenarioRead
+from app.schemas import StopRead as StopResponse
 from app.services.map_data import MapDataService
 
 

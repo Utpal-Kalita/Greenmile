@@ -1,6 +1,6 @@
+import uuid
 from dataclasses import dataclass
 from datetime import time
-import uuid
 
 from app.core.config import Settings
 from app.domain.enums import RouteAction, StopType

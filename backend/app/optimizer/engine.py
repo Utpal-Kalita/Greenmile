@@ -436,4 +436,4 @@ class IncrementalOptimizer:
         if direct:
             return str(direct)
         stop = getattr(item, "stop", None)
-        return str(getattr(stop, "external_id"))
+        return str(stop.external_id)
