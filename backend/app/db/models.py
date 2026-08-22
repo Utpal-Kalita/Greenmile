@@ -185,5 +185,5 @@ class BenchmarkRun(UUIDPrimaryKeyMixin, Base):
     route_quality_delta: Mapped[float]
     constraint_violations: Mapped[int]
     memory_usage_mb: Mapped[float]
-    stage_timings: Mapped[dict[str, float]] = mapped_column(JSONB, default=dict)
+    stage_timings: Mapped[dict[str, float | list[float]]] = mapped_column(JSONB, default=dict)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())

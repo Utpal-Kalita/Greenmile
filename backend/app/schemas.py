@@ -331,7 +331,7 @@ class BenchmarkRead(ORMModel):
     route_quality_delta: float
     constraint_violations: int
     memory_usage_mb: float
-    stage_timings: dict[str, float]
+    stage_timings: dict[str, float | list[float]]
     created_at: datetime
 
 

@@ -39,7 +39,7 @@ class BenchmarkService:
             baseline_times: list[float] = []
             optimized_times: list[float] = []
             baseline = optimized = None
-            stage_timings: dict[str, float] = {}
+            stage_timings: dict[str, float | list[float]] = {}
             for _ in range(payload.repetitions):
                 started = perf_counter()
                 baseline = optimizer.baseline(stops, scenario.vehicles, depot)
