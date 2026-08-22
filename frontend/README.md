@@ -1,16 +1,46 @@
-# React + Vite
+# Greenmile Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A dark-first operational interface for Greenmile’s bidirectional last-mile optimizer. The frontend is a **Next.js 16 App Router** application using TypeScript, Tailwind CSS 4, and seeded mock data.
 
-Currently, two official plugins are available:
+## Run locally
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+npm run dev
+```
 
-## React Compiler
+Open [http://localhost:3000](http://localhost:3000).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Routes
 
-## Expanding the ESLint configuration
+- `/` — Trip demo: load Delhi NCR data, run the visible optimization pipeline, and explore impact, intelligence, packing, and driver mode.
+- `/performance` — Performance Lab with workload benchmarks and optimization profiles.
+- `/system` — System architecture and engine event timeline.
+- `/how-it-works` — Four-step product explanation and technical methods.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Commands
+
+```bash
+npm run dev        # start the development server
+npm run lint       # lint the source
+npm run typecheck  # run TypeScript without emitting files
+npm run build      # create a production build
+npm run start      # serve the production build
+```
+
+## Data
+
+The current experience intentionally uses typed mock data from `src/data/mock-data.ts`. No backend or environment variable is required for the redesign demo.
+
+## Structure
+
+```text
+src/
+├── app/            # App Router pages, metadata, and route states
+├── components/     # Interactive product experiences and shared shell
+├── data/           # Typed Delhi NCR demo fixtures
+├── lib/            # Small shared utilities
+└── types/          # Greenmile domain types
+```
+
+The visual system follows `../docs/branding.md` and the experience follows `../docs/ui_ux.md`.
