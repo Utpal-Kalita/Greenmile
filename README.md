@@ -1,4 +1,4 @@
-# 🟢 Greenmile — Bidirectional Last-Mile Logistics Optimizer
+# 🟢 Greenmile — Bidirectional Last-Mile Logistics Optimizer.
 
 > _"The greenest mile is the one you don't drive twice."_
 
