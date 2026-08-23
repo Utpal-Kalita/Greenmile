@@ -1,167 +1,180 @@
-# 🟢 Greenmile — Bidirectional Last-Mile Logistics Optimizer
+# Greenmile
 
-> _"The greenest mile is the one you don't drive twice."_
+Greenmile is a bidirectional last-mile planning system that combines outbound deliveries and inbound returns into depot-closed vehicle routes. It provides a persistent FastAPI backend, a deterministic optimization engine, an event-driven trip workflow, and a Next.js operations interface with interactive Leaflet maps.
 
-**Greenmile** is an AI-powered logistics optimizer that merges outbound deliveries and inbound returns into a single smart loop — eliminating the empty-van problem that wastes 40% of last-mile fuel in India.
+The current application is version 3.0.0.
 
-Built for **FAR AWAY 2026 Hackathon · Theme: Logistics & Transit**
+## What Is Implemented
 
-🌐 **Live Demo → [greenmile-seven.vercel.app](https://greenmile-seven.vercel.app/)**
+- Persistent scenarios, stops, vehicles, optimization runs, route stops, metrics, events, benchmarks, and optional AI analyses in PostgreSQL.
+- A deterministic 500-stop Delhi demo with explicit synthetic-data provenance.
+- DBSCAN geographic clustering using Haversine distance.
+- Multi-vehicle workload partitioning by weight and volume.
+- Delivery-before-return route construction using nearest-neighbour ordering and bounded 2-opt improvement.
+- Capacity, time-window, precedence, depot-closure, and driver-hours validation.
+- Separate delivery/return baseline routes for before-and-after comparisons.
+- Incremental route repair after supported trip events.
+- Server-Sent Events (SSE) for optimization and route-update progress.
+- Route-level distance, fuel, emissions, labor, and total-cost metrics.
+- Interactive Leaflet maps with OpenStreetMap-derived tiles, depot and stop markers, route lines, sequence numbers, popups, zooming, and panning.
+- Optional post-route operational analysis through Azure OpenAI structured outputs.
+- Benchmark execution and persisted p50, p95, and p99 results.
 
----
+## Honest Boundaries
 
-## 📌 The Problem
+Greenmile is currently a decision-support demo, not a production dispatch platform.
 
-Every day, Indian delivery fleets run **two separate trips** for the same set of customers:
+- Route distances are straight-line Haversine estimates, not road-network paths.
+- The optimizer does not use live traffic, GPS, weather, or driver telemetry.
+- Azure OpenAI does not create or reorder routes. It analyzes the completed deterministic route.
+- Return probabilities from Azure OpenAI are reasoned estimates, not predictions from a trained model.
+- If Azure OpenAI is not configured, the route still completes and intelligence is reported as unavailable. No AI response is fabricated.
+- The browser demo loads the persisted synthetic scenario. CSV import exists in the API but is not currently exposed as a frontend upload flow.
+- Authentication, authorization, and multi-tenant isolation are not implemented.
 
-```
-Trip 1 (Delivery):   Warehouse ──📦──→ Customers ──🚫──→ Warehouse   (van returns EMPTY)
-Trip 2 (Returns):    Warehouse ──🚫──→ Customers ──📦──→ Warehouse   (van leaves EMPTY)
-```
+## Architecture
 
-That's **2 trips, 2 fuel tanks, 2 driver shifts** — for work that one loop could cover. No existing tool on the market combines deliveries and returns into a single optimized route.
-
-## 💡 The Solution
-
-Greenmile merges both trips into **one bidirectional loop**:
-
-```
-Warehouse ──📦 deliver──→ Customers ──↩️ collect returns──→ Warehouse
-                       ONE TRIP. ONE VAN. ONE DRIVER.
-```
-
-The van delivers packages on the way out and picks up returns on the way back. No empty legs. No wasted fuel.
-
-### Impact Per Van Per Day
-
-| Metric        | Before (2 Trips) | After (1 Loop) |       Saved       |
-| ------------- | :--------------: | :------------: | :---------------: |
-| Distance      |      87 km       |     52 km      | **▼ 35 km (40%)** |
-| Fuel Cost     |       ₹653       |      ₹390      |  **▼ ₹263/day**   |
-| CO₂ Emissions |     19.4 kg      |    11.6 kg     |   **▼ 7.8 kg**    |
-| Driver Hours  |     8.2 hrs      |    5.1 hrs     |   **▼ 3.1 hrs**   |
-
-> For a **50-van fleet**: ₹33 lakh saved/year · 97 tonnes CO₂ avoided · ≈ 4,600 trees equivalent
-
----
-
-## ✨ Key Features
-
-### 🧠 AI-Powered Intelligence (Gemini 2.0 Flash)
-
-- **Fraud & Anomaly Detection** — Analyses return stop metadata (frequency, disputes, confirmation delays) and flags suspicious patterns with risk scores (0–1), reasons, and actions (HOLD / VERIFY / PROCEED)
-- **Natural Language Briefing** — Generates a 3-sentence plain-English route summary that non-technical fleet managers can read in 10 seconds
-- **Return Probability Predictor** — Scores each delivery for return likelihood and pre-allocates van space for predicted returns
-
-> **Graceful fallback**: if no Gemini API key is provided, the system automatically falls back to heuristic anomaly detection and a static route summary — no crash, no empty UI.
-
-### 🗺️ Route Optimization Engine
-
-- **DBSCAN Geographic Clustering** — Groups nearby stops into zones using haversine distance (eps = 3 km), so each van handles a tight geographic area
-- **Bidirectional Loop Optimizer** — Nearest-Neighbour seed + 2-opt improvement builds one loop: deliver outbound → collect returns inbound → return to warehouse
-- **Before/After Split Map** — Side-by-side Leaflet maps showing the old 2-trip routes (red + blue) vs the optimized green loop with progressive drawing animation
-
-### 📦 Operations Tools
-
-- **Packing Sequencer** — SVG bird's-eye van diagram showing exactly how to load: returns at the rear (collected last), deliveries at the front (dropped first). Warehouse workers follow the numbered checklist
-- **Driver Mobile View** — One-stop-at-a-time interface with navigation, progress tracking, and inline anomaly warnings
-- **Fleet Scaler** — Slider projecting annual savings from 1 to 50 vans with live ₹/CO₂/hours calculations
-
----
-
-## 🏗️ Architecture
-
-```
-greenmile/
-├── backend/
-│   ├── app/
-│   │   ├── main.py                  # FastAPI — /upload, /optimize endpoints
-│   │   ├── models.py                # Pydantic schemas: Stop, OptimizationRequest
-│   │   └── optimizer/
-│   │       ├── dbscan.py            # DBSCAN geographic clustering (haversine)
-│   │       ├── haversine.py         # Great-circle distance matrix
-│   │       ├── route.py             # NN + 2-opt bidirectional loop builder
-│   │       └── return_predictor.py  # Return probability scoring heuristic
-│   ├── ai/
-│   │   ├── anomaly.py               # Gemini fraud detector (google-genai SDK)
-│   │   └── summary.py               # Gemini NL route summary generator
-│   └── requirements.txt
-├── frontend/
-│   ├── src/
-│   │   ├── app/                     # Next.js App Router pages + route states
-│   │   ├── components/              # Trip, performance, system, packing, driver UI
-│   │   ├── lib/api.ts               # Typed REST + SSE backend client
-│   │   ├── lib/                     # Shared frontend utilities
-│   │   └── types/                   # Greenmile domain models
-│   ├── next.config.ts
-│   └── package.json
-├── data/
-│   └── demo_stops.csv               # 18 seeded stops — Delhi-NCR Zone B
-├── frontend/vercel.json             # Vercel frontend deployment config
-└── render.yaml                      # Render backend deployment config
+```text
+Next.js frontend
+  |-- scenario and stop loading
+  |-- optimization controls and SSE progress
+  |-- Leaflet route visualization
+  |-- impact, packing, benchmark, and driver views
+  |
+  v
+FastAPI service
+  |-- scenario and CSV import API
+  |-- asynchronous optimization runs
+  |-- trip events and incremental route repair
+  |-- map and benchmark payloads
+  |
+  +--> deterministic optimizer
+  |      DBSCAN -> partition -> nearest neighbour -> 2-opt
+  |      -> route materialization -> constraint checks -> metrics
+  |
+  +--> optional Azure OpenAI analysis after routing
+  |
+  v
+PostgreSQL
+  scenarios, stops, vehicles, runs, routes, events, metrics,
+  benchmarks, and AI analyses
 ```
 
-### System Flow
+### Route Lifecycle
 
-```mermaid
-flowchart TD
-    A([CSV Upload / Demo Data]) --> B[POST /upload]
-    B --> C{Validate columns, types, coordinates}
-    C -->|Invalid| D([400 Error + message])
-    C -->|Valid| E[Parsed stops JSON]
-    E --> F([Frontend: stop summary cards])
-    F --> G([Click ⚡ Optimize])
-    G --> H[POST /optimize]
+1. Load the seeded demo or create a scenario through the API.
+2. Store stops and vehicles in PostgreSQL.
+3. Create an optimization run with `POST /api/optimization-runs`.
+4. Validate inputs, cluster stops, build routes, check constraints, calculate metrics, and persist results.
+5. Stream stage events to the browser over SSE.
+6. Run optional Azure OpenAI analysis after deterministic routing completes.
+7. Submit trip events to repair affected routes without reclustering or running a global 2-opt pass.
 
-    subgraph Pipeline ["Optimization Pipeline"]
-        H --> I["DBSCAN clustering<br/>(eps=3km, Haversine)"]
-        I --> J["NN + 2-opt per cluster<br/>(bidirectional loop)"]
-        J --> K["Return Probability Predictor"]
-        K --> L["Gemini Anomaly Detection<br/>(risk_score + reason)"]
-        L --> M["Gemini NL Summary<br/>(3-sentence briefing)"]
-    end
+## Repository Layout
 
-    M --> N([Annotated route + metrics])
-    N --> O([Split Before/After Map])
-    N --> P([Metric Cards — savings])
-    N --> Q([Packing Sequencer + SVG])
-    N --> R([Driver View])
-    N --> S([Fleet Scaler])
-    N --> T([Anomaly Badges])
+```text
+Greenmile/
+|-- backend/
+|   |-- app/
+|   |   |-- api/routes/          # Health, scenario, run, event, and benchmark endpoints
+|   |   |-- ai/                  # Optional Azure OpenAI provider and schemas
+|   |   |-- core/                # Settings and structured logging
+|   |   |-- data_pipeline/       # CSV validation and deterministic demo seeding
+|   |   |-- db/                  # SQLAlchemy models and async sessions
+|   |   |-- optimizer/engine.py  # Active optimizer, constraints, metrics, and repair logic
+|   |   |-- repositories/        # Persistence access
+|   |   |-- services/            # Application orchestration and map payloads
+|   |   |-- main.py              # FastAPI application entry point
+|   |   `-- schemas.py           # API request and response models
+|   |-- alembic/                 # PostgreSQL migrations
+|   |-- tests/                   # API, optimizer, map, benchmark, and event tests
+|   |-- Dockerfile
+|   |-- entrypoint.sh            # Migrate, seed, then start Uvicorn
+|   `-- requirements.txt
+|-- frontend/
+|   |-- src/app/                 # Next.js App Router pages
+|   |-- src/components/          # Trip, map, results, system, and performance UI
+|   |-- src/lib/api.ts           # Typed REST and SSE client
+|   |-- src/types/api.ts         # Frontend API contracts
+|   |-- Dockerfile
+|   |-- next.config.ts
+|   |-- package.json
+|   `-- vercel.json
+|-- data/demo_stops.csv          # Separate 42-row CSV import example
+|-- docker-compose.yml           # PostgreSQL, backend, and frontend
+|-- environment.example          # Local environment template
+`-- render.yaml                  # Render web-service definition
 ```
 
----
+## Technology
 
-## 🚀 Quick Start
+| Layer | Current implementation |
+| --- | --- |
+| Frontend | Next.js 16.3, React 19, TypeScript, Tailwind CSS 4 |
+| Maps | Leaflet with OpenStreetMap-derived CARTO tiles |
+| API | FastAPI, Pydantic v2, Uvicorn |
+| Persistence | PostgreSQL, SQLAlchemy 2 async, asyncpg, Alembic |
+| Optimization | NumPy, scikit-learn DBSCAN, custom Haversine/nearest-neighbour/2-opt logic |
+| Intelligence | Optional Azure OpenAI structured outputs through the OpenAI SDK |
+| Infrastructure | Docker Compose, Vercel frontend configuration, Render backend configuration |
+
+## Quick Start With Docker
 
 ### Prerequisites
 
-- Python 3.10+ and Node.js 20.9+
-- Docker Desktop for the full stack
-- An Azure OpenAI resource is optional; without it, route optimization still works and intelligence is reported as unavailable
+- Docker Desktop or another Docker Compose-compatible runtime.
+- Ports `3000`, `8000`, and `5432` available locally.
 
-### 1. Backend
+### Start the stack
 
 ```bash
+cp environment.example .env
+docker compose up --build
+```
+
+The backend container runs Alembic migrations and seeds the deterministic demo before starting Uvicorn.
+
+Open:
+
+- Frontend: http://localhost:3000
+- API: http://localhost:8000
+- Swagger: http://localhost:8000/docs
+- Readiness: http://localhost:8000/health/ready
+
+Azure OpenAI variables may remain empty. Optimization does not depend on AI availability.
+
+## Manual Development
+
+### Backend
+
+The backend targets Python 3.13 and requires PostgreSQL.
+
+```bash
+docker compose up -d postgres
+
 cd backend
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
-```
 
-Create a `.env` file inside `backend/`:
-
-```
-GEMINI_API_KEY=your_gemini_api_key_here
-```
-
-Start the server:
-
-```bash
+export DATABASE_URL=postgresql+asyncpg://greenmile:greenmile@localhost:5432/greenmile
+alembic upgrade head
+python -m app.data_pipeline.seed
 python -m uvicorn app.main:app --port 8000
 ```
 
-API docs → http://localhost:8000/docs
+To enable optional operational intelligence, also configure:
 
-### 2. Frontend
+```bash
+export AZURE_OPENAI_ENDPOINT=https://YOUR-RESOURCE.openai.azure.com
+export AZURE_OPENAI_API_KEY=replace-with-your-server-side-key
+export AZURE_OPENAI_DEPLOYMENT=replace-with-your-deployment-name
+export OPENAI_API_VERSION=2024-10-21
+```
+
+These values are server-only. Never expose the API key through a `NEXT_PUBLIC_` variable.
+
+### Frontend
 
 ```bash
 cd frontend
@@ -169,108 +182,184 @@ npm install
 npm run dev
 ```
 
-The frontend reads persisted scenarios and computed results from the FastAPI backend. The recommended full-stack workflow is `docker compose up --build`; see `environment.example` for optional Azure OpenAI configuration.
+The frontend defaults to `http://localhost:8000`. Override it when necessary:
 
-Greenmile → http://localhost:3000
+```bash
+NEXT_PUBLIC_API_URL=https://your-api.example.com npm run dev
+```
 
-### 3. Try the Demo
+## Demo Workflow
 
-1. Open http://localhost:3000
-2. Click **Try Delhi demo**
-3. Click **Optimize this trip** and watch each engine stage complete
-4. Explore the route transformation, impact, intelligence, packing, and driver views
-5. Open **Performance**, **System**, and **How it works** from the navigation
+1. Open http://localhost:3000.
+2. Select **Try Delhi demo**.
+3. Review the persisted 500-stop scenario and five-vehicle fleet.
+4. Select **Optimize this trip**.
+5. Watch validation, clustering, routing, constraint, metrics, persistence, and AI-analysis events.
+6. Inspect the interactive map, before/after metrics, route timeline, constraints, packing plan, and driver action.
+7. Submit a supported trip event to exercise incremental route repair.
+8. Use the **Performance**, **System**, and **How it works** pages for benchmark and architecture views.
 
----
+## API Reference
 
-## ☁️ Deployment
+All domain endpoints use the `/api` prefix.
 
-🌐 **Frontend** → [greenmile-seven.vercel.app](https://greenmile-seven.vercel.app/) (Vercel)
+### Health
 
-### Frontend → Vercel
+| Method | Endpoint | Purpose |
+| --- | --- | --- |
+| `GET` | `/` | Service metadata and links |
+| `GET` | `/health/live` | Process liveness |
+| `GET` | `/health/ready` | Database readiness |
+| `GET` | `/docs` | Swagger UI |
 
-`frontend/vercel.json` identifies the application as a native Next.js project.
+### Scenarios
 
-1. Push this repo to GitHub
-2. Go to [vercel.com](https://vercel.com) → **Add New Project** → import your repo
-3. Set **Root Directory** to `frontend`
-4. Set `NEXT_PUBLIC_API_URL` to the deployed FastAPI origin
-5. Deploy — Vercel auto-detects Next.js
+| Method | Endpoint | Purpose |
+| --- | --- | --- |
+| `GET` | `/api/scenarios` | List scenarios |
+| `POST` | `/api/scenarios` | Create a scenario and its vehicles |
+| `GET` | `/api/scenarios/demo` | Load the current seeded demo |
+| `GET` | `/api/scenarios/{scenario_id}` | Read one scenario |
+| `GET` | `/api/scenarios/{scenario_id}/stops` | List scenario stops |
+| `GET` | `/api/scenarios/{scenario_id}/map` | Read baseline map GeoJSON |
+| `POST` | `/api/scenarios/{scenario_id}/stops/import` | Replace stops from a CSV upload |
 
-### Backend → Render
+### Optimization Runs And Events
 
-`render.yaml` at the project root configures a free-tier Python web service:
+| Method | Endpoint | Purpose |
+| --- | --- | --- |
+| `POST` | `/api/optimization-runs` | Queue a run for a scenario |
+| `GET` | `/api/optimization-runs/{run_id}` | Read run status and results |
+| `GET` | `/api/optimization-runs/{run_id}/route` | Read persisted route stops |
+| `GET` | `/api/optimization-runs/{run_id}/map` | Read optimized map GeoJSON |
+| `GET` | `/api/optimization-runs/{run_id}/events` | Read persisted stage and trip events |
+| `GET` | `/api/optimization-runs/{run_id}/events/stream` | Stream events over SSE |
+| `POST` | `/api/optimization-runs/{run_id}/events` | Submit a supported trip event |
 
-1. Go to [render.com](https://render.com) → **New → Blueprint** → connect your repo
-2. Render auto-reads `render.yaml` and provisions the service
-3. In the Render dashboard, go to **Environment** and add `GEMINI_API_KEY`
-
----
-
-## 🔌 API Reference
-
-| Method | Endpoint    | Description                                                               |
-| ------ | ----------- | ------------------------------------------------------------------------- |
-| `GET`  | `/`         | Health check — returns API status and Gemini config                       |
-| `GET`  | `/docs`     | Interactive Swagger UI                                                    |
-| `POST` | `/upload`   | Upload CSV file → returns parsed + validated stops JSON                   |
-| `POST` | `/optimize` | Accepts `{ stops: Stop[] }` → returns optimized route with AI annotations |
-
-### Stop Schema
+Create a run with:
 
 ```json
 {
-  "stop_id": "D7",
-  "type": "DELIVERY",
-  "lat": 28.5479,
-  "lng": 77.2118,
-  "address": "Malviya Nagar",
-  "weight_kg": 4.1,
-  "volume_l": 18,
-  "time_window_start": "12:00",
-  "time_window_end": "15:00",
-  "cluster_id": "Zone_B",
-  "return_count_30d": 3,
-  "avg_delivery_confirm_minutes": 15,
-  "dispute_history_count": 1
+  "scenario_id": "scenario-uuid",
+  "vehicle_id": null
 }
 ```
 
-`type` must be `"DELIVERY"` or `"RETURN"`.
+Supported trip events include delivery completion/failure, return readiness/collection/cancellation, stop cancellation, capacity changes, traffic delays, and driver delays.
 
-### Optimization Response
+### Benchmarks
 
-The `/optimize` endpoint returns:
+| Method | Endpoint | Purpose |
+| --- | --- | --- |
+| `GET` | `/api/benchmarks` | List persisted benchmark results |
+| `POST` | `/api/benchmarks` | Execute configured workloads |
+| `GET` | `/api/benchmarks/{benchmark_id}` | Read one benchmark result |
 
-- `route` — Ordered list of stops annotated with `risk_score`, `flag`, `reason`, `suggested_action`, `return_probability`, `pre_stage_return`
-- `nl_summary` — Gemini-generated 3-sentence route briefing
-- `metrics` — Before/after distance, fuel cost, CO₂, driver hours
-- `flagged_count` — Number of stops with anomaly flags
-- `pre_staged_returns` — Number of delivery stops pre-allocated a return bay
+## CSV Import
 
-### CSV Format
+CSV import replaces the stops for an existing scenario. Files must be UTF-8 encoded.
 
-Required columns (see `data/demo_stops.csv` for a working example):
+Required columns:
 
-```
-stop_id, type, lat, lng, address, weight_kg, volume_l,
-time_window_start, time_window_end, cluster_id,
-return_count_30d, avg_delivery_confirm_minutes, dispute_history_count
+```text
+stop_id,type,lat,lng,address,weight_kg,volume_l,time_window_start,time_window_end
 ```
 
----
+Optional columns:
 
-## 🛠️ Tech Stack
+```text
+service_time_seconds,return_count_30d,avg_delivery_confirm_minutes,
+dispute_history_count,data_provenance
+```
 
-| Layer            | Technology                                          |
-| ---------------- | --------------------------------------------------- |
-| **Backend**      | Python 3.12 · FastAPI · Uvicorn                     |
-| **Optimization** | scikit-learn (DBSCAN) · scipy · custom NN + 2-opt   |
-| **AI**           | Azure OpenAI structured outputs (post-route)        |
-| **Frontend**     | Next.js 16 · React 19 · TypeScript · Tailwind CSS 4 |
-| **Maps**         | Responsive SVG route visualization                  |
-| **Data**         | pandas · CSV validation · Pydantic v2 models        |
+Validation includes coordinates, non-negative weight and volume, valid stop type, and `time_window_start < time_window_end`. Supported stop types are `DELIVERY`, `RETURN`, and `PICKUP`.
 
----
+`data/demo_stops.csv` is a separate 42-row import example. It is not the same dataset as the database-backed 500-stop browser demo.
 
-_Greenmile v2.0 · Built for India's last mile 🇮🇳_
+## Optimization Behavior
+
+The active implementation is `backend/app/optimizer/engine.py`.
+
+### Baseline
+
+- Separates delivery and return workloads.
+- Partitions each workload across the configured fleet.
+- Produces independent depot-closed routes for comparison.
+
+### Optimized Plan
+
+- Clusters stops with DBSCAN using `eps = 3 km` and `min_samples = 2` by default.
+- Balances stops across available vehicles by accumulated weight and volume.
+- Orders deliveries first and returns/pickups second for every vehicle.
+- Applies nearest-neighbour ordering and bounded 2-opt improvement within each segment.
+- Materializes arrival/departure times and load transitions.
+- Validates weight, volume, time windows, precedence, depot closure, and maximum driver hours.
+- Persists route stops, metrics, violations, stage timings, and system state.
+
+### Incremental Repair
+
+Supported trip events can trigger route adaptation. Repair preserves unaffected vehicle order, removes cancelled/completed stops where applicable, rematerializes affected routes, rechecks constraints, and publishes updated events.
+
+## Optional Azure OpenAI Analysis
+
+Azure OpenAI runs after the deterministic route is persisted. It receives structured route and stop evidence and can return:
+
+- A concise operational summary.
+- Up to twelve return insights.
+- Up to eight recommendations.
+
+The system prompt explicitly prevents the model from claiming it calculated the route or from inventing operational history. Provider status, latency, model metadata, predictions, recommendations, and errors are persisted.
+
+## Validation
+
+### Frontend
+
+```bash
+cd frontend
+npm run lint
+npm run typecheck
+npm test
+npm run build
+```
+
+### Backend
+
+```bash
+cd backend
+ruff check app tests
+mypy app
+pytest
+```
+
+## Deployment
+
+### Frontend: Vercel
+
+1. Import the repository in Vercel.
+2. Set the project root directory to `frontend`.
+3. Set `NEXT_PUBLIC_API_URL` to the public FastAPI origin.
+4. Deploy as a Next.js project. `frontend/vercel.json` declares the framework.
+
+The frontend needs no AI credentials.
+
+### Backend: Render
+
+`render.yaml` currently defines only the Python web process. It does not provision PostgreSQL, set `DATABASE_URL`, or run Alembic migrations and demo seeding. Before treating it as a complete deployment:
+
+1. Provision PostgreSQL and set `DATABASE_URL`.
+2. Set `CORS_ORIGINS` to the deployed frontend origin.
+3. Run `alembic upgrade head` during release/startup.
+4. Run `python -m app.data_pipeline.seed` when the demo is required.
+5. Configure the optional `AZURE_OPENAI_*` variables, not `GEMINI_API_KEY`.
+
+The Docker backend entrypoint already performs migration and seeding; the current Render start command does not.
+
+## Data And Claims
+
+The bundled demo is deterministic synthetic data generated with seed `20260822`. It is explicitly labeled `SYNTHETIC_DETERMINISTIC` and must not be presented as observed fleet performance.
+
+Distance, fuel, emissions, labor, and cost savings shown by the application are calculated from the active scenario and configured assumptions. They should not be presented as universal savings or production benchmarks without external validation.
+
+## License
+
+No license file is currently included in this repository.
