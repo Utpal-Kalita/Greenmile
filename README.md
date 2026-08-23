@@ -4,7 +4,7 @@ Greenmile is a bidirectional last-mile planning system that combines outbound de
 
 The current application is version 3.0.0.
 
-[Live demo](https://greenmile-seven.vercel.app/) | [Presentation](https://docs.google.com/presentation/d/16DIOttygRqafvQ5uakdc6B03lOPCy-Ll/edit?usp=sharing&ouid=111781734386739260632&rtpof=true&sd=true)
+[Live demo](https://greenmileseven.vercel.app/) | [Presentation](https://docs.google.com/presentation/d/16DIOttygRqafvQ5uakdc6B03lOPCy-Ll/edit?usp=sharing&ouid=111781734386739260632&rtpof=true&sd=true)
 
 ## What Is Implemented
 
