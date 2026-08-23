@@ -62,9 +62,9 @@ def generate_delhi_stops(count: int = 500, seed: int = 20260822) -> list[StopImp
     return rows
 
 
-async def seed_demo(force: bool = False) -> str:
+async def seed_demo(force: bool = False, *, session_factory=SessionFactory) -> str:
     settings = get_settings()
-    async with SessionFactory() as session:
+    async with session_factory() as session:
         repository = ScenarioRepository(session)
         existing = await repository.get_demo()
         is_current = bool(existing and existing.provenance.get("generator") == SEED_VERSION)

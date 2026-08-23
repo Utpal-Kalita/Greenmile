@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import {
   AlertCircle,
-  BrainCircuit,
   Check,
   ChevronDown,
   CircleDot,
@@ -61,6 +60,10 @@ export function SystemView() {
       setError(reason instanceof Error ? reason.message : "Run failed");
     }
   }
+  const visibleEvents =
+    run?.events.filter(
+      (event) => !event.event_type.startsWith("AI_ANALYSIS_"),
+    ) ?? [];
   return (
     <div className="content-page system-page">
       <header className="page-hero system-hero">
@@ -148,42 +151,6 @@ export function SystemView() {
               <span>Route ready first</span>
             </div>
           </article>
-          <div className="branch-junction">
-            <span />
-            <i>ASYNC</i>
-            <span />
-          </div>
-          <article className="ai-branch">
-            <header>
-              <BrainCircuit size={20} />
-              <div>
-                <span className="eyebrow intelligence">Azure OpenAI</span>
-                <h3>Explain after routing.</h3>
-              </div>
-            </header>
-            <ul>
-              <li>
-                <Check size={13} />
-                Return intelligence
-              </li>
-              <li>
-                <Check size={13} />
-                Risk reasoning
-              </li>
-              <li>
-                <Check size={13} />
-                Briefing
-              </li>
-              <li>
-                <Check size={13} />
-                Change explanation
-              </li>
-            </ul>
-            <div className="branch-result">
-              <BrainCircuit size={18} />
-              <span>{run?.intelligence.status ?? "Provider pending"}</span>
-            </div>
-          </article>
         </div>
       </section>
       <section className="event-section">
@@ -208,8 +175,8 @@ export function SystemView() {
               <span>Output</span>
               <span>Status</span>
             </div>
-            {run?.events.length ? (
-              run.events.map((event) => (
+            {visibleEvents.length ? (
+              visibleEvents.map((event) => (
                 <div className="event-row" key={event.id}>
                   <time className="mono">
                     {new Date(event.created_at).toLocaleTimeString()}

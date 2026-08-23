@@ -4,21 +4,24 @@ Greenmile is a bidirectional last-mile planning system that combines outbound de
 
 The current application is version 3.0.0.
 
+[Live demo](https://greenmile-seven.vercel.app/) | [Presentation](https://docs.google.com/presentation/d/16DIOttygRqafvQ5uakdc6B03lOPCy-Ll/edit?usp=sharing&ouid=111781734386739260632&rtpof=true&sd=true)
+
 ## What Is Implemented
 
 - Persistent scenarios, stops, vehicles, optimization runs, route stops, metrics, events, benchmarks, and optional AI analyses in PostgreSQL.
 - A deterministic 500-stop Delhi demo with explicit synthetic-data provenance.
 - DBSCAN geographic clustering using Haversine distance.
 - Multi-vehicle workload partitioning by weight and volume.
-- Delivery-before-return route construction using nearest-neighbour ordering and bounded 2-opt improvement.
-- Capacity, time-window, precedence, depot-closure, and driver-hours validation.
+- Delivery-before-return route construction using nearest-neighbour ordering and optimized-v2 bounded 2-opt search.
+- Cached distance lookups, constant-time edge deltas, safe candidate pruning, and explicit local-search budgets.
+- Fail-closed capacity, time-window, precedence, depot-closure, route-completeness, and numeric validation.
 - Separate delivery/return baseline routes for before-and-after comparisons.
 - Incremental route repair after supported trip events.
 - Server-Sent Events (SSE) for optimization and route-update progress.
 - Route-level distance, fuel, emissions, labor, and total-cost metrics.
 - Interactive Leaflet maps with OpenStreetMap-derived tiles, depot and stop markers, route lines, sequence numbers, popups, zooming, and panning.
 - Optional post-route operational analysis through Azure OpenAI structured outputs.
-- Benchmark execution and persisted p50, p95, and p99 results.
+- Reproducible 100, 500, 1,000, and 5,000-stop benchmark workloads with p50, p95, p99, CPU, memory, route-quality, correctness, and local-search instrumentation.
 
 ## Honest Boundaries
 
@@ -49,8 +52,8 @@ FastAPI service
   |-- map and benchmark payloads
   |
   +--> deterministic optimizer
-  |      DBSCAN -> partition -> nearest neighbour -> 2-opt
-  |      -> route materialization -> constraint checks -> metrics
+  |      DBSCAN -> partition -> nearest neighbour
+  |      -> cached delta 2-opt -> fail-closed validation -> metrics
   |
   +--> optional Azure OpenAI analysis after routing
   |
@@ -81,7 +84,8 @@ Greenmile/
 |   |   |-- core/                # Settings and structured logging
 |   |   |-- data_pipeline/       # CSV validation and deterministic demo seeding
 |   |   |-- db/                  # SQLAlchemy models and async sessions
-|   |   |-- optimizer/engine.py  # Active optimizer, constraints, metrics, and repair logic
+|   |   |-- optimizer/           # Core engine, optimized-v2 search, and validators
+|   |   |-- benchmarks/          # Reproducible benchmark harness and CLI
 |   |   |-- repositories/        # Persistence access
 |   |   |-- services/            # Application orchestration and map payloads
 |   |   |-- main.py              # FastAPI application entry point
@@ -101,6 +105,8 @@ Greenmile/
 |   |-- package.json
 |   `-- vercel.json
 |-- data/demo_stops.csv          # Separate 42-row CSV import example
+|-- benchmark-results/           # Checked-in Round 2 JSON and Markdown evidence
+|-- BENCHMARK.md                 # Benchmark methodology and interpretation
 |-- docker-compose.yml           # PostgreSQL, backend, and frontend
 |-- environment.example          # Local environment template
 `-- render.yaml                  # Render web-service definition
@@ -114,7 +120,7 @@ Greenmile/
 | Maps | Leaflet with OpenStreetMap-derived CARTO tiles |
 | API | FastAPI, Pydantic v2, Uvicorn |
 | Persistence | PostgreSQL, SQLAlchemy 2 async, asyncpg, Alembic |
-| Optimization | NumPy, scikit-learn DBSCAN, custom Haversine/nearest-neighbour/2-opt logic |
+| Optimization | NumPy, scikit-learn DBSCAN, Haversine routing, cached delta 2-opt, fail-closed validation |
 | Intelligence | Optional Azure OpenAI structured outputs through the OpenAI SDK |
 | Infrastructure | Docker Compose, Vercel frontend configuration, Render backend configuration |
 
@@ -278,7 +284,7 @@ Validation includes coordinates, non-negative weight and volume, valid stop type
 
 ## Optimization Behavior
 
-The active implementation is `backend/app/optimizer/engine.py`.
+The active route pipeline combines `backend/app/optimizer/engine.py`, `backend/app/optimizer/optimized_v2.py`, and `backend/app/optimizer/validator.py`.
 
 ### Baseline
 
@@ -291,9 +297,11 @@ The active implementation is `backend/app/optimizer/engine.py`.
 - Clusters stops with DBSCAN using `eps = 3 km` and `min_samples = 2` by default.
 - Balances stops across available vehicles by accumulated weight and volume.
 - Orders deliveries first and returns/pickups second for every vehicle.
-- Applies nearest-neighbour ordering and bounded 2-opt improvement within each segment.
+- Applies nearest-neighbour ordering and optimized-v2 bounded 2-opt improvement within each segment.
+- Uses a per-segment distance cache and constant-time edge-delta evaluation.
+- Safely prunes candidates that cannot improve the route and records search budgets, cache hits, candidate counts, improvements, timings, and stop reasons.
 - Materializes arrival/departure times and load transitions.
-- Validates weight, volume, time windows, precedence, depot closure, and maximum driver hours.
+- Fails closed when stops are missing or duplicated, values are non-finite, route distances disagree, depot closure fails, or operational constraints are violated.
 - Persists route stops, metrics, violations, stage timings, and system state.
 
 ### Incremental Repair
@@ -330,6 +338,8 @@ ruff check app tests
 mypy app
 pytest
 ```
+
+Round 2 benchmark methodology and reproduction commands are documented in `BENCHMARK.md`. Generated comparison artifacts are stored in `benchmark-results/` and summarized by the frontend Performance Lab.
 
 ## Deployment
 

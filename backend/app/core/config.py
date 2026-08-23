@@ -32,7 +32,7 @@ class Settings(BaseSettings):
     dbscan_eps_km: float = 3.0
     dbscan_min_samples: int = 2
     two_opt_max_iterations: int = 60
-    algorithm_version: str = "greenmile-haversine-v1"
+    algorithm_version: str = "greenmile-haversine-optimized-v2"
     routing_provider: str = "HAVERSINE"
 
 

@@ -1,5 +1,8 @@
+from sqlalchemy import func, select
+
 from app.data_pipeline.csv_import import parse_csv
-from app.data_pipeline.seed import generate_delhi_stops
+from app.data_pipeline.seed import generate_delhi_stops, seed_demo
+from app.db.models import Scenario, Stop, Vehicle
 
 
 def test_seed_is_deterministic_and_balanced():
@@ -9,6 +12,16 @@ def test_seed_is_deterministic_and_balanced():
     assert [item.model_dump() for item in first] == [item.model_dump() for item in second]
     assert sum(item.type.value == "DELIVERY" for item in first) == 250
     assert all(item.data_provenance == "SYNTHETIC_DETERMINISTIC" for item in first)
+
+
+async def test_seed_demo_is_idempotent(session, test_session_factory):
+    first_id = await seed_demo(session_factory=test_session_factory)
+    second_id = await seed_demo(session_factory=test_session_factory)
+
+    assert second_id == first_id
+    assert await session.scalar(select(func.count(Scenario.id))) == 1
+    assert await session.scalar(select(func.count(Stop.id))) == 500
+    assert await session.scalar(select(func.count(Vehicle.id))) == 5
 
 
 def test_csv_returns_structured_validation_errors():

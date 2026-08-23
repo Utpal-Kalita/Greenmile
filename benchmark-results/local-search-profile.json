@@ -1,0 +1,1468 @@
+{
+  "profiles": [
+    {
+      "algorithm": "baseline-v1",
+      "cprofile_top": [
+        {
+          "cumtime_seconds": 0.216,
+          "function": "/app/app/optimizer/engine.py:178(_two_opt)",
+          "ncalls": "2",
+          "percall_cumtime_seconds": 0.108,
+          "percall_tottime_seconds": 0.008,
+          "tottime_seconds": 0.016
+        },
+        {
+          "cumtime_seconds": 0.205,
+          "function": "/app/app/benchmarks/profile_local_search.py:72(distance)",
+          "ncalls": "89658",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.054
+        },
+        {
+          "cumtime_seconds": 0.135,
+          "function": "/app/app/optimizer/engine.py:97(distance)",
+          "ncalls": "89658",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.09
+        },
+        {
+          "cumtime_seconds": 0.014,
+          "function": "{built-in method math.sin}",
+          "ncalls": "179316",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.014
+        },
+        {
+          "cumtime_seconds": 0.014,
+          "function": "{built-in method math.cos}",
+          "ncalls": "179316",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.014
+        },
+        {
+          "cumtime_seconds": 0.01,
+          "function": "/app/app/benchmarks/profile_local_search.py:173(_nearest_neighbour)",
+          "ncalls": "2",
+          "percall_cumtime_seconds": 0.005,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.0
+        },
+        {
+          "cumtime_seconds": 0.009,
+          "function": "{method 'setdefault' of 'dict' objects}",
+          "ncalls": "89660",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.009
+        },
+        {
+          "cumtime_seconds": 0.009,
+          "function": "{built-in method builtins.min}",
+          "ncalls": "1129",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.001
+        },
+        {
+          "cumtime_seconds": 0.008,
+          "function": "/app/app/benchmarks/profile_local_search.py:178(<lambda>)",
+          "ncalls": "3450",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.001
+        },
+        {
+          "cumtime_seconds": 0.008,
+          "function": "{built-in method math.asin}",
+          "ncalls": "89658",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.008
+        },
+        {
+          "cumtime_seconds": 0.008,
+          "function": "{built-in method math.sqrt}",
+          "ncalls": "89658",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.008
+        },
+        {
+          "cumtime_seconds": 0.002,
+          "function": "{built-in method builtins.len}",
+          "ncalls": "22468",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.002
+        }
+      ],
+      "dataset": "delhi-100",
+      "dataset_version": "round2-delhi-v1",
+      "segment_profiles": [
+        {
+          "distance_after_km": 97.9,
+          "distance_before_km": 109.616,
+          "distance_calls": 83568,
+          "estimated_candidates_evaluated": 20892,
+          "improvement_km": 11.716,
+          "segment_type": "DELIVERY",
+          "stop_count": 80,
+          "vehicle_sequence": 1,
+          "wall_ms": 209.675,
+          "worst_case_candidates_per_iteration": 1650
+        },
+        {
+          "distance_after_km": 68.108,
+          "distance_before_km": 75.098,
+          "distance_calls": 2436,
+          "estimated_candidates_evaluated": 609,
+          "improvement_km": 6.99,
+          "segment_type": "RETURN",
+          "stop_count": 20,
+          "vehicle_sequence": 1,
+          "wall_ms": 6.095,
+          "worst_case_candidates_per_iteration": 171
+        }
+      ],
+      "stop_count": 100,
+      "totals": {
+        "distance_calls": 86004,
+        "estimated_candidates_evaluated": 21501,
+        "improvement_km": 18.706,
+        "local_optimization_wall_ms": 215.77,
+        "segments": 2
+      },
+      "two_opt_max_iterations": 60,
+      "vehicle_count": 1
+    },
+    {
+      "algorithm": "baseline-v1",
+      "cprofile_top": [
+        {
+          "cumtime_seconds": 2.689,
+          "function": "/app/app/optimizer/engine.py:178(_two_opt)",
+          "ncalls": "4",
+          "percall_cumtime_seconds": 0.672,
+          "percall_tottime_seconds": 0.051,
+          "tottime_seconds": 0.204
+        },
+        {
+          "cumtime_seconds": 2.559,
+          "function": "/app/app/benchmarks/profile_local_search.py:72(distance)",
+          "ncalls": "1115322",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.649
+        },
+        {
+          "cumtime_seconds": 1.699,
+          "function": "/app/app/optimizer/engine.py:97(distance)",
+          "ncalls": "1115322",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 1.132
+        },
+        {
+          "cumtime_seconds": 0.181,
+          "function": "{built-in method math.sin}",
+          "ncalls": "2230644",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.181
+        },
+        {
+          "cumtime_seconds": 0.178,
+          "function": "{built-in method math.cos}",
+          "ncalls": "2230644",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.178
+        },
+        {
+          "cumtime_seconds": 0.124,
+          "function": "/app/app/benchmarks/profile_local_search.py:173(_nearest_neighbour)",
+          "ncalls": "4",
+          "percall_cumtime_seconds": 0.031,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.0
+        },
+        {
+          "cumtime_seconds": 0.119,
+          "function": "{method 'setdefault' of 'dict' objects}",
+          "ncalls": "1115326",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.119
+        },
+        {
+          "cumtime_seconds": 0.114,
+          "function": "{built-in method builtins.min}",
+          "ncalls": "11906",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.007
+        },
+        {
+          "cumtime_seconds": 0.107,
+          "function": "/app/app/benchmarks/profile_local_search.py:178(<lambda>)",
+          "ncalls": "42750",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.009
+        },
+        {
+          "cumtime_seconds": 0.104,
+          "function": "{built-in method math.sqrt}",
+          "ncalls": "1115322",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.104
+        },
+        {
+          "cumtime_seconds": 0.104,
+          "function": "{built-in method math.asin}",
+          "ncalls": "1115322",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.104
+        },
+        {
+          "cumtime_seconds": 0.025,
+          "function": "{built-in method builtins.len}",
+          "ncalls": "278945",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.025
+        }
+      ],
+      "dataset": "delhi-500",
+      "dataset_version": "round2-delhi-v1",
+      "segment_profiles": [
+        {
+          "distance_after_km": 148.654,
+          "distance_before_km": 160.589,
+          "distance_calls": 479396,
+          "estimated_candidates_evaluated": 119849,
+          "improvement_km": 11.935,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 1,
+          "wall_ms": 1204.424,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 81.745,
+          "distance_before_km": 88.852,
+          "distance_calls": 36328,
+          "estimated_candidates_evaluated": 9082,
+          "improvement_km": 7.107,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 1,
+          "wall_ms": 91.271,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 134.797,
+          "distance_before_km": 148.957,
+          "distance_calls": 531888,
+          "estimated_candidates_evaluated": 132972,
+          "improvement_km": 14.161,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 2,
+          "wall_ms": 1334.455,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 87.842,
+          "distance_before_km": 93.264,
+          "distance_calls": 23952,
+          "estimated_candidates_evaluated": 5988,
+          "improvement_km": 5.422,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 2,
+          "wall_ms": 59.213,
+          "worst_case_candidates_per_iteration": 900
+        }
+      ],
+      "stop_count": 500,
+      "totals": {
+        "distance_calls": 1071564,
+        "estimated_candidates_evaluated": 267891,
+        "improvement_km": 38.625,
+        "local_optimization_wall_ms": 2689.363,
+        "segments": 4
+      },
+      "two_opt_max_iterations": 60,
+      "vehicle_count": 2
+    },
+    {
+      "algorithm": "baseline-v1",
+      "cprofile_top": [
+        {
+          "cumtime_seconds": 6.083,
+          "function": "/app/app/optimizer/engine.py:178(_two_opt)",
+          "ncalls": "8",
+          "percall_cumtime_seconds": 0.76,
+          "percall_tottime_seconds": 0.057,
+          "tottime_seconds": 0.454
+        },
+        {
+          "cumtime_seconds": 5.785,
+          "function": "/app/app/benchmarks/profile_local_search.py:72(distance)",
+          "ncalls": "2302828",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 1.504
+        },
+        {
+          "cumtime_seconds": 3.815,
+          "function": "/app/app/optimizer/engine.py:97(distance)",
+          "ncalls": "2302828",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 2.537
+        },
+        {
+          "cumtime_seconds": 0.418,
+          "function": "{built-in method math.sin}",
+          "ncalls": "4605656",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.418
+        },
+        {
+          "cumtime_seconds": 0.391,
+          "function": "{built-in method math.cos}",
+          "ncalls": "4605656",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.391
+        },
+        {
+          "cumtime_seconds": 0.266,
+          "function": "{method 'setdefault' of 'dict' objects}",
+          "ncalls": "2302836",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.266
+        },
+        {
+          "cumtime_seconds": 0.266,
+          "function": "/app/app/benchmarks/profile_local_search.py:173(_nearest_neighbour)",
+          "ncalls": "8",
+          "percall_cumtime_seconds": 0.033,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.001
+        },
+        {
+          "cumtime_seconds": 0.244,
+          "function": "{built-in method builtins.min}",
+          "ncalls": "24548",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.016
+        },
+        {
+          "cumtime_seconds": 0.237,
+          "function": "{built-in method math.sqrt}",
+          "ncalls": "2302828",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.237
+        },
+        {
+          "cumtime_seconds": 0.232,
+          "function": "{built-in method math.asin}",
+          "ncalls": "2302828",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.232
+        },
+        {
+          "cumtime_seconds": 0.229,
+          "function": "/app/app/benchmarks/profile_local_search.py:178(<lambda>)",
+          "ncalls": "85500",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.018
+        },
+        {
+          "cumtime_seconds": 0.055,
+          "function": "{built-in method builtins.len}",
+          "ncalls": "576709",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.055
+        }
+      ],
+      "dataset": "delhi-1000",
+      "dataset_version": "round2-delhi-v1",
+      "segment_profiles": [
+        {
+          "distance_after_km": 127.021,
+          "distance_before_km": 143.95,
+          "distance_calls": 397880,
+          "estimated_candidates_evaluated": 99470,
+          "improvement_km": 16.928,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 1,
+          "wall_ms": 997.628,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 81.783,
+          "distance_before_km": 93.525,
+          "distance_calls": 54540,
+          "estimated_candidates_evaluated": 13635,
+          "improvement_km": 11.742,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 1,
+          "wall_ms": 134.391,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 151.956,
+          "distance_before_km": 163.793,
+          "distance_calls": 469592,
+          "estimated_candidates_evaluated": 117398,
+          "improvement_km": 11.837,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 2,
+          "wall_ms": 1148.983,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 83.321,
+          "distance_before_km": 85.372,
+          "distance_calls": 20252,
+          "estimated_candidates_evaluated": 5063,
+          "improvement_km": 2.051,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 2,
+          "wall_ms": 48.38,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 139.441,
+          "distance_before_km": 152.551,
+          "distance_calls": 538756,
+          "estimated_candidates_evaluated": 134689,
+          "improvement_km": 13.11,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 3,
+          "wall_ms": 1486.619,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 85.59,
+          "distance_before_km": 91.177,
+          "distance_calls": 37104,
+          "estimated_candidates_evaluated": 9276,
+          "improvement_km": 5.588,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 3,
+          "wall_ms": 99.11,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 150.805,
+          "distance_before_km": 164.93,
+          "distance_calls": 680700,
+          "estimated_candidates_evaluated": 170175,
+          "improvement_km": 14.125,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 4,
+          "wall_ms": 2126.341,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 81.483,
+          "distance_before_km": 82.962,
+          "distance_calls": 16488,
+          "estimated_candidates_evaluated": 4122,
+          "improvement_km": 1.479,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 4,
+          "wall_ms": 41.875,
+          "worst_case_candidates_per_iteration": 900
+        }
+      ],
+      "stop_count": 1000,
+      "totals": {
+        "distance_calls": 2215312,
+        "estimated_candidates_evaluated": 553828,
+        "improvement_km": 76.86,
+        "local_optimization_wall_ms": 6083.327,
+        "segments": 8
+      },
+      "two_opt_max_iterations": 60,
+      "vehicle_count": 4
+    },
+    {
+      "algorithm": "baseline-v1",
+      "cprofile_top": [
+        {
+          "cumtime_seconds": 13.605,
+          "function": "/app/app/optimizer/engine.py:178(_two_opt)",
+          "ncalls": "20",
+          "percall_cumtime_seconds": 0.68,
+          "percall_tottime_seconds": 0.053,
+          "tottime_seconds": 1.053
+        },
+        {
+          "cumtime_seconds": 12.998,
+          "function": "/app/app/benchmarks/profile_local_search.py:72(distance)",
+          "ncalls": "5101054",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 3.344
+        },
+        {
+          "cumtime_seconds": 8.582,
+          "function": "/app/app/optimizer/engine.py:97(distance)",
+          "ncalls": "5101054",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 5.742
+        },
+        {
+          "cumtime_seconds": 0.908,
+          "function": "{built-in method math.sin}",
+          "ncalls": "10202108",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.908
+        },
+        {
+          "cumtime_seconds": 0.891,
+          "function": "{built-in method math.cos}",
+          "ncalls": "10202108",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.891
+        },
+        {
+          "cumtime_seconds": 0.716,
+          "function": "/app/app/benchmarks/profile_local_search.py:173(_nearest_neighbour)",
+          "ncalls": "20",
+          "percall_cumtime_seconds": 0.036,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.002
+        },
+        {
+          "cumtime_seconds": 0.654,
+          "function": "{built-in method builtins.min}",
+          "ncalls": "54758",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.04
+        },
+        {
+          "cumtime_seconds": 0.618,
+          "function": "{method 'setdefault' of 'dict' objects}",
+          "ncalls": "5101074",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.618
+        },
+        {
+          "cumtime_seconds": 0.614,
+          "function": "/app/app/benchmarks/profile_local_search.py:178(<lambda>)",
+          "ncalls": "213750",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.049
+        },
+        {
+          "cumtime_seconds": 0.524,
+          "function": "{built-in method math.sqrt}",
+          "ncalls": "5101054",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.524
+        },
+        {
+          "cumtime_seconds": 0.518,
+          "function": "{built-in method math.asin}",
+          "ncalls": "5101054",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.518
+        },
+        {
+          "cumtime_seconds": 0.126,
+          "function": "{built-in method builtins.len}",
+          "ncalls": "1271016",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.126
+        }
+      ],
+      "dataset": "delhi-2500",
+      "dataset_version": "round2-delhi-v1",
+      "segment_profiles": [
+        {
+          "distance_after_km": 143.379,
+          "distance_before_km": 152.685,
+          "distance_calls": 384748,
+          "estimated_candidates_evaluated": 96187,
+          "improvement_km": 9.306,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 1,
+          "wall_ms": 1228.592,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 83.621,
+          "distance_before_km": 93.059,
+          "distance_calls": 32552,
+          "estimated_candidates_evaluated": 8138,
+          "improvement_km": 9.438,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 1,
+          "wall_ms": 119.273,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 136.402,
+          "distance_before_km": 148.776,
+          "distance_calls": 611712,
+          "estimated_candidates_evaluated": 152928,
+          "improvement_km": 12.374,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 2,
+          "wall_ms": 1563.638,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 85.843,
+          "distance_before_km": 92.02,
+          "distance_calls": 17156,
+          "estimated_candidates_evaluated": 4289,
+          "improvement_km": 6.176,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 2,
+          "wall_ms": 42.616,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 143.197,
+          "distance_before_km": 149.628,
+          "distance_calls": 330684,
+          "estimated_candidates_evaluated": 82671,
+          "improvement_km": 6.43,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 3,
+          "wall_ms": 826.237,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 86.382,
+          "distance_before_km": 94.586,
+          "distance_calls": 19856,
+          "estimated_candidates_evaluated": 4964,
+          "improvement_km": 8.203,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 3,
+          "wall_ms": 49.315,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 151.361,
+          "distance_before_km": 160.586,
+          "distance_calls": 457280,
+          "estimated_candidates_evaluated": 114320,
+          "improvement_km": 9.225,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 4,
+          "wall_ms": 1311.443,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 88.515,
+          "distance_before_km": 94.701,
+          "distance_calls": 43020,
+          "estimated_candidates_evaluated": 10755,
+          "improvement_km": 6.185,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 4,
+          "wall_ms": 114.015,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 145.336,
+          "distance_before_km": 160.208,
+          "distance_calls": 576896,
+          "estimated_candidates_evaluated": 144224,
+          "improvement_km": 14.872,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 5,
+          "wall_ms": 1584.09,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 83.688,
+          "distance_before_km": 92.143,
+          "distance_calls": 34984,
+          "estimated_candidates_evaluated": 8746,
+          "improvement_km": 8.455,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 5,
+          "wall_ms": 98.268,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 138.328,
+          "distance_before_km": 151.407,
+          "distance_calls": 518888,
+          "estimated_candidates_evaluated": 129722,
+          "improvement_km": 13.079,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 6,
+          "wall_ms": 1511.457,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 82.557,
+          "distance_before_km": 94.607,
+          "distance_calls": 37008,
+          "estimated_candidates_evaluated": 9252,
+          "improvement_km": 12.05,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 6,
+          "wall_ms": 108.221,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 146.495,
+          "distance_before_km": 162.113,
+          "distance_calls": 457816,
+          "estimated_candidates_evaluated": 114454,
+          "improvement_km": 15.618,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 7,
+          "wall_ms": 1274.764,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 85.512,
+          "distance_before_km": 89.296,
+          "distance_calls": 37140,
+          "estimated_candidates_evaluated": 9285,
+          "improvement_km": 3.784,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 7,
+          "wall_ms": 98.056,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 140.9,
+          "distance_before_km": 151.134,
+          "distance_calls": 435340,
+          "estimated_candidates_evaluated": 108835,
+          "improvement_km": 10.234,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 8,
+          "wall_ms": 1243.056,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 82.79,
+          "distance_before_km": 96.594,
+          "distance_calls": 15028,
+          "estimated_candidates_evaluated": 3757,
+          "improvement_km": 13.804,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 8,
+          "wall_ms": 38.597,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 147.484,
+          "distance_before_km": 154.475,
+          "distance_calls": 431896,
+          "estimated_candidates_evaluated": 107974,
+          "improvement_km": 6.992,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 9,
+          "wall_ms": 1182.985,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 83.087,
+          "distance_before_km": 91.779,
+          "distance_calls": 31932,
+          "estimated_candidates_evaluated": 7983,
+          "improvement_km": 8.692,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 9,
+          "wall_ms": 94.009,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 140.557,
+          "distance_before_km": 153.627,
+          "distance_calls": 379744,
+          "estimated_candidates_evaluated": 94936,
+          "improvement_km": 13.07,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 10,
+          "wall_ms": 1037.317,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 85.54,
+          "distance_before_km": 93.143,
+          "distance_calls": 28584,
+          "estimated_candidates_evaluated": 7146,
+          "improvement_km": 7.602,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 10,
+          "wall_ms": 79.657,
+          "worst_case_candidates_per_iteration": 900
+        }
+      ],
+      "stop_count": 2500,
+      "totals": {
+        "distance_calls": 4882264,
+        "estimated_candidates_evaluated": 1220566,
+        "improvement_km": 195.589,
+        "local_optimization_wall_ms": 13605.606,
+        "segments": 20
+      },
+      "two_opt_max_iterations": 60,
+      "vehicle_count": 10
+    },
+    {
+      "algorithm": "baseline-v1",
+      "cprofile_top": [
+        {
+          "cumtime_seconds": 27.905,
+          "function": "/app/app/optimizer/engine.py:178(_two_opt)",
+          "ncalls": "40",
+          "percall_cumtime_seconds": 0.698,
+          "percall_tottime_seconds": 0.054,
+          "tottime_seconds": 2.155
+        },
+        {
+          "cumtime_seconds": 26.567,
+          "function": "/app/app/benchmarks/profile_local_search.py:72(distance)",
+          "ncalls": "10838344",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 6.766
+        },
+        {
+          "cumtime_seconds": 17.603,
+          "function": "/app/app/optimizer/engine.py:97(distance)",
+          "ncalls": "10838344",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 11.75
+        },
+        {
+          "cumtime_seconds": 1.892,
+          "function": "{built-in method math.sin}",
+          "ncalls": "21676688",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 1.892
+        },
+        {
+          "cumtime_seconds": 1.832,
+          "function": "{built-in method math.cos}",
+          "ncalls": "21676688",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 1.832
+        },
+        {
+          "cumtime_seconds": 1.359,
+          "function": "/app/app/benchmarks/profile_local_search.py:173(_nearest_neighbour)",
+          "ncalls": "40",
+          "percall_cumtime_seconds": 0.034,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.004
+        },
+        {
+          "cumtime_seconds": 1.241,
+          "function": "{built-in method builtins.min}",
+          "ncalls": "115987",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.08
+        },
+        {
+          "cumtime_seconds": 1.217,
+          "function": "{method 'setdefault' of 'dict' objects}",
+          "ncalls": "10838384",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 1.217
+        },
+        {
+          "cumtime_seconds": 1.161,
+          "function": "/app/app/benchmarks/profile_local_search.py:178(<lambda>)",
+          "ncalls": "427500",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.1
+        },
+        {
+          "cumtime_seconds": 1.072,
+          "function": "{built-in method math.sqrt}",
+          "ncalls": "10838344",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 1.072
+        },
+        {
+          "cumtime_seconds": 1.057,
+          "function": "{built-in method math.asin}",
+          "ncalls": "10838344",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 1.057
+        },
+        {
+          "cumtime_seconds": 0.257,
+          "function": "{built-in method builtins.len}",
+          "ncalls": "2707699",
+          "percall_cumtime_seconds": 0.0,
+          "percall_tottime_seconds": 0.0,
+          "tottime_seconds": 0.257
+        }
+      ],
+      "dataset": "delhi-5000",
+      "dataset_version": "round2-delhi-v1",
+      "segment_profiles": [
+        {
+          "distance_after_km": 142.565,
+          "distance_before_km": 151.004,
+          "distance_calls": 495112,
+          "estimated_candidates_evaluated": 123778,
+          "improvement_km": 8.439,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 1,
+          "wall_ms": 1345.882,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 87.397,
+          "distance_before_km": 95.897,
+          "distance_calls": 35368,
+          "estimated_candidates_evaluated": 8842,
+          "improvement_km": 8.5,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 1,
+          "wall_ms": 92.835,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 139.178,
+          "distance_before_km": 152.343,
+          "distance_calls": 566428,
+          "estimated_candidates_evaluated": 141607,
+          "improvement_km": 13.165,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 2,
+          "wall_ms": 1636.054,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 85.462,
+          "distance_before_km": 92.782,
+          "distance_calls": 36056,
+          "estimated_candidates_evaluated": 9014,
+          "improvement_km": 7.32,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 2,
+          "wall_ms": 102.403,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 144.904,
+          "distance_before_km": 153.021,
+          "distance_calls": 466104,
+          "estimated_candidates_evaluated": 116526,
+          "improvement_km": 8.117,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 3,
+          "wall_ms": 1344.299,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 80.662,
+          "distance_before_km": 84.89,
+          "distance_calls": 21192,
+          "estimated_candidates_evaluated": 5298,
+          "improvement_km": 4.229,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 3,
+          "wall_ms": 51.866,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 135.546,
+          "distance_before_km": 149.4,
+          "distance_calls": 578556,
+          "estimated_candidates_evaluated": 144639,
+          "improvement_km": 13.854,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 4,
+          "wall_ms": 1479.732,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 81.334,
+          "distance_before_km": 92.383,
+          "distance_calls": 33968,
+          "estimated_candidates_evaluated": 8492,
+          "improvement_km": 11.049,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 4,
+          "wall_ms": 82.421,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 142.206,
+          "distance_before_km": 158.067,
+          "distance_calls": 463408,
+          "estimated_candidates_evaluated": 115852,
+          "improvement_km": 15.861,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 5,
+          "wall_ms": 1220.081,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 76.969,
+          "distance_before_km": 83.468,
+          "distance_calls": 23428,
+          "estimated_candidates_evaluated": 5857,
+          "improvement_km": 6.5,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 5,
+          "wall_ms": 58.946,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 141.194,
+          "distance_before_km": 147.613,
+          "distance_calls": 322456,
+          "estimated_candidates_evaluated": 80614,
+          "improvement_km": 6.419,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 6,
+          "wall_ms": 903.973,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 78.996,
+          "distance_before_km": 85.527,
+          "distance_calls": 32432,
+          "estimated_candidates_evaluated": 8108,
+          "improvement_km": 6.531,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 6,
+          "wall_ms": 94.106,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 141.623,
+          "distance_before_km": 155.421,
+          "distance_calls": 560680,
+          "estimated_candidates_evaluated": 140170,
+          "improvement_km": 13.798,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 7,
+          "wall_ms": 1420.915,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 87.115,
+          "distance_before_km": 93.911,
+          "distance_calls": 36668,
+          "estimated_candidates_evaluated": 9167,
+          "improvement_km": 6.795,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 7,
+          "wall_ms": 161.534,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 145.593,
+          "distance_before_km": 160.358,
+          "distance_calls": 525536,
+          "estimated_candidates_evaluated": 131384,
+          "improvement_km": 14.765,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 8,
+          "wall_ms": 1304.724,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 82.577,
+          "distance_before_km": 86.697,
+          "distance_calls": 24560,
+          "estimated_candidates_evaluated": 6140,
+          "improvement_km": 4.12,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 8,
+          "wall_ms": 60.894,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 138.524,
+          "distance_before_km": 155.462,
+          "distance_calls": 603580,
+          "estimated_candidates_evaluated": 150895,
+          "improvement_km": 16.938,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 9,
+          "wall_ms": 1628.332,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 85.817,
+          "distance_before_km": 96.858,
+          "distance_calls": 19988,
+          "estimated_candidates_evaluated": 4997,
+          "improvement_km": 11.041,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 9,
+          "wall_ms": 52.01,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 134.401,
+          "distance_before_km": 141.764,
+          "distance_calls": 443056,
+          "estimated_candidates_evaluated": 110764,
+          "improvement_km": 7.362,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 10,
+          "wall_ms": 1223.217,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 82.34,
+          "distance_before_km": 98.2,
+          "distance_calls": 36832,
+          "estimated_candidates_evaluated": 9208,
+          "improvement_km": 15.86,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 10,
+          "wall_ms": 108.432,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 139.883,
+          "distance_before_km": 148.83,
+          "distance_calls": 453944,
+          "estimated_candidates_evaluated": 113486,
+          "improvement_km": 8.947,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 11,
+          "wall_ms": 1124.502,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 74.762,
+          "distance_before_km": 83.884,
+          "distance_calls": 39636,
+          "estimated_candidates_evaluated": 9909,
+          "improvement_km": 9.122,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 11,
+          "wall_ms": 97.89,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 134.82,
+          "distance_before_km": 148.121,
+          "distance_calls": 464072,
+          "estimated_candidates_evaluated": 116018,
+          "improvement_km": 13.3,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 12,
+          "wall_ms": 1179.953,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 86.557,
+          "distance_before_km": 95.476,
+          "distance_calls": 24788,
+          "estimated_candidates_evaluated": 6197,
+          "improvement_km": 8.919,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 12,
+          "wall_ms": 61.089,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 131.539,
+          "distance_before_km": 143.444,
+          "distance_calls": 571176,
+          "estimated_candidates_evaluated": 142794,
+          "improvement_km": 11.905,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 13,
+          "wall_ms": 1426.208,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 76.841,
+          "distance_before_km": 80.865,
+          "distance_calls": 25808,
+          "estimated_candidates_evaluated": 6452,
+          "improvement_km": 4.025,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 13,
+          "wall_ms": 65.682,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 135.765,
+          "distance_before_km": 148.994,
+          "distance_calls": 571416,
+          "estimated_candidates_evaluated": 142854,
+          "improvement_km": 13.229,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 14,
+          "wall_ms": 1634.245,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 87.133,
+          "distance_before_km": 99.059,
+          "distance_calls": 48888,
+          "estimated_candidates_evaluated": 12222,
+          "improvement_km": 11.926,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 14,
+          "wall_ms": 120.896,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 130.339,
+          "distance_before_km": 140.891,
+          "distance_calls": 424564,
+          "estimated_candidates_evaluated": 106141,
+          "improvement_km": 10.552,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 15,
+          "wall_ms": 1085.403,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 87.691,
+          "distance_before_km": 88.002,
+          "distance_calls": 11096,
+          "estimated_candidates_evaluated": 2774,
+          "improvement_km": 0.311,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 15,
+          "wall_ms": 27.308,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 142.913,
+          "distance_before_km": 155.374,
+          "distance_calls": 537308,
+          "estimated_candidates_evaluated": 134327,
+          "improvement_km": 12.461,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 16,
+          "wall_ms": 1378.382,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 88.714,
+          "distance_before_km": 97.241,
+          "distance_calls": 25300,
+          "estimated_candidates_evaluated": 6325,
+          "improvement_km": 8.527,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 16,
+          "wall_ms": 63.965,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 146.433,
+          "distance_before_km": 154.056,
+          "distance_calls": 479616,
+          "estimated_candidates_evaluated": 119904,
+          "improvement_km": 7.623,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 17,
+          "wall_ms": 1279.765,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 81.744,
+          "distance_before_km": 89.685,
+          "distance_calls": 38636,
+          "estimated_candidates_evaluated": 9659,
+          "improvement_km": 7.94,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 17,
+          "wall_ms": 109.604,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 140.768,
+          "distance_before_km": 155.449,
+          "distance_calls": 546348,
+          "estimated_candidates_evaluated": 136587,
+          "improvement_km": 14.682,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 18,
+          "wall_ms": 1734.462,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 86.439,
+          "distance_before_km": 93.284,
+          "distance_calls": 20404,
+          "estimated_candidates_evaluated": 5101,
+          "improvement_km": 6.845,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 18,
+          "wall_ms": 49.51,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 143.585,
+          "distance_before_km": 152.423,
+          "distance_calls": 371468,
+          "estimated_candidates_evaluated": 92867,
+          "improvement_km": 8.837,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 19,
+          "wall_ms": 972.732,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 91.549,
+          "distance_before_km": 94.266,
+          "distance_calls": 33836,
+          "estimated_candidates_evaluated": 8459,
+          "improvement_km": 2.717,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 19,
+          "wall_ms": 87.902,
+          "worst_case_candidates_per_iteration": 900
+        },
+        {
+          "distance_after_km": 140.514,
+          "distance_before_km": 150.497,
+          "distance_calls": 362060,
+          "estimated_candidates_evaluated": 90515,
+          "improvement_km": 9.984,
+          "segment_type": "DELIVERY",
+          "stop_count": 200,
+          "vehicle_sequence": 20,
+          "wall_ms": 969.979,
+          "worst_case_candidates_per_iteration": 4650
+        },
+        {
+          "distance_after_km": 95.369,
+          "distance_before_km": 103.607,
+          "distance_calls": 24992,
+          "estimated_candidates_evaluated": 6248,
+          "improvement_km": 8.239,
+          "segment_type": "RETURN",
+          "stop_count": 50,
+          "vehicle_sequence": 20,
+          "wall_ms": 64.551,
+          "worst_case_candidates_per_iteration": 900
+        }
+      ],
+      "stop_count": 5000,
+      "totals": {
+        "distance_calls": 10400764,
+        "estimated_candidates_evaluated": 2600191,
+        "improvement_km": 380.754,
+        "local_optimization_wall_ms": 27906.684,
+        "segments": 40
+      },
+      "two_opt_max_iterations": 60,
+      "vehicle_count": 20
+    }
+  ],
+  "schema_version": "greenmile-local-search-profile-v1"
+}

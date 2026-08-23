@@ -30,7 +30,6 @@ export function TripResults({
       <BeforeAfter run={run} stops={stops} />
       <RouteTimeline route={run.route} />
       <RouteIntelligence run={run} />
-      <ProviderPanel run={run} />
       <CapacityAndPacking run={run} />
       <DriverPreview run={run} onTripEvent={onTripEvent} />
       <section className="story-end">
@@ -247,7 +246,7 @@ function RouteIntelligence({ run }: { run: OptimizationRun }) {
       <div className="section-heading-row">
         <div>
           <span className="eyebrow">Verified by the engine</span>
-          <h2>Route intelligence</h2>
+          <h2>Route checks</h2>
         </div>
         <p>
           {run.constraints.feasible
@@ -269,54 +268,6 @@ function RouteIntelligence({ run }: { run: OptimizationRun }) {
             </small>
           </div>
         ))}
-      </div>
-    </section>
-  );
-}
-
-function ProviderPanel({ run }: { run: OptimizationRun }) {
-  return (
-    <section className="intelligence-section reveal-section">
-      <div className="intelligence-intro">
-        <span className="eyebrow intelligence">
-          <Sparkles size={12} /> Greenmile Intelligence
-        </span>
-        <h2>Route first. Models plug in later.</h2>
-        <p>{run.intelligence.message}</p>
-      </div>
-      <div className="risk-console">
-        <div className="risk-header">
-          <span>Provider status</span>
-          <span className="mono">RUN / {run.run_id}</span>
-        </div>
-        <div className="risk-score">
-          <span className="mono">AI</span>
-          <strong className="mono" style={{ fontSize: 28 }}>
-            {run.intelligence.status}
-          </strong>
-        </div>
-        <p>
-          <AlertCircle size={15} /> No fabricated model output
-        </p>
-        <dl>
-          <div>
-            <dt>Return prediction</dt>
-            <dd className="mono">{run.prediction.status}</dd>
-          </div>
-          <div>
-            <dt>Intelligence</dt>
-            <dd className="mono">{run.intelligence.status}</dd>
-          </div>
-          <div>
-            <dt>Route dependency</dt>
-            <dd className="mono success-text">NONE</dd>
-          </div>
-        </dl>
-        <div className="recommendation">
-          <span>Model contract</span>
-          <strong>READY</strong>
-          <p>{run.prediction.message}</p>
-        </div>
       </div>
     </section>
   );
