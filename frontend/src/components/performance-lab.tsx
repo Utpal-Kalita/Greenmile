@@ -1,60 +1,27 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import {
-  AlertCircle,
-  Check,
-  Gauge,
-  Play,
-  ShieldCheck,
-  Timer,
-} from "lucide-react";
-import { api } from "@/lib/api";
-import type { Benchmark, Scenario } from "@/types/api";
+import { useMemo, useState } from "react";
+import { Check, Gauge, ShieldCheck, Timer } from "lucide-react";
+import round2Report from "@/data/round2-benchmark-results.json";
+
+const workloads = round2Report.workloads;
 
 export function PerformanceLab() {
-  const [scenario, setScenario] = useState<Scenario | null>(null);
-  const [benchmarks, setBenchmarks] = useState<Benchmark[]>([]);
   const [workload, setWorkload] = useState(500);
-  const [running, setRunning] = useState(false);
-  const [error, setError] = useState("");
-  useEffect(() => {
-    void Promise.all([api.getDemoScenario(), api.getBenchmarks()])
-      .then(([demo, records]) => {
-        setScenario(demo);
-        setBenchmarks(latestByWorkload(records));
-      })
-      .catch((reason) =>
-        setError(
-          reason instanceof Error ? reason.message : "Backend unavailable",
-        ),
-      );
-  }, []);
   const benchmark = useMemo(
-    () => benchmarks.find((item) => item.stop_count === workload),
-    [benchmarks, workload],
+    () => workloads.find((item) => item.stop_count === workload) ?? workloads[0],
+    [workload],
   );
-  const improvement = benchmark
-    ? (1 - benchmark.optimized_latency_ms / benchmark.baseline_latency_ms) * 100
-    : null;
-  async function runBenchmark() {
-    if (!scenario) return;
-    setRunning(true);
-    setError("");
-    try {
-      const records = await api.runBenchmarks(scenario.id, [workload]);
-      setBenchmarks((current) => latestByWorkload([...records, ...current]));
-    } catch (reason) {
-      setError(reason instanceof Error ? reason.message : "Benchmark failed");
-    } finally {
-      setRunning(false);
-    }
-  }
+  const generatedAt = new Date(round2Report.generated_at).toLocaleDateString(
+    "en-IN",
+    { day: "2-digit", month: "short", year: "numeric" },
+  );
+
   return (
     <div className="content-page performance-page">
       <header className="page-hero performance-hero">
         <div>
-          <span className="eyebrow">Greenmile performance / measured</span>
+          <span className="eyebrow">Greenmile performance / Round 2</span>
           <h1>
             We measure
             <br />
@@ -62,144 +29,103 @@ export function PerformanceLab() {
           </h1>
         </div>
         <div className="hero-proof">
-          <span className="mono">POSTGRESQL BENCHMARK</span>
-          <strong className="mono">
-            {improvement == null ? "—" : `${improvement.toFixed(1)}%`}
-          </strong>
-          <p>
-            {benchmark
-              ? `faster at ${benchmark.stop_count.toLocaleString()} stops`
-              : "Run a workload to generate evidence"}
-          </p>
+          <span className="mono">ROUND 2 ARTIFACT</span>
+          <strong className="mono">{formatSpeedupValue(benchmark.speedup)}</strong>
+          <p>{`faster at ${benchmark.stop_count.toLocaleString()} stops`}</p>
         </div>
       </header>
       <section className="workload-section">
         <div className="section-heading-row">
           <div>
             <span className="eyebrow">Workload</span>
-            <h2>Choose the pressure.</h2>
+            <h2>Choose the measured artifact.</h2>
           </div>
           <p>
-            Every value comes from executing the algorithms and persisting the
-            result.
+            Values are read from <code>{round2Report.source_file}</code>, generated {generatedAt}.
           </p>
         </div>
         <div className="workload-tabs">
-          {[100, 500, 1000, 5000].map((value) => (
+          {workloads.map((item) => (
             <button
-              key={value}
-              className={workload === value ? "is-active" : ""}
-              onClick={() => setWorkload(value)}
+              key={item.stop_count}
+              className={workload === item.stop_count ? "is-active" : ""}
+              onClick={() => setWorkload(item.stop_count)}
             >
-              <strong className="mono">{value.toLocaleString()}</strong>
+              <strong className="mono">{item.stop_count.toLocaleString()}</strong>
               <span>stops</span>
             </button>
           ))}
         </div>
-        <button
-          className="primary-button"
-          style={{ marginTop: 18 }}
-          onClick={runBenchmark}
-          disabled={!scenario || running}
-        >
-          <Play size={15} />
-          {running
-            ? "Measuring…"
-            : `Run ${workload.toLocaleString()}-stop benchmark`}
-        </button>
-        {error && (
-          <p className="eyebrow danger" style={{ marginLeft: 16 }}>
-            <AlertCircle size={12} />
-            {error}
-          </p>
-        )}
       </section>
-      {benchmark ? (
-        <>
-          <section className="benchmark-section">
-            <div className="benchmark-head">
-              <span>Measured value</span>
-              <span>Baseline</span>
-              <span>Optimized</span>
-              <span>Change</span>
-            </div>
-            <BenchmarkRow
-              label="Execution latency"
-              before={`${benchmark.baseline_latency_ms.toFixed(1)} ms`}
-              after={`${benchmark.optimized_latency_ms.toFixed(1)} ms`}
-              change={`${improvement!.toFixed(1)}% faster`}
-            />
-            <BenchmarkRow
-              label="Route distance"
-              before={`${benchmark.baseline_distance_km.toFixed(1)} km`}
-              after={`${benchmark.optimized_distance_km.toFixed(1)} km`}
-              change={`${benchmark.route_quality_delta.toFixed(1)}%`}
-            />
-            <BenchmarkRow
-              label="p95 latency"
-              before="—"
-              after={`${benchmark.p95_latency_ms.toFixed(1)} ms`}
-              change="measured"
-            />
-            <BenchmarkRow
-              label="Memory"
-              before="—"
-              after={`${benchmark.memory_usage_mb.toFixed(1)} MB`}
-              change="observed"
-            />
-          </section>
-          <section className="tradeoff-section">
-            <div className="section-heading-row">
-              <div>
-                <span className="eyebrow">Correctness guardrail</span>
-                <h2>Speed, with proof.</h2>
-              </div>
-              <p>
-                Optimization only counts when route quality and feasibility
-                remain visible.
-              </p>
-            </div>
-            <div className="quality-grid">
-              <article>
-                <Timer size={18} />
-                <span>Critical path</span>
-                <strong className="mono">
-                  {benchmark.optimized_latency_ms.toFixed(1)} MS
-                </strong>
-              </article>
-              <article>
-                <Gauge size={18} />
-                <span>Route quality delta</span>
-                <strong className="mono">
-                  {benchmark.route_quality_delta.toFixed(2)}%
-                </strong>
-              </article>
-              <article>
-                <ShieldCheck size={18} />
-                <span>Constraints</span>
-                <strong className="mono">
-                  {benchmark.constraint_violations} VIOLATIONS
-                </strong>
-              </article>
-              <article>
-                <Check size={18} />
-                <span>Dataset</span>
-                <strong className="mono">{benchmark.dataset_version}</strong>
-              </article>
-            </div>
-          </section>
-        </>
-      ) : (
-        <section className="route-loading" style={{ minHeight: 360 }}>
-          <span className="eyebrow">No fabricated benchmark</span>
-          <h1 style={{ fontSize: 48 }}>
-            Run the engine to see measured evidence.
-          </h1>
-        </section>
-      )}
+      <section className="benchmark-section">
+        <div className="benchmark-head">
+          <span>Measured value</span>
+          <span>Baseline</span>
+          <span>Optimized</span>
+          <span>Change</span>
+        </div>
+        <BenchmarkRow
+          label="P50 execution latency"
+          before={formatMs(benchmark.baseline_latency_ms)}
+          after={formatMs(benchmark.optimized_latency_ms)}
+          change={formatSpeedup(benchmark.speedup)}
+        />
+        <BenchmarkRow
+          label="P95 execution latency"
+          before={formatMs(benchmark.baseline_p95_latency_ms)}
+          after={formatMs(benchmark.optimized_p95_latency_ms)}
+          change={formatSpeedup(benchmark.speedup_p95)}
+        />
+        <BenchmarkRow
+          label="P99 execution latency"
+          before={formatMs(benchmark.baseline_p99_latency_ms)}
+          after={formatMs(benchmark.optimized_p99_latency_ms)}
+          change={formatSpeedup(benchmark.speedup_p99)}
+        />
+        <BenchmarkRow
+          label="Route distance"
+          before={formatKm(benchmark.baseline_distance_km)}
+          after={formatKm(benchmark.optimized_distance_km)}
+          change={`${benchmark.quality_delta_percent.toFixed(1)}% quality delta`}
+        />
+      </section>
+      <section className="tradeoff-section">
+        <div className="section-heading-row">
+          <div>
+            <span className="eyebrow">Correctness guardrail</span>
+            <h2>Speed, with proof.</h2>
+          </div>
+          <p>
+            Baseline and optimized numbers come from the same Round 2 dataset, seed, and benchmark artifact.
+          </p>
+        </div>
+        <div className="quality-grid">
+          <article>
+            <Timer size={18} />
+            <span>Optimized P50</span>
+            <strong className="mono">{formatMs(benchmark.optimized_latency_ms).toUpperCase()}</strong>
+          </article>
+          <article>
+            <Gauge size={18} />
+            <span>Route quality delta</span>
+            <strong className="mono">{benchmark.quality_delta_percent.toFixed(2)}%</strong>
+          </article>
+          <article>
+            <ShieldCheck size={18} />
+            <span>Correctness parity</span>
+            <strong className="mono">{benchmark.correctness_equal ? "MATCH" : "CHECK"}</strong>
+          </article>
+          <article>
+            <Check size={18} />
+            <span>Dataset</span>
+            <strong className="mono">{benchmark.dataset_version}</strong>
+          </article>
+        </div>
+      </section>
     </div>
   );
 }
+
 function BenchmarkRow({
   label,
   before,
@@ -220,9 +146,19 @@ function BenchmarkRow({
     </div>
   );
 }
-function latestByWorkload(records: Benchmark[]) {
-  const seen = new Set<number>();
-  return [...records]
-    .sort((a, b) => Date.parse(b.created_at) - Date.parse(a.created_at))
-    .filter((item) => !seen.has(item.stop_count) && seen.add(item.stop_count));
+
+function formatMs(value: number) {
+  return `${value.toLocaleString("en-IN", { maximumFractionDigits: 3 })} ms`;
+}
+
+function formatKm(value: number) {
+  return `${value.toLocaleString("en-IN", { maximumFractionDigits: 3 })} km`;
+}
+
+function formatSpeedup(value: number) {
+  return `${formatSpeedupValue(value)} faster`;
+}
+
+function formatSpeedupValue(value: number) {
+  return `${value.toFixed(2)}×`;
 }

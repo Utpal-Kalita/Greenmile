@@ -314,17 +314,6 @@ function OptimizedPanel({
           <strong className="mono">{run.constraints.violations.length}</strong>
         </div>
       </div>
-      <div className="result-callout">
-        <Sparkles size={15} />
-        <div>
-          <span>Model status</span>
-          <strong>
-            {run.intelligence.status === "UNAVAILABLE"
-              ? "No model connected — no fake output."
-              : run.intelligence.message}
-          </strong>
-        </div>
-      </div>
       <div className="action-stack">
         <button
           className="secondary-button"

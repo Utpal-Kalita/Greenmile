@@ -47,6 +47,8 @@ class AzureOpenAIIntelligenceProvider:
                     {"role": "user", "content": str(route_context)},
                 ],
                 response_format=RouteIntelligence,
+                reasoning_effort="low",
+                max_completion_tokens=4096,
             )
             parsed = completion.choices[0].message.parsed
             if parsed is None:

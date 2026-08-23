@@ -53,7 +53,6 @@ const technical = [
   "2-opt improvement",
   "Capacity constraints",
   "Time windows",
-  "AI risk reasoning",
 ];
 
 export function HowItWorks() {
