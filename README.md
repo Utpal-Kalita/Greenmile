@@ -6,7 +6,7 @@
 
 Built for **FAR AWAY 2026 Hackathon · Theme: Logistics & Transit**
 
-🌐 **Live Demo → [greenmile-seven.vercel.app](https://greenmile-seven.vercel.app/)**
+🌐 **Live Demo → [greenmileseven.vercel.app](https://greenmileseven.vercel.app/)**
 📊 **Presentation → [GreenMile PPT](https://docs.google.com/presentation/d/16DIOttygRqafvQ5uakdc6B03lOPCy-Ll/edit?usp=sharing&ouid=111781734386739260632&rtpof=true&sd=true)**
 
 ---
